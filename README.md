@@ -3,5 +3,5 @@
 | Project | Niche | Status |
 |---------|-------|--------|
 | NovaAI | AI Product | ✅ Done |
-| Roti | Warung Roti | 🚧 In Progress |
+| Roti | Warung Roti | ✅ Done |
 
