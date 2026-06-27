@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NovaAI Studio — Automate the Busywork. Reclaim Your Week.</title>
+<meta name="description" content="NovaAI Studio builds AI automation, custom chatbots, and workflow systems that hand you back 15+ hours a week. Book a free consultation." />
+
+<!-- ============================================================
+     GOOGLE FONTS
+     Display: Space Grotesk (characterful, geometric, techy)
+     Body:    Inter (clean, neutral, highly legible)
+============================================================ -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+/* ============================================================
+   DESIGN TOKENS
+   5-value palette:
+     --bg        soft cool off-white  (page background)
+     --surface   pure white           (cards / panels)
+     --accent    NovaAI blue          (primary accent)
+     --ink       deep navy            (text primary)
+     --muted     slate                (text secondary)
+   Plus brand cyan used ONLY inside gradients (signature moment).
+   One radius (16px) everywhere; pill (999px) reserved for CTAs.
+============================================================ */
+:root{
+  --bg:       #F6F8FC;
+  --surface:  #FFFFFF;
+  --accent:   #2563EB;
+  --ink:      #0F172A;
+  --muted:    #64748B;
+
+  /* signature gradient partners (brand cyan) */
+  --cyan:     #06B6D4;
+  --grad:     linear-gradient(120deg, #2563EB 0%, #06B6D4 100%);
+
+  --line:     #E6EBF4;
+  --radius:   16px;
+  --pill:     999px;
+
+  /* type scale */
+  --fs-display: clamp(40px, 6vw, 64px);
+  --fs-h1: clamp(32px, 4.4vw, 40px);
+  --fs-h2: clamp(26px, 3.4vw, 32px);
+  --fs-h3: 22px;
+  --fs-body: 16px;
+  --fs-small: 13px;
+
+  --maxw: 1100px;
+  --pad-y: 96px;
+  --shadow-sm: 0 1px 2px rgba(15,23,42,.04), 0 4px 12px rgba(15,23,42,.05);
+  --shadow-lg: 0 18px 50px -12px rgba(37,99,235,.28);
+}
+
+/* ============================================================
+   RESET / BASE
+============================================================ */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:var(--fs-body);
+  line-height:1.6;
+  color:var(--ink);
+  background:var(--bg);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4,.display{font-family:'Space Grotesk',sans-serif;line-height:1.1;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+section{padding:var(--pad-y) 0;position:relative}
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+.eyebrow{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:var(--fs-small);font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent);
+  display:inline-flex;align-items:center;gap:8px;
+}
+.eyebrow::before{content:"";width:22px;height:2px;background:var(--grad);border-radius:2px}
+
+.section-head{max-width:680px;margin-bottom:56px}
+.section-head h2{font-size:var(--fs-h2);margin:18px 0 14px}
+.section-head p{color:var(--muted);font-size:18px}
+
+/* ============================================================
+   BUTTONS  (pill radius reserved for CTAs)
+============================================================ */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;
+  padding:15px 28px;border-radius:var(--pill);border:1px solid transparent;
+  cursor:pointer;transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s,background .25s;
+  white-space:nowrap;
+}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:var(--shadow-lg)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 24px 60px -10px rgba(37,99,235,.45)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn-ghost:hover{transform:translateY(-3px);border-color:var(--accent);color:var(--accent)}
+.btn svg{transition:transform .25s}
+.btn-primary:hover svg{transform:translateX(4px)}
+
+/* ============================================================
+   NAVBAR — transparent on hero, solid on scroll
+============================================================ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  transition:background .35s,box-shadow .35s,border-color .35s,padding .35s;
+  border-bottom:1px solid transparent;padding:10px 0;
+}
+.nav.scrolled{background:rgba(255,255,255,.82);backdrop-filter:blur(14px);border-color:var(--line);box-shadow:0 4px 24px rgba(15,23,42,.05)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:11px;font-family:'Space Grotesk';font-weight:700;font-size:19px;letter-spacing:-.02em}
+.brand .logo{width:34px;height:34px;border-radius:10px;background:var(--grad);display:grid;place-items:center;box-shadow:0 6px 16px rgba(37,99,235,.35)}
+.brand .logo svg{width:20px;height:20px}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a.link{font-size:15px;font-weight:500;color:var(--muted);transition:color .2s}
+.nav-links a.link:hover{color:var(--ink)}
+.nav .btn{padding:11px 22px;font-size:15px}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:6px}
+.nav-toggle span{display:block;width:24px;height:2px;background:var(--ink);margin:5px 0;border-radius:2px;transition:.3s}
+
+/* ============================================================
+   HERO + SIGNATURE ELEMENT
+   Signature = animated aurora mesh + a live "workflow" panel where
+   a pulse of light travels node→node, automating a task in real time.
+============================================================ */
+.hero{min-height:100vh;display:flex;align-items:center;padding-top:120px;overflow:hidden}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(70px);z-index:0;opacity:.55;animation:drift 18s ease-in-out infinite}
+.hero::before{width:520px;height:520px;background:radial-gradient(circle,#2563EB,transparent 70%);top:-120px;right:-80px}
+.hero::after{width:460px;height:460px;background:radial-gradient(circle,#06B6D4,transparent 70%);bottom:-160px;left:-120px;animation-delay:-9s}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-30px,40px) scale(1.12)}}
+
+.hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero-copy h1{font-size:var(--fs-display);margin:22px 0}
+.hero-copy h1 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-copy p.sub{font-size:19px;color:var(--muted);max-width:520px;margin-bottom:34px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.hero-trust{margin-top:30px;display:flex;align-items:center;gap:12px;color:var(--muted);font-size:14px}
+.stars{color:#F59E0B;letter-spacing:2px}
+
+.badge{display:inline-flex;align-items:center;gap:9px;background:var(--surface);border:1px solid var(--line);
+  padding:7px 15px 7px 9px;border-radius:var(--pill);font-size:13px;font-weight:500;color:var(--muted);box-shadow:var(--shadow-sm)}
+.badge .dot{width:8px;height:8px;border-radius:50%;background:#22C55E;box-shadow:0 0 0 4px rgba(34,197,94,.18);animation:pulse 2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 7px rgba(34,197,94,0)}}
+
+/* --- the signature workflow panel --- */
+.workflow{
+  position:relative;background:var(--surface);border:1px solid var(--line);
+  border-radius:calc(var(--radius) + 6px);padding:26px;box-shadow:0 30px 70px -20px rgba(15,23,42,.25);
+}
+.wf-bar{display:flex;align-items:center;gap:7px;margin-bottom:20px}
+.wf-bar i{width:11px;height:11px;border-radius:50%;background:var(--line)}
+.wf-bar i:nth-child(1){background:#F87171}.wf-bar i:nth-child(2){background:#FBBF24}.wf-bar i:nth-child(3){background:#34D399}
+.wf-bar span{margin-left:8px;font-size:12px;color:var(--muted);font-family:'Space Grotesk'}
+.wf-flow{position:relative}
+.wf-node{display:flex;align-items:center;gap:13px;padding:13px 15px;border:1px solid var(--line);border-radius:var(--radius);
+  background:#fff;margin:14px 0;transition:border-color .4s,box-shadow .4s,transform .4s;position:relative}
+.wf-node .ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:#EEF3FE;color:var(--accent);flex-shrink:0;transition:.4s}
+.wf-node .ic svg{width:19px;height:19px}
+.wf-node b{font-family:'Space Grotesk';font-size:14.5px;display:block}
+.wf-node small{font-size:12.5px;color:var(--muted)}
+.wf-node .tick{margin-left:auto;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;color:#fff;transition:.4s}
+.wf-node .tick svg{width:12px;height:12px;opacity:0;transform:scale(.4);transition:.4s}
+.wf-node.active{border-color:var(--accent);box-shadow:0 10px 30px -10px rgba(37,99,235,.4);transform:translateX(4px)}
+.wf-node.active .ic{background:var(--grad);color:#fff}
+.wf-node.done .tick{background:#22C55E;border-color:#22C55E}
+.wf-node.done .tick svg{opacity:1;transform:scale(1)}
+/* connector line + travelling pulse */
+.wf-line{position:absolute;left:33px;top:0;bottom:0;width:2px;background:var(--line);z-index:0}
+.wf-pulse{position:absolute;left:-3px;width:8px;height:8px;border-radius:50%;background:var(--cyan);
+  box-shadow:0 0 14px 3px var(--cyan);top:0;transition:top .55s cubic-bezier(.5,0,.3,1);opacity:0}
+.wf-foot{display:flex;align-items:center;justify-content:space-between;margin-top:18px;padding-top:16px;border-top:1px dashed var(--line)}
+.wf-foot .saved{font-family:'Space Grotesk';font-weight:700;font-size:15px}
+.wf-foot .saved b{color:var(--accent)}
+.wf-foot .live{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.wf-foot .live i{width:7px;height:7px;border-radius:50%;background:#22C55E;animation:pulse 2s infinite}
+
+/* ============================================================
+   SOCIAL PROOF BAR
+============================================================ */
+.proof{padding:40px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface)}
+.proof p{text-align:center;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:26px;font-weight:500}
+.logos{display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap}
+.logos svg{height:26px;opacity:.62;transition:opacity .25s,transform .25s;color:var(--ink);flex:1;min-width:120px}
+.logos svg:hover{opacity:1;transform:translateY(-2px)}
+
+/* ============================================================
+   PROBLEM -> SOLUTION
+============================================================ */
+.ps-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.ps-card{border-radius:var(--radius);padding:38px 34px;border:1px solid var(--line)}
+.ps-before{background:#FBFBFD}
+.ps-after{background:var(--ink);color:#fff;border-color:transparent;position:relative;overflow:hidden}
+.ps-after::after{content:"";position:absolute;width:300px;height:300px;background:radial-gradient(circle,rgba(6,182,212,.4),transparent 70%);top:-100px;right:-100px;filter:blur(30px)}
+.ps-card .tag{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk';font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px;position:relative;z-index:1}
+.ps-before .tag{color:#EF4444}
+.ps-after .tag{color:var(--cyan)}
+.ps-card h3{font-size:var(--fs-h3);margin-bottom:22px;position:relative;z-index:1}
+.ps-after h3{color:#fff}
+.ps-list{list-style:none;position:relative;z-index:1}
+.ps-list li{display:flex;gap:13px;padding:11px 0;font-size:15.5px;align-items:flex-start}
+.ps-before .ps-list li{color:#475569}
+.ps-after .ps-list li{color:#CBD5E1}
+.ps-list li svg{flex-shrink:0;margin-top:3px;width:19px;height:19px}
+.ps-before .ps-list li svg{color:#EF4444}
+.ps-after .ps-list li svg{color:#22D3EE}
+
+/* ============================================================
+   FEATURES / HOW IT WORKS
+============================================================ */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;counter-reset:step}
+.feat-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:34px 30px;
+  transition:transform .3s,box-shadow .3s,border-color .3s;position:relative}
+.feat-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:transparent}
+.feat-card .num{counter-increment:step;font-family:'Space Grotesk';font-weight:700;font-size:13px;color:var(--accent);letter-spacing:.1em}
+.feat-card .num::before{content:"STEP 0" counter(step)}
+.feat-icon{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#EEF3FE,#E6FBFF);display:grid;place-items:center;margin:18px 0 22px;color:var(--accent)}
+.feat-icon svg{width:27px;height:27px}
+.feat-card h3{font-size:var(--fs-h3);margin-bottom:12px}
+.feat-card p{color:var(--muted);font-size:15.5px}
+
+/* ============================================================
+   TESTIMONIALS
+============================================================ */
+.tst-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.tst-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:32px 30px;display:flex;flex-direction:column;gap:20px}
+.tst-card .stars{font-size:15px}
+.tst-card p{font-size:15.5px;color:#334155;flex:1}
+.tst-person{display:flex;align-items:center;gap:13px;border-top:1px solid var(--line);padding-top:20px}
+.avatar{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:'Space Grotesk';font-weight:700;font-size:16px;flex-shrink:0}
+.tst-person b{font-family:'Space Grotesk';font-size:15px;display:block}
+.tst-person small{color:var(--muted);font-size:13px}
+
+/* ============================================================
+   PRICING
+============================================================ */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch}
+.price-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:36px 30px;display:flex;flex-direction:column}
+.price-card.pop{border-color:transparent;box-shadow:0 30px 70px -24px rgba(37,99,235,.4);position:relative;transform:translateY(-10px)}
+.price-card.pop::before{content:"";position:absolute;inset:0;border-radius:var(--radius);padding:1.6px;background:var(--grad);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.pop-tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--grad);color:#fff;
+  font-family:'Space Grotesk';font-weight:600;font-size:12px;letter-spacing:.06em;padding:6px 16px;border-radius:var(--pill);box-shadow:var(--shadow-lg)}
+.price-card h3{font-size:var(--fs-h3)}
+.price-card .desc{color:var(--muted);font-size:14px;margin:8px 0 22px;min-height:40px}
+.price-card .amt{font-family:'Space Grotesk';font-weight:700;font-size:46px;letter-spacing:-.03em;line-height:1}
+.price-card .amt span{font-size:16px;color:var(--muted);font-weight:500}
+.price-card .per{font-size:13px;color:var(--muted);margin-top:6px}
+.price-card ul{list-style:none;margin:26px 0;display:flex;flex-direction:column;gap:13px;flex:1}
+.price-card ul li{display:flex;gap:11px;font-size:14.5px;color:#334155}
+.price-card ul li svg{color:var(--accent);flex-shrink:0;width:19px;height:19px}
+.price-card .btn{width:100%;justify-content:center}
+
+/* ============================================================
+   FAQ ACCORDION
+============================================================ */
+.faq-wrap{max-width:780px;margin:0 auto}
+.faq-item{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);margin-bottom:14px;overflow:hidden;transition:border-color .3s,box-shadow .3s}
+.faq-item.open{border-color:var(--accent);box-shadow:var(--shadow-sm)}
+.faq-q{width:100%;background:none;border:none;cursor:pointer;padding:22px 26px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-family:'Space Grotesk';font-weight:600;font-size:17px;color:var(--ink);text-align:left}
+.faq-q .pm{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;flex-shrink:0;transition:.3s;position:relative}
+.faq-item.open .pm{background:var(--grad);border-color:transparent}
+.faq-q .pm::before,.faq-q .pm::after{content:"";position:absolute;background:var(--muted);transition:.3s}
+.faq-q .pm::before{width:11px;height:2px}.faq-q .pm::after{width:2px;height:11px}
+.faq-item.open .pm::before,.faq-item.open .pm::after{background:#fff}
+.faq-item.open .pm::after{transform:rotate(90deg);opacity:0}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
+.faq-a p{padding:0 26px 24px;color:var(--muted);font-size:15.5px}
+
+/* ============================================================
+   FINAL CTA
+============================================================ */
+.final{background:var(--ink);color:#fff;border-radius:0;overflow:hidden;position:relative;margin:0 16px var(--pad-y);border-radius:calc(var(--radius) + 8px)}
+.final::before{content:"";position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(37,99,235,.55),transparent 65%);top:-260px;left:50%;transform:translateX(-50%);filter:blur(40px)}
+.final::after{content:"";position:absolute;width:380px;height:380px;background:radial-gradient(circle,rgba(6,182,212,.45),transparent 65%);bottom:-200px;right:-80px;filter:blur(40px)}
+.final-inner{position:relative;z-index:1;text-align:center;max-width:680px;margin:0 auto;padding:80px 24px}
+.scarcity{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);
+  padding:8px 17px;border-radius:var(--pill);font-size:13.5px;font-weight:500;margin-bottom:26px;backdrop-filter:blur(6px)}
+.scarcity .dot{width:8px;height:8px;border-radius:50%;background:#FBBF24;box-shadow:0 0 0 4px rgba(251,191,36,.2);animation:pulse 2s infinite}
+.final-inner h2{font-size:var(--fs-h1);margin-bottom:18px}
+.final-inner h2 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.final-inner p{color:#CBD5E1;font-size:18px;margin-bottom:34px}
+.final-inner .btn-primary{box-shadow:0 18px 50px -8px rgba(6,182,212,.5)}
+.final-note{margin-top:18px;font-size:13.5px;color:#94A3B8}
+
+/* ============================================================
+   FOOTER
+============================================================ */
+.footer{padding:50px 0 40px}
+.footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.footer .brand{font-size:18px}
+.footer .f-links{display:flex;gap:28px;flex-wrap:wrap}
+.footer .f-links a{color:var(--muted);font-size:14.5px;transition:color .2s}
+.footer .f-links a:hover{color:var(--ink)}
+.footer .copy{width:100%;border-top:1px solid var(--line);margin-top:30px;padding-top:24px;color:var(--muted);font-size:13.5px;text-align:center}
+
+/* ============================================================
+   SCROLL REVEAL
+============================================================ */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media(max-width:900px){
+  :root{--pad-y:64px}
+  .hero .wrap{grid-template-columns:1fr;gap:44px}
+  .hero{padding-top:110px;min-height:auto;padding-bottom:64px}
+  .hero-copy p.sub{max-width:none}
+  .ps-grid,.feat-grid,.tst-grid,.price-grid{grid-template-columns:1fr}
+  .price-card.pop{transform:none}
+  .nav-links{position:fixed;top:64px;left:16px;right:16px;flex-direction:column;align-items:stretch;gap:6px;
+    background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px;box-shadow:var(--shadow-lg);transform:translateY(-12px);opacity:0;pointer-events:none;transition:.3s}
+  .nav-links.show{transform:none;opacity:1;pointer-events:auto}
+  .nav-links a.link{padding:8px 4px}
+  .nav .btn{width:100%;justify-content:center}
+  .nav-toggle{display:block}
+}
+@media(max-width:560px){
+  .wrap{padding:0 18px}
+  .logos{justify-content:center;gap:22px}
+  .logos svg{flex:0 0 38%;min-width:0}
+  .footer .wrap{flex-direction:column;text-align:center}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ NAVBAR ============================================================ -->
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" class="brand">
+      <span class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/></svg>
+      </span>
+      NovaAI Studio
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a class="link" href="#problem">Why NovaAI</a>
+      <a class="link" href="#how">How it works</a>
+      <a class="link" href="#pricing">Pricing</a>
+      <a class="link" href="#faq">FAQ</a>
+      <a class="btn btn-primary" href="#book">Book a Free Consultation</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<span id="top"></span>
+
+<!-- ============================================================ HERO ============================================================ -->
+<header class="hero">
+  <div class="wrap">
+    <!-- copy -->
+    <div class="hero-copy reveal">
+      <span class="badge"><span class="dot"></span>Now booking June automation sprints</span>
+      <h1>Stop drowning in busywork.<br><span class="grad">Let AI run the boring 80%.</span></h1>
+      <p class="sub">NovaAI Studio designs custom AI automations, chatbots, and workflow systems that quietly handle your repetitive tasks — so your team ships more and clocks fewer late nights. Most clients reclaim <strong>15+ hours a week</strong> within 30 days.</p>
+      <div class="hero-cta">
+        <a href="#book" class="btn btn-primary">Book a Free Consultation
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#how" class="btn btn-ghost">See how it works</a>
+      </div>
+      <div class="hero-trust">
+        <span class="stars">★★★★★</span>
+        <span>Trusted by 120+ founders &amp; lean teams</span>
+      </div>
+    </div>
+
+    <!-- SIGNATURE ELEMENT: live workflow that automates a task before your eyes -->
+    <div class="workflow reveal" id="workflow" aria-label="Live automation demo">
+      <div class="wf-bar"><i></i><i></i><i></i><span>nova-flow · invoice-automation.run</span></div>
+      <div class="wf-flow">
+        <div class="wf-line"></div>
+        <div class="wf-pulse" id="wfPulse"></div>
+
+        <div class="wf-node" data-step="0">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 4v16"/></svg></span>
+          <span><b>New email lands</b><small>Client sends a PDF invoice</small></span>
+          <span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+        </div>
+
+        <div class="wf-node" data-step="1">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 100 18 9 9 0 000-18z"/><path d="M12 7v5l3 2"/></svg></span>
+          <span><b>AI reads &amp; extracts</b><small>Vendor, amount, due date parsed</small></span>
+          <span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+        </div>
+
+        <div class="wf-node" data-step="2">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9 6 9-6"/><rect x="3" y="5" width="18" height="14" rx="2"/></svg></span>
+          <span><b>Logged &amp; routed</b><small>Pushed to accounting + Slack</small></span>
+          <span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+        </div>
+
+        <div class="wf-node" data-step="3">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+          <span><b>You get your time back</b><small>Zero manual data entry</small></span>
+          <span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+        </div>
+      </div>
+      <div class="wf-foot">
+        <span class="saved">Hours saved this month: <b id="counter">0</b></span>
+        <span class="live"><i></i>automation live</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================ SOCIAL PROOF ============================================================ -->
+<div class="proof">
+  <div class="wrap">
+    <p>Powering automations for fast-moving teams</p>
+    <div class="logos">
+      <!-- SVG text-based wordmark logos -->
+      <svg viewBox="0 0 150 30" role="img" aria-label="Brightwave"><text x="0" y="22" font-family="Space Grotesk,sans-serif" font-size="22" font-weight="700" fill="currentColor">Bright<tspan fill="#2563EB">wave</tspan></text></svg>
+      <svg viewBox="0 0 130 30" role="img" aria-label="Loftly"><text x="0" y="22" font-family="Space Grotesk,sans-serif" font-size="22" font-weight="700" fill="currentColor">Loftly</text><circle cx="118" cy="9" r="4" fill="#06B6D4"/></svg>
+      <svg viewBox="0 0 140 30" role="img" aria-label="Quanta"><text x="0" y="22" font-family="Space Grotesk,sans-serif" font-size="22" font-weight="700" fill="currentColor">QUANTA</text></svg>
+      <svg viewBox="0 0 150 30" role="img" aria-label="Northpeak"><text x="14" y="22" font-family="Space Grotesk,sans-serif" font-size="22" font-weight="700" fill="currentColor">Northpeak</text><path d="M0 22L7 8l7 14z" fill="#2563EB"/></svg>
+      <svg viewBox="0 0 120 30" role="img" aria-label="Hue Studio"><text x="0" y="22" font-family="Space Grotesk,sans-serif" font-size="22" font-weight="700" fill="currentColor">hue°</text><text x="44" y="22" font-family="Inter,sans-serif" font-size="15" font-weight="500" fill="currentColor">studio</text></svg>
+      <svg viewBox="0 0 130 30" role="img" aria-label="Cadence"><rect x="0" y="6" width="16" height="16" rx="4" fill="#06B6D4"/><text x="24" y="22" font-family="Space Grotesk,sans-serif" font-size="22" font-weight="700" fill="currentColor">Cadence</text></svg>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ PROBLEM -> SOLUTION ============================================================ -->
+<section id="problem">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">The honest before &amp; after</span>
+      <h2>You didn't start a business to copy-paste spreadsheets at 9pm.</h2>
+      <p>Yet that's where most teams quietly lose their best hours. Here's the shift NovaAI builds for you.</p>
+    </div>
+    <div class="ps-grid">
+      <!-- BEFORE -->
+      <div class="ps-card ps-before reveal">
+        <span class="tag">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L14.7 3.9a2 2 0 00-3.4 0z"/></svg>
+          Life without automation
+        </span>
+        <h3>Every day starts behind.</h3>
+        <ul class="ps-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>Re-typing the same data between five different tools.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>Leads sitting unanswered for hours while you're heads-down.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>"We'll automate it later" — and later never comes.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>Paying skilled people to do robot-level repetition.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>You're the bottleneck — and growth stalls when you do.</li>
+        </ul>
+      </div>
+      <!-- AFTER -->
+      <div class="ps-card ps-after reveal">
+        <span class="tag">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4.5 12.5h6L11 22l8.5-10.5h-6z"/></svg>
+          Life on NovaAI
+        </span>
+        <h3>The boring work runs itself.</h3>
+        <ul class="ps-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Data flows between your tools automatically — no copy-paste.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>An AI chatbot answers and qualifies leads in seconds, 24/7.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Workflows we build and maintain — you don't touch code.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Your team focuses on the work that actually grows revenue.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>You step out of the weeds — the business runs without you.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ HOW IT WORKS ============================================================ -->
+<section id="how">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">How it works</span>
+      <h2>From overwhelmed to automated in three steps.</h2>
+      <p>No bloated software to learn. We map it, build it, and hand you systems that just run.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card reveal">
+        <span class="num"></span>
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
+        <h3>1. We map your time-leaks</h3>
+        <p>On a free call we trace exactly where your hours vanish each week. You leave with a prioritized automation plan — whether or not you hire us.</p>
+      </div>
+      <div class="feat-card reveal">
+        <span class="num"></span>
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.5L21 9l-5 4.5L17.5 21 12 17l-5.5 4L8 13.5 3 9l6.6-.5z"/></svg></div>
+        <h3>2. We build the systems</h3>
+        <p>Custom chatbots, AI workflows, and tool integrations — built to fit how you already work. You watch tasks start disappearing, usually within two weeks.</p>
+      </div>
+      <div class="feat-card reveal">
+        <span class="num"></span>
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M6 20V10M18 20V4"/></svg></div>
+        <h3>3. You scale, we maintain</h3>
+        <p>Your automations keep running while we monitor, tune, and expand them. Capacity grows without adding headcount — or your late nights back.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ TESTIMONIALS ============================================================ -->
+<section id="testimonials">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Real results</span>
+      <h2>Teams that got their week back.</h2>
+      <p>A few of the founders and operators who stopped doing work a machine should do.</p>
+    </div>
+    <div class="tst-grid">
+      <div class="tst-card reveal">
+        <span class="stars">★★★★★</span>
+        <p>"We were manually onboarding every new client — contracts, folders, welcome emails, the works. NovaAI turned it into one automated flow. What used to eat half a day now happens before I've finished my coffee."</p>
+        <div class="tst-person">
+          <span class="avatar" style="background:linear-gradient(135deg,#2563EB,#06B6D4)">MR</span>
+          <span><b>Maya Reyes</b><small>Founder, Brightwave Agency</small></span>
+        </div>
+      </div>
+      <div class="tst-card reveal">
+        <span class="stars">★★★★★</span>
+        <p>"Their AI chatbot now handles the first reply to every lead that hits our site. We're booking 40% more discovery calls and I haven't touched the inbox at midnight in months. Genuinely changed how the business runs."</p>
+        <div class="tst-person">
+          <span class="avatar" style="background:linear-gradient(135deg,#7C3AED,#2563EB)">DO</span>
+          <span><b>Daniel Okafor</b><small>Co-founder, Loftly</small></span>
+        </div>
+      </div>
+      <div class="tst-card reveal">
+        <span class="stars">★★★★★</span>
+        <p>"I was skeptical AI could handle our reporting without making a mess. They built a workflow that pulls our numbers, writes the summary, and drops it in Slack every Monday. It's been flawless for six months. Worth every cent."</p>
+        <div class="tst-person">
+          <span class="avatar" style="background:linear-gradient(135deg,#06B6D4,#0F172A)">SC</span>
+          <span><b>Sara Chen</b><small>Head of Ops, Northpeak</small></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ PRICING ============================================================ -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Engagements</span>
+      <h2>Pick the pace that fits your growth.</h2>
+      <p>Every engagement starts with the free consultation. No lock-in, cancel anytime after the first month.</p>
+    </div>
+    <div class="price-grid">
+      <!-- Tier 1 -->
+      <div class="price-card reveal">
+        <h3>Starter Sprint</h3>
+        <p class="desc">One painful workflow, fully automated and handed off.</p>
+        <div class="amt">$1,200<span> one-time</span></div>
+        <p class="per">2-week build · 1 automation</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>1 custom AI workflow or chatbot</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Integration with up to 3 tools</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Documentation + handoff training</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>14 days of post-launch support</li>
+        </ul>
+        <a href="#book" class="btn btn-ghost">Start a Sprint</a>
+      </div>
+      <!-- Tier 2 (popular) -->
+      <div class="price-card pop reveal">
+        <span class="pop-tag">Most Popular</span>
+        <h3>Automation Partner</h3>
+        <p class="desc">A done-for-you automation team on monthly retainer.</p>
+        <div class="amt">$2,900<span> /mo</span></div>
+        <p class="per">Ongoing build + maintenance</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Everything in Starter, ongoing</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>2–4 new automations every month</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Unlimited tweaks &amp; monitoring</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Priority Slack channel with our team</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Monthly time-saved reporting</li>
+        </ul>
+        <a href="#book" class="btn btn-primary" style="box-shadow:none">Book a Free Consultation</a>
+      </div>
+      <!-- Tier 3 -->
+      <div class="price-card reveal">
+        <h3>Scale &amp; Embed</h3>
+        <p class="desc">Custom AI systems built into the core of your operation.</p>
+        <div class="amt">Custom</div>
+        <p class="per">For teams automating at scale</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Dedicated automation architect</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Custom AI models &amp; private data</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Company-wide rollout &amp; training</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>SLA &amp; security review included</li>
+        </ul>
+        <a href="#book" class="btn btn-ghost">Talk to Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ FAQ ============================================================ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto">
+      <span class="eyebrow" style="justify-content:center">Honest answers</span>
+      <h2>The questions skeptical buyers actually ask.</h2>
+    </div>
+    <div class="faq-wrap reveal">
+      <div class="faq-item">
+        <button class="faq-q">Do I need to be technical or understand AI to work with you?<span class="pm"></span></button>
+        <div class="faq-a"><p>Not at all — that's the whole point. You tell us what eats your time; we handle every technical decision, build, and the ongoing maintenance. Most of our clients have never written a line of code, and they never need to.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How is this different from buying an off-the-shelf AI tool?<span class="pm"></span></button>
+        <div class="faq-a"><p>Generic tools force you to bend your process around their software. We build automations around how you already work and connect the tools you already use, so there's nothing new to learn — and no $200/month subscription gathering dust because nobody set it up properly.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How quickly will I actually see results?<span class="pm"></span></button>
+        <div class="faq-a"><p>Most Starter Sprints ship a working automation within two weeks, and you'll feel the time savings immediately after. On a monthly partnership, we prioritize your biggest time-leak first so you see a return before the first invoice clears.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Is my business data safe with AI in the loop?<span class="pm"></span></button>
+        <div class="faq-a"><p>Yes. We use enterprise-grade providers with no-training data policies, scope every integration to least-privilege access, and can run fully private models for sensitive workflows. On Scale &amp; Embed engagements we include a formal security review and sign an NDA before any access is granted.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What if something breaks after you've built it?<span class="pm"></span></button>
+        <div class="faq-a"><p>Every build includes post-launch support, and partnership clients get continuous monitoring — we usually catch and fix issues before you'd even notice. You're never handed a black box and left alone with it.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ FINAL CTA ============================================================ -->
+<section id="book" style="padding-top:0;padding-bottom:0">
+  <div class="final">
+    <div class="final-inner reveal">
+      <span class="scarcity"><span class="dot"></span>Only 4 onboarding slots left for July</span>
+      <h2>Reclaim 15+ hours a week.<br><span class="grad">Starting with one free call.</span></h2>
+      <p>In 30 minutes we'll map exactly which tasks AI should be handling for you — and you'll walk away with a concrete automation plan, even if we never work together.</p>
+      <a href="mailto:hello@novaaistudio.com?subject=Free%20Consultation" class="btn btn-primary">Book a Free Consultation
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <p class="final-note">No pitch deck, no pressure. Just a plan to win your time back.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ FOOTER ============================================================ -->
+<footer class="footer">
+  <div class="wrap">
+    <a href="#top" class="brand">
+      <span class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/></svg></span>
+      NovaAI Studio
+    </a>
+    <nav class="f-links">
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="mailto:hello@novaaistudio.com">Contact</a>
+    </nav>
+    <p class="copy">© 2026 NovaAI Studio. Automating the busywork so you don't have to.</p>
+  </div>
+</footer>
+
+<!-- ============================================================ JAVASCRIPT ============================================================ -->
+<script>
+/* ---- Navbar: transparent on hero, solid on scroll ---- */
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+/* ---- Mobile menu toggle ---- */
+const navLinks = document.getElementById('navLinks');
+const navToggle = document.getElementById('navToggle');
+navToggle.addEventListener('click', () => navLinks.classList.toggle('show'));
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('show')));
+
+/* ---- Smooth scroll handled by CSS scroll-behavior; offset for fixed nav via scroll-margin ---- */
+document.querySelectorAll('section, span#top').forEach(el => el.style.scrollMarginTop = '90px');
+
+/* ---- Scroll-triggered reveals ---- */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+}, {threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ---- FAQ accordion with smooth height animation ---- */
+document.querySelectorAll('.faq-item').forEach(item => {
+  const q = item.querySelector('.faq-q');
+  const a = item.querySelector('.faq-a');
+  q.addEventListener('click', () => {
+    const open = item.classList.contains('open');
+    // close others for a clean single-open accordion
+    document.querySelectorAll('.faq-item.open').forEach(o => { o.classList.remove('open'); o.querySelector('.faq-a').style.maxHeight = null; });
+    if(!open){ item.classList.add('open'); a.style.maxHeight = a.scrollHeight + 'px'; }
+  });
+});
+
+/* ============================================================
+   SIGNATURE MICRO-INTERACTION
+   A pulse of light travels the workflow, lighting each node and
+   ticking it "done" — then a counter of hours saved climbs.
+   Runs once the panel scrolls into view, and loops gently.
+============================================================ */
+(function(){
+  const panel  = document.getElementById('workflow');
+  const pulse  = document.getElementById('wfPulse');
+  const nodes  = Array.from(panel.querySelectorAll('.wf-node'));
+  const counterEl = document.getElementById('counter');
+  let counter = 0, started = false;
+
+  function positionPulse(node){
+    const pTop = panel.querySelector('.wf-flow').getBoundingClientRect().top;
+    const nRect = node.querySelector('.ic').getBoundingClientRect();
+    pulse.style.top = (nRect.top - pTop + nRect.height/2 - 4) + 'px';
+  }
+
+  function tickCounter(target){
+    const start = counter, end = target, dur = 900, t0 = performance.now();
+    (function step(now){
+      const p = Math.min((now - t0)/dur, 1);
+      counter = Math.round(start + (end - start) * (1 - Math.pow(1-p,3)));
+      counterEl.textContent = counter;
+      if(p < 1) requestAnimationFrame(step);
+    })(performance.now());
+  }
+
+  function runCycle(){
+    nodes.forEach(n => n.classList.remove('active','done'));
+    pulse.style.opacity = 1;
+    nodes.forEach((node, i) => {
+      setTimeout(() => {
+        positionPulse(node);
+        nodes.forEach(n => n.classList.remove('active'));
+        node.classList.add('active');
+        if(i>0) nodes[i-1].classList.add('done');
+        if(i === nodes.length - 1){
+          setTimeout(() => {
+            node.classList.add('done');
+            node.classList.remove('active');
+            pulse.style.opacity = 0;
+            tickCounter(counter + 47);
+            setTimeout(runCycle, 4200); // gently loop
+          }, 650);
+        }
+      }, i * 750 + 200);
+    });
+  }
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting && !started){ started = true; setTimeout(runCycle, 500); } });
+  }, {threshold:0.4});
+  obs.observe(panel);
+})();
+</script>
+</body>
+</html>
