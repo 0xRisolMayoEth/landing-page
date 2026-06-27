@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Roti Remah — toko roti artisan lokal. Renyah di luar, lembut di dalam, baru keluar oven tiap hari. Order sekarang!" />
+<meta name="theme-color" content="#E85D04" />
+<title>Roti Remah — Roti yang Bikin Kamu Balik Lagi</title>
+
+<!-- Open Graph -->
+<meta property="og:title" content="Roti Remah — Roti yang Bikin Kamu Balik Lagi" />
+<meta property="og:description" content="Roti artisan baru keluar oven, harga pelajar friendly. Kita kesini yuk." />
+<meta property="og:image" content="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1400&q=80" />
+<meta property="og:type" content="website" />
+
+<style>
+/* ============== FONTS ============== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;0,900;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+/* ============== DESIGN TOKENS ============== */
+:root{
+  --bg:#FFFBF5;
+  --surface:#FFF8EE;
+  --primary:#E85D04;
+  --primary-dark:#C44D00;
+  --secondary:#FFB703;
+  --text:#1A1A1A;
+  --text-muted:#6B5E52;
+  --white:#ffffff;
+  --radius-card:16px;
+  --radius-pill:999px;
+  --shadow-sm:0 4px 14px rgba(232,93,4,.10);
+  --shadow-md:0 10px 30px rgba(232,93,4,.14);
+  --shadow-lg:0 22px 50px rgba(232,93,4,.22);
+  --display:'Playfair Display', Georgia, serif;
+  --body:'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --maxw:1180px;
+}
+
+/* ============== RESET ============== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--body);
+  background:var(--bg);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+ul{list-style:none}
+section{position:relative}
+
+/* ============== UTILITIES ============== */
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.eyebrow{
+  font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--primary);display:inline-flex;align-items:center;gap:8px;
+}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--secondary);border-radius:2px}
+.h2{font-family:var(--display);font-size:40px;font-weight:800;line-height:1.12;letter-spacing:-.5px}
+.lead{color:var(--text-muted);font-size:17px;max-width:560px}
+.section-pad{padding:96px 0}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  font-weight:700;font-size:16px;border-radius:var(--radius-pill);
+  padding:15px 30px;min-height:52px;transition:transform .25s ease,
+  background .25s ease,box-shadow .25s ease,color .25s ease;
+  will-change:transform;white-space:nowrap;
+}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:var(--shadow-sm)}
+.btn-primary:hover{background:var(--primary-dark);transform:scale(1.03);box-shadow:var(--shadow-md)}
+.btn-secondary{background:rgba(255,255,255,.14);color:#fff;border:1.5px solid rgba(255,255,255,.55);backdrop-filter:blur(6px)}
+.btn-secondary:hover{background:rgba(255,255,255,.92);color:var(--text);transform:scale(1.03)}
+.btn-dark{background:var(--text);color:#fff}
+.btn-dark:hover{background:#000;transform:scale(1.03)}
+.btn-sm{padding:11px 20px;min-height:44px;font-size:14px}
+.btn-block{width:100%}
+
+/* ============== NAVBAR ============== */
+.nav{
+  position:fixed;top:0;left:0;width:100%;z-index:100;
+  transition:background .35s ease,box-shadow .35s ease,padding .35s ease;
+  padding:18px 0;
+}
+.nav.scrolled{background:rgba(255,251,245,.92);backdrop-filter:blur(12px);box-shadow:0 6px 24px rgba(26,26,26,.07);padding:11px 0}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{font-family:var(--display);font-weight:900;font-size:26px;letter-spacing:-.5px;color:#fff;display:flex;align-items:center;gap:8px;transition:color .35s ease}
+.logo .dot{color:var(--secondary)}
+.nav.scrolled .logo{color:var(--text)}
+.nav-links{display:flex;align-items:center;gap:30px}
+.nav-links a{font-weight:600;font-size:15px;color:rgba(255,255,255,.92);position:relative;transition:color .3s ease}
+.nav.scrolled .nav-links a{color:var(--text-muted)}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:2px;background:var(--primary);transition:width .3s ease;border-radius:2px}
+.nav-links a:hover{color:var(--primary)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{display:flex;align-items:center;gap:14px}
+.burger{display:none;flex-direction:column;gap:5px;padding:8px;background:none}
+.burger span{width:24px;height:2.5px;background:#fff;border-radius:2px;transition:background .35s ease,transform .3s ease,opacity .3s ease}
+.nav.scrolled .burger span{background:var(--text)}
+
+/* mobile menu */
+.mobile-menu{
+  position:fixed;inset:0 0 0 auto;width:min(82%,340px);background:var(--bg);z-index:120;
+  transform:translateX(100%);transition:transform .4s cubic-bezier(.7,0,.2,1);
+  padding:90px 28px 32px;box-shadow:-20px 0 60px rgba(0,0,0,.18);display:flex;flex-direction:column;gap:6px;
+}
+.mobile-menu.open{transform:translateX(0)}
+.mobile-menu a{font-weight:600;font-size:18px;padding:14px 6px;border-bottom:1px solid rgba(107,94,82,.12);color:var(--text)}
+.mobile-menu .btn{margin-top:20px}
+.menu-close{position:absolute;top:24px;right:24px;font-size:30px;line-height:1;color:var(--text)}
+.overlay{position:fixed;inset:0;background:rgba(26,26,26,.45);z-index:110;opacity:0;visibility:hidden;transition:.35s}
+.overlay.show{opacity:1;visibility:visible}
+
+/* ============== HERO ============== */
+.hero{min-height:100svh;display:flex;align-items:center;position:relative;overflow:hidden;isolation:isolate}
+.hero-bg{position:absolute;inset:-8% 0 0 0;height:118%;z-index:-3;will-change:transform}
+.hero-bg img{width:100%;height:100%;object-fit:cover}
+.hero-overlay{
+  position:absolute;inset:0;z-index:-2;
+  background:linear-gradient(105deg,rgba(26,15,5,.86) 0%,rgba(26,15,5,.60) 45%,rgba(26,15,5,.30) 100%),
+  linear-gradient(0deg,rgba(26,15,5,.70),rgba(26,15,5,0) 38%);
+}
+#particles{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.hero-content{padding-top:80px;max-width:760px}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;background:rgba(255,183,3,.16);
+  border:1px solid rgba(255,183,3,.5);color:var(--secondary);font-weight:600;font-size:14px;
+  padding:8px 16px;border-radius:var(--radius-pill);margin-bottom:24px;backdrop-filter:blur(4px);
+  animation:floatBadge 3s ease-in-out infinite;
+}
+@keyframes floatBadge{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.hero h1{
+  font-family:var(--display);color:#fff;font-weight:900;font-size:72px;line-height:1.05;
+  letter-spacing:-1.5px;margin-bottom:22px;text-shadow:0 4px 30px rgba(0,0,0,.3);
+}
+.hero h1 .accent{color:var(--secondary);font-style:italic}
+.hero p.sub{color:rgba(255,255,255,.9);font-size:20px;line-height:1.6;max-width:540px;margin-bottom:36px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+.hero-stats{display:flex;gap:34px;flex-wrap:wrap}
+.hero-stats .stat strong{display:block;font-family:var(--display);font-size:30px;font-weight:800;color:#fff;line-height:1}
+.hero-stats .stat span{font-size:13px;color:rgba(255,255,255,.72);letter-spacing:.03em}
+.hero-stats .divider{width:1px;background:rgba(255,255,255,.22)}
+
+.scroll-ind{
+  position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:1;
+  display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(255,255,255,.8);
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+}
+.scroll-ind .mouse{width:26px;height:42px;border:2px solid rgba(255,255,255,.6);border-radius:14px;position:relative}
+.scroll-ind .mouse::before{content:"";position:absolute;top:8px;left:50%;transform:translateX(-50%);width:4px;height:8px;background:var(--secondary);border-radius:4px;animation:scrollWheel 1.6s ease-in-out infinite}
+@keyframes scrollWheel{0%{opacity:0;transform:translate(-50%,0)}40%{opacity:1}80%,100%{opacity:0;transform:translate(-50%,14px)}}
+
+/* ============== MARQUEE / SOCIAL PROOF ============== */
+.proof{background:var(--text);color:#fff;padding:18px 0;overflow:hidden}
+.marquee{display:flex;gap:0;width:max-content;animation:scrollX 34s linear infinite}
+.proof:hover .marquee{animation-play-state:paused}
+.marquee .track{display:flex}
+.marquee .item{display:flex;align-items:center;gap:12px;padding:0 38px;white-space:nowrap;font-weight:600;font-size:15px;color:rgba(255,255,255,.92)}
+.marquee .item .ic{color:var(--secondary);font-size:18px}
+.marquee .item .star{color:var(--secondary);letter-spacing:2px}
+@keyframes scrollX{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ============== MENU HIGHLIGHT ============== */
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:48px;flex-wrap:wrap}
+.menu-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.card{
+  background:var(--surface);border-radius:var(--radius-card);overflow:hidden;
+  box-shadow:var(--shadow-sm);transition:transform .35s ease,box-shadow .35s ease;
+  display:flex;flex-direction:column;border:1px solid rgba(107,94,82,.07);
+}
+.card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg)}
+.card-img{position:relative;aspect-ratio:4/3;overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.card:hover .card-img img{transform:scale(1.08)}
+.card-tag{
+  position:absolute;top:12px;left:12px;font-size:11px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;padding:6px 12px;border-radius:var(--radius-pill);color:#fff;backdrop-filter:blur(2px);
+}
+.tag-best{background:var(--primary)}
+.tag-new{background:var(--secondary);color:var(--text)}
+.tag-hot{background:#D7263D}
+.card-body{padding:20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card-body h3{font-family:var(--display);font-size:22px;font-weight:700;line-height:1.2}
+.card-body .desc{color:var(--text-muted);font-size:14.5px;line-height:1.55;flex:1}
+.card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:8px;gap:10px}
+.price{font-weight:800;font-size:20px;color:var(--primary)}
+.price small{font-size:13px;color:var(--text-muted);font-weight:500;text-decoration:line-through;margin-left:6px}
+
+/* ============== WHY US ============== */
+.why{background:var(--surface)}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.why-card{
+  background:var(--bg);border-radius:var(--radius-card);padding:36px 30px;
+  border:1px solid rgba(107,94,82,.08);transition:transform .35s ease,box-shadow .35s ease;
+  position:relative;overflow:hidden;
+}
+.why-card::after{content:"";position:absolute;top:-40px;right:-40px;width:120px;height:120px;background:radial-gradient(circle,rgba(255,183,3,.22),transparent 70%);border-radius:50%}
+.why-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+.why-ic{
+  width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,var(--primary),var(--secondary));
+  display:flex;align-items:center;justify-content:center;margin-bottom:22px;box-shadow:var(--shadow-sm);
+}
+.why-ic svg{width:32px;height:32px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.why-card h3{font-family:var(--display);font-size:24px;font-weight:700;margin-bottom:10px}
+.why-card p{color:var(--text-muted);font-size:15.5px}
+
+/* ============== HOW TO ORDER ============== */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;position:relative}
+.steps::before{content:"";position:absolute;top:38px;left:16%;right:16%;height:2px;background:repeating-linear-gradient(90deg,var(--secondary) 0 10px,transparent 10px 20px);z-index:0}
+.step{text-align:center;position:relative;z-index:1}
+.step-num{
+  width:76px;height:76px;margin:0 auto 22px;border-radius:50%;background:var(--bg);
+  border:2px solid var(--primary);display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);font-size:32px;font-weight:800;color:var(--primary);box-shadow:var(--shadow-sm);
+  transition:.3s;
+}
+.step:hover .step-num{background:var(--primary);color:#fff}
+.step h3{font-family:var(--display);font-size:22px;font-weight:700;margin-bottom:8px}
+.step p{color:var(--text-muted);font-size:15px;max-width:280px;margin:0 auto}
+
+/* ============== TESTIMONIALS ============== */
+.testi{background:var(--surface)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.bubble{
+  background:var(--bg);border-radius:20px;padding:28px;position:relative;
+  box-shadow:var(--shadow-sm);border:1px solid rgba(107,94,82,.08);transition:transform .35s ease,box-shadow .35s ease;
+}
+.bubble:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+.bubble .stars{color:var(--secondary);font-size:16px;letter-spacing:2px;margin-bottom:14px}
+.bubble .quote{font-size:16px;line-height:1.65;color:var(--text);margin-bottom:22px}
+.bubble .quote b{background:linear-gradient(transparent 60%,rgba(255,183,3,.45) 60%)}
+.bubble .who{display:flex;align-items:center;gap:13px}
+.bubble .who img{width:46px;height:46px;border-radius:50%;object-fit:cover}
+.bubble .who .name{font-weight:700;font-size:15px}
+.bubble .who .role{font-size:13px;color:var(--text-muted)}
+
+/* ============== PROMO ============== */
+.promo-sec{padding:90px 0}
+.promo{
+  background:linear-gradient(120deg,var(--primary) 0%,#F77F00 55%,var(--secondary) 130%);
+  border-radius:28px;padding:56px;color:#fff;position:relative;overflow:hidden;text-align:center;
+  box-shadow:var(--shadow-lg);
+}
+.promo::before,.promo::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.12)}
+.promo::before{width:240px;height:240px;top:-90px;left:-70px}
+.promo::after{width:180px;height:180px;bottom:-70px;right:-50px}
+.promo-inner{position:relative;z-index:1}
+.promo .tagline{display:inline-block;background:rgba(0,0,0,.18);font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;padding:7px 16px;border-radius:var(--radius-pill);margin-bottom:18px}
+.promo h2{font-family:var(--display);font-size:46px;font-weight:900;line-height:1.08;margin-bottom:12px;letter-spacing:-1px}
+.promo p{font-size:18px;opacity:.95;max-width:520px;margin:0 auto 30px}
+.countdown{display:flex;gap:14px;justify-content:center;margin-bottom:32px;flex-wrap:wrap}
+.cd-box{background:rgba(0,0,0,.22);border-radius:16px;padding:16px 20px;min-width:84px;backdrop-filter:blur(4px)}
+.cd-box .num{font-family:var(--display);font-size:42px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.cd-box .lbl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.85;margin-top:6px}
+.promo .btn-claim{background:#fff;color:var(--primary);font-size:18px;padding:17px 40px}
+.promo .btn-claim:hover{background:var(--text);color:#fff;transform:scale(1.04)}
+
+/* ============== LOKASI ============== */
+.loc-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:stretch}
+.loc-map{border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow-md);min-height:380px;border:1px solid rgba(107,94,82,.1)}
+.loc-map iframe{width:100%;height:100%;min-height:380px;border:0;display:block;filter:saturate(1.1)}
+.hours{display:flex;flex-direction:column;gap:0;margin:24px 0 28px}
+.hours-row{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px dashed rgba(107,94,82,.22)}
+.hours-row .day{font-weight:600;display:flex;align-items:center;gap:10px}
+.hours-row .day .pin{width:8px;height:8px;border-radius:50%;background:var(--secondary)}
+.hours-row.today{color:var(--primary);font-weight:700}
+.hours-row .time{font-variant-numeric:tabular-nums;color:var(--text-muted)}
+.hours-row.today .time{color:var(--primary)}
+.contact-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.contact-chip{display:flex;align-items:center;gap:9px;background:var(--surface);border:1px solid rgba(107,94,82,.12);padding:11px 18px;border-radius:var(--radius-pill);font-weight:600;font-size:14px;transition:.25s}
+.contact-chip:hover{background:var(--primary);color:#fff;transform:translateY(-2px)}
+.contact-chip svg{width:18px;height:18px}
+
+/* ============== FOOTER ============== */
+footer{background:var(--text);color:rgba(255,255,255,.72);padding:64px 0 28px}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px;margin-bottom:44px}
+footer .logo{color:#fff;margin-bottom:14px}
+.foot-about p{max-width:320px;font-size:15px}
+.foot-socials{display:flex;gap:12px;margin-top:20px}
+.foot-socials a{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;transition:.3s}
+.foot-socials a:hover{background:var(--primary);transform:translateY(-3px)}
+.foot-socials svg{width:19px;height:19px;fill:#fff}
+.foot-col h4{color:#fff;font-size:15px;font-weight:700;margin-bottom:18px;letter-spacing:.02em}
+.foot-col a{display:block;padding:7px 0;font-size:14.5px;transition:color .25s,padding-left .25s}
+.foot-col a:hover{color:var(--secondary);padding-left:5px}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:13.5px}
+.foot-bottom a{color:var(--secondary)}
+
+/* ============== REVEAL ANIMATION ============== */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}
+.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}
+
+/* ============== RESPONSIVE ============== */
+@media (max-width:1024px){
+  .menu-grid{grid-template-columns:repeat(2,1fr)}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .hero h1{font-size:58px}
+}
+@media (max-width:768px){
+  .nav-links{display:none}
+  .nav-cta .btn{display:none}
+  .burger{display:flex}
+  .section-pad{padding:68px 0}
+  .h2,.promo h2{font-size:31px}
+  .hero h1{font-size:43px;letter-spacing:-1px}
+  .hero p.sub{font-size:17px}
+  .why-grid,.steps,.testi-grid,.loc-grid,.foot-grid{grid-template-columns:1fr}
+  .steps::before{display:none}
+  .promo{padding:40px 24px}
+  .loc-map iframe{min-height:300px}
+  .hero-stats{gap:20px}
+  .hero-stats .stat strong{font-size:25px}
+  .foot-bottom{justify-content:center;text-align:center}
+}
+@media (max-width:480px){
+  .menu-grid{grid-template-columns:1fr}
+  .hero h1{font-size:38px}
+  .cd-box{min-width:70px;padding:13px 14px}
+  .cd-box .num{font-size:34px}
+  .wrap{padding:0 20px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ========== NAVBAR ========== -->
+<nav class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#hero" class="logo">Roti<span class="dot">.</span>Remah</a>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#why">About</a></li>
+      <li><a href="#lokasi">Lokasi</a></li>
+      <li><a href="#promo">Order</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="https://wa.me/6281234567890?text=Halo%20Roti%20Remah,%20mau%20order%20dong!" class="btn btn-primary btn-sm">Order Sekarang</a>
+      <button class="burger" id="burger" aria-label="Buka menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- mobile menu -->
+<div class="overlay" id="overlay"></div>
+<aside class="mobile-menu" id="mobileMenu">
+  <button class="menu-close" id="menuClose" aria-label="Tutup menu">&times;</button>
+  <a href="#menu">Menu</a>
+  <a href="#why">About</a>
+  <a href="#how">Cara Order</a>
+  <a href="#lokasi">Lokasi</a>
+  <a href="#promo">Promo</a>
+  <a href="https://wa.me/6281234567890?text=Halo%20Roti%20Remah,%20mau%20order%20dong!" class="btn btn-primary btn-block">Order Sekarang</a>
+</aside>
+
+<!-- ========== HERO ========== -->
+<header class="hero" id="hero">
+  <div class="hero-bg" id="heroBg">
+    <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1400&q=80" alt="Roti artisan baru keluar oven di Roti Remah" />
+  </div>
+  <div class="hero-overlay"></div>
+  <canvas id="particles"></canvas>
+
+  <div class="wrap hero-content">
+    <span class="hero-badge">🔥 Freshly Baked Daily</span>
+    <h1>Roti yang Bikin <span class="accent">Kamu Balik</span> Lagi.</h1>
+    <p class="sub">Renyah di luar, lembut di dalam, wangi baru keluar oven. Tempat nongkrong baru kamu yang harganya pelajar friendly — beneran.</p>
+    <div class="hero-actions">
+      <a href="https://wa.me/6281234567890?text=Halo%20Roti%20Remah,%20mau%20order%20dong!" class="btn btn-primary">Order Sekarang 🥐</a>
+      <a href="#menu" class="btn btn-secondary">Lihat Menu</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><strong>2.000+</strong><span>Pelanggan muda</span></div>
+      <div class="divider"></div>
+      <div class="stat"><strong>4,9★</strong><span>Dari 870 review</span></div>
+      <div class="divider"></div>
+      <div class="stat"><strong>06.00</strong><span>Oven mulai panas</span></div>
+    </div>
+  </div>
+
+  <a href="#proof" class="scroll-ind" aria-label="Scroll ke bawah">
+    <div class="mouse"></div>
+    <span>Scroll</span>
+  </a>
+</header>
+
+<!-- ========== SOCIAL PROOF MARQUEE ========== -->
+<section class="proof" id="proof">
+  <div class="marquee" id="marquee">
+    <div class="track">
+      <span class="item"><span class="star">★★★★★</span> Rating 4,9 dari 870 review</span>
+      <span class="item"><span class="ic">👥</span> Dipercaya 2.000+ pelanggan muda</span>
+      <span class="item"><span class="ic">🥖</span> Baru keluar oven tiap pagi</span>
+      <span class="item"><span class="ic">📍</span> Featured di @JajanJogja</span>
+      <span class="item"><span class="ic">🌾</span> 100% bahan lokal pilihan</span>
+      <span class="item"><span class="ic">💛</span> Harga pelajar friendly</span>
+    </div>
+    <div class="track" aria-hidden="true">
+      <span class="item"><span class="star">★★★★★</span> Rating 4,9 dari 870 review</span>
+      <span class="item"><span class="ic">👥</span> Dipercaya 2.000+ pelanggan muda</span>
+      <span class="item"><span class="ic">🥖</span> Baru keluar oven tiap pagi</span>
+      <span class="item"><span class="ic">📍</span> Featured di @JajanJogja</span>
+      <span class="item"><span class="ic">🌾</span> 100% bahan lokal pilihan</span>
+      <span class="item"><span class="ic">💛</span> Harga pelajar friendly</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MENU HIGHLIGHT ========== -->
+<section class="section-pad" id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="reveal">
+        <span class="eyebrow">Yang Paling Hits</span>
+        <h2 class="h2" style="margin-top:14px">Menu favorit yang<br>selalu ludes duluan.</h2>
+      </div>
+      <p class="lead reveal d1">Empat bintang utama dapur kami. Sekali coba, dijamin kamu bakal punya “menu andalan” baru.</p>
+    </div>
+
+    <div class="menu-grid">
+      <!-- 1 -->
+      <article class="card reveal">
+        <div class="card-img">
+          <span class="card-tag tag-best">Best Seller</span>
+          <img loading="lazy" src="https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=800&q=80" alt="Sourdough renyah Roti Remah" />
+        </div>
+        <div class="card-body">
+          <h3>Sourdough Renyah</h3>
+          <p class="desc">Kerak garing, dalemnya lembut kenyal. Difermentasi 24 jam, asemnya pas.</p>
+          <div class="card-foot">
+            <span class="price">28k</span>
+            <a href="https://wa.me/6281234567890?text=Mau%20order%20Sourdough%20Renyah" class="btn btn-dark btn-sm">Order</a>
+          </div>
+        </div>
+      </article>
+      <!-- 2 -->
+      <article class="card reveal d1">
+        <div class="card-img">
+          <span class="card-tag tag-hot">🔥 Hot</span>
+          <img loading="lazy" src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800&q=80" alt="Roti cokelat lumer Roti Remah" />
+        </div>
+        <div class="card-body">
+          <h3>Choco Lava Bun</h3>
+          <p class="desc">Roti empuk isi cokelat lumer yang meleleh pas digigit. Bahaya kalau lagi lapar.</p>
+          <div class="card-foot">
+            <span class="price">22k</span>
+            <a href="https://wa.me/6281234567890?text=Mau%20order%20Choco%20Lava%20Bun" class="btn btn-dark btn-sm">Order</a>
+          </div>
+        </div>
+      </article>
+      <!-- 3 -->
+      <article class="card reveal d2">
+        <div class="card-img">
+          <span class="card-tag tag-new">New</span>
+          <img loading="lazy" src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=800&q=80" alt="Toast alpukat Roti Remah" />
+        </div>
+        <div class="card-body">
+          <h3>Avo Smash Toast</h3>
+          <p class="desc">Toast hangat, alpukat creamy, taburan wijen. Sarapan estetik buat feed kamu.</p>
+          <div class="card-foot">
+            <span class="price">26k</span>
+            <a href="https://wa.me/6281234567890?text=Mau%20order%20Avo%20Smash%20Toast" class="btn btn-dark btn-sm">Order</a>
+          </div>
+        </div>
+      </article>
+      <!-- 4 -->
+      <article class="card reveal d3">
+        <div class="card-img">
+          <span class="card-tag tag-best">Best Seller</span>
+          <img loading="lazy" src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80" alt="Croissant mentega Roti Remah" />
+        </div>
+        <div class="card-body">
+          <h3>Butter Croissant</h3>
+          <p class="desc">Berlapis-lapis, wangi mentega, “kresss” di gigitan pertama. Teman kopi sejati.</p>
+          <div class="card-foot">
+            <span class="price">18k <small>24k</small></span>
+            <a href="https://wa.me/6281234567890?text=Mau%20order%20Butter%20Croissant" class="btn btn-dark btn-sm">Order</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WHY US ========== -->
+<section class="section-pad why" id="why">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="reveal">
+        <span class="eyebrow">Kenapa Harus Sini?</span>
+        <h2 class="h2" style="margin-top:14px">Bukan sekadar roti,<br>tapi alasan buat balik lagi.</h2>
+      </div>
+      <p class="lead reveal d1">Tiga hal kecil yang bikin kami beda — dan bikin kamu nagih.</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-ic">
+          <svg viewBox="0 0 24 24"><path d="M12 2v3M5 11a7 7 0 0 1 14 0c0 4-3 6-7 10-4-4-7-6-7-10Z"/><path d="M9 11a3 3 0 0 1 6 0"/></svg>
+        </div>
+        <h3>Fresh Tiap Hari</h3>
+        <p>Oven nyala dari jam 6 pagi. Yang kamu beli hari ini ya dibikin hari ini juga — no roti kemarin.</p>
+      </div>
+      <div class="why-card reveal d1">
+        <div class="why-ic">
+          <svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg>
+        </div>
+        <h3>Bahan Lokal Pilihan</h3>
+        <p>Tepung, telur, sampai mentega dari produsen lokal. Dukung yang dekat, rasanya juga lebih jujur.</p>
+      </div>
+      <div class="why-card reveal d2">
+        <div class="why-ic">
+          <svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h3>Harga Pelajar Friendly</h3>
+        <p>Mulai 18 ribuan udah dapet roti artisan beneran. Worth it tanpa bikin dompet nangis.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== HOW TO ORDER ========== -->
+<section class="section-pad" id="how">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:54px" class="reveal">
+      <span class="eyebrow" style="justify-content:center">Gampang Banget</span>
+      <h2 class="h2" style="margin-top:14px">Tiga langkah, roti<br>nyampe di tangan.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <h3>Pilih Favoritmu</h3>
+        <p>Scroll menu di atas, tentuin mana yang bikin perut bunyi duluan.</p>
+      </div>
+      <div class="step reveal d1">
+        <div class="step-num">2</div>
+        <h3>Order via WA</h3>
+        <p>Tap tombol order, chat langsung jalan. Bayar gampang, ga ribet.</p>
+      </div>
+      <div class="step reveal d2">
+        <div class="step-num">3</div>
+        <h3>Terima &amp; Santap</h3>
+        <p>Ambil di toko atau diantar. Masih hangat pas sampe — janji.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TESTIMONIALS ========== -->
+<section class="section-pad testi" id="testi">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:50px" class="reveal">
+      <span class="eyebrow" style="justify-content:center">Kata Mereka</span>
+      <h2 class="h2" style="margin-top:14px">Yang udah coba,<br>susah berhenti.</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="bubble reveal">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"Udah coba 10 toko roti, yang ini <b>beda banget rasanya</b>. Sourdough-nya beneran kress, ga lebay."</p>
+        <div class="who">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&q=80" alt="Foto Nadia" />
+          <div><div class="name">Nadia P.</div><div class="role">Mahasiswa · 20 th</div></div>
+        </div>
+      </div>
+      <div class="bubble reveal d1">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"Choco lava-nya <b>lumer parah</b> 😭 langsung jadi tempat nongkrong tetap aku sama temen-temen abis kelas."</p>
+        <div class="who">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&q=80" alt="Foto Raka" />
+          <div><div class="name">Raka A.</div><div class="role">Anak SMA · 17 th</div></div>
+        </div>
+      </div>
+      <div class="bubble reveal d2">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"Harga 18k dapet croissant sekelas ini? <b>Gokil sih worth it banget.</b> Aesthetic buat konten juga."</p>
+        <div class="who">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=120&q=80" alt="Foto Dimas" />
+          <div><div class="name">Dimas R.</div><div class="role">Content creator · 23 th</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PROMO ========== -->
+<section class="promo-sec" id="promo">
+  <div class="wrap">
+    <div class="promo reveal">
+      <div class="promo-inner">
+        <span class="tagline">⏰ Promo hari ini aja!</span>
+        <h2>Jangan Sampe Kehabisan.</h2>
+        <p>Croissant &amp; sourdough diskon spesial buat 50 order pertama hari ini. Begitu timer abis, balik harga normal.</p>
+        <div class="countdown" id="countdown" aria-label="Hitung mundur promo">
+          <div class="cd-box"><div class="num" id="cd-h">00</div><div class="lbl">Jam</div></div>
+          <div class="cd-box"><div class="num" id="cd-m">00</div><div class="lbl">Menit</div></div>
+          <div class="cd-box"><div class="num" id="cd-s">00</div><div class="lbl">Detik</div></div>
+        </div>
+        <a href="https://wa.me/6281234567890?text=Mau%20klaim%20promo%20Roti%20Remah%20hari%20ini!" class="btn btn-claim">Klaim Sekarang 🎉</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== LOKASI ========== -->
+<section class="section-pad" id="lokasi">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="reveal">
+        <span class="eyebrow">Mampir Yuk</span>
+        <h2 class="h2" style="margin-top:14px">Kita kesini yuk —<br>tempatnya nyaman buat nongkrong.</h2>
+      </div>
+      <p class="lead reveal d1">Buka tiap hari dari pagi sampe malam. Wangi rotinya kecium dari depan, beneran.</p>
+    </div>
+
+    <div class="loc-grid">
+      <div class="loc-map reveal">
+        <iframe
+          title="Lokasi Roti Remah"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=Malioboro,Yogyakarta&output=embed">
+        </iframe>
+      </div>
+
+      <div class="reveal d1">
+        <h3 style="font-family:var(--display);font-size:26px;font-weight:700;margin-bottom:6px">Jam Buka</h3>
+        <div class="hours" id="hours">
+          <div class="hours-row" data-day="1"><span class="day"><span class="pin"></span>Senin – Jumat</span><span class="time">06.00 – 21.00</span></div>
+          <div class="hours-row" data-day="6"><span class="day"><span class="pin"></span>Sabtu</span><span class="time">06.00 – 22.00</span></div>
+          <div class="hours-row" data-day="0"><span class="day"><span class="pin"></span>Minggu</span><span class="time">07.00 – 21.00</span></div>
+        </div>
+
+        <h3 style="font-family:var(--display);font-size:26px;font-weight:700;margin-bottom:14px">Sapa Kami</h3>
+        <div class="contact-row">
+          <a href="https://wa.me/6281234567890" class="contact-chip">
+            <svg viewBox="0 0 24 24" fill="#25D366"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.1.3.7 1.1 1.4 1.7.9.8 1.6 1.1 1.9 1.2.2.1.4.1.5-.1l.7-.8c.2-.2.3-.2.5-.1l1.8.9c.2.1.4.2.4.3.1.2.1.7 0 1.3Z"/></svg>
+            WhatsApp
+          </a>
+          <a href="https://instagram.com" class="contact-chip">
+            <svg viewBox="0 0 24 24" fill="#E1306C"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.1.4.3 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.1-1 .3-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.1-.4-.3-1-.4-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.1 1-.3 2.2-.4 1.3-.1 1.7-.1 4.9-.1Zm0 5.1a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4Zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm6-7.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0Z"/></svg>
+            @rotiremah
+          </a>
+        </div>
+        <a href="https://wa.me/6281234567890?text=Halo%20Roti%20Remah!" class="btn btn-primary btn-block">Hubungi Kami →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-about">
+        <div class="logo">Roti<span class="dot">.</span>Remah</div>
+        <p>Toko roti artisan lokal yang bikin kamu balik lagi. Baru keluar oven tiap hari, harga pelajar friendly.</p>
+        <div class="foot-socials">
+          <a href="https://instagram.com" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.1.4.3 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.1-1 .3-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.1-.4-.3-1-.4-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.1 1-.3 2.2-.4 1.3-.1 1.7-.1 4.9-.1Zm0 5.1a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4Zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm6-7.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0Z"/></svg></a>
+          <a href="https://tiktok.com" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M16.5 3a5.4 5.4 0 0 0 3.8 1.6v3.1a8.5 8.5 0 0 1-3.8-.9v6.6A6 6 0 1 1 9 7.6v3.2a2.9 2.9 0 1 0 2 2.7V3h3.5Z"/></svg></a>
+          <a href="https://wa.me/6281234567890" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.1.3.7 1.1 1.4 1.7.9.8 1.6 1.1 1.9 1.2.2.1.4.1.5-.1l.7-.8c.2-.2.3-.2.5-.1l1.8.9c.2.1.4.2.4.3.1.2.1.7 0 1.3Z"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Jelajah</h4>
+        <a href="#menu">Menu</a>
+        <a href="#why">About</a>
+        <a href="#how">Cara Order</a>
+        <a href="#lokasi">Lokasi</a>
+      </div>
+      <div class="foot-col">
+        <h4>Order</h4>
+        <a href="https://wa.me/6281234567890">WhatsApp</a>
+        <a href="https://instagram.com">Instagram DM</a>
+        <a href="#promo">Promo Hari Ini</a>
+        <a href="#menu">Pesan Sekarang</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Roti Remah. Dibikin dengan 🧡 &amp; mentega di Yogyakarta.</span>
+      <span>Lapar? <a href="https://wa.me/6281234567890">Order sekarang →</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ========== NAVBAR scroll state ========== */
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+/* ========== MOBILE MENU ========== */
+const burger = document.getElementById('burger');
+const mobileMenu = document.getElementById('mobileMenu');
+const overlay = document.getElementById('overlay');
+const menuClose = document.getElementById('menuClose');
+const toggleMenu = (open) => {
+  mobileMenu.classList.toggle('open', open);
+  overlay.classList.toggle('show', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+};
+burger.addEventListener('click', () => toggleMenu(true));
+menuClose.addEventListener('click', () => toggleMenu(false));
+overlay.addEventListener('click', () => toggleMenu(false));
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+
+/* ========== HERO PARALLAX (rAF, ringan) ========== */
+const heroBg = document.getElementById('heroBg');
+let ticking = false;
+function parallax(){
+  const y = window.scrollY;
+  if (y < window.innerHeight){
+    heroBg.style.transform = 'translateY(' + (y * 0.35) + 'px)';
+  }
+  ticking = false;
+}
+window.addEventListener('scroll', () => {
+  if (!ticking){ requestAnimationFrame(parallax); ticking = true; }
+}, {passive:true});
+
+/* ========== FLOATING BREADCRUMB PARTICLES ========== */
+(function(){
+  const canvas = document.getElementById('particles');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let w, h, particles = [];
+  const COUNT = 18;
+  function resize(){
+    const hero = document.getElementById('hero');
+    w = canvas.width = hero.offsetWidth;
+    h = canvas.height = hero.offsetHeight;
+  }
+  function make(){
+    particles = [];
+    for (let i=0;i<COUNT;i++){
+      particles.push({
+        x: Math.random()*w,
+        y: Math.random()*h,
+        r: Math.random()*2.6 + 1,
+        sx: (Math.random()-0.5)*0.25,
+        sy: -(Math.random()*0.35 + 0.12),
+        a: Math.random()*0.4 + 0.25
+      });
+    }
+  }
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    for (const p of particles){
+      p.x += p.sx; p.y += p.sy;
+      if (p.y < -10){ p.y = h + 10; p.x = Math.random()*w; }
+      if (p.x < -10) p.x = w+10;
+      if (p.x > w+10) p.x = -10;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(255,183,3,' + p.a + ')';
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  resize(); make();
+  window.addEventListener('resize', () => { resize(); make(); });
+  if (!reduce) draw();
+})();
+
+/* ========== SECTION REVEAL ========== */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+}, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ========== COUNTDOWN (24 jam, persist via localStorage) ========== */
+(function(){
+  const KEY = 'rotiremah_promo_deadline';
+  let deadline = Number(localStorage.getItem(KEY));
+  if (!deadline || deadline < Date.now()){
+    deadline = Date.now() + 24*60*60*1000;
+    localStorage.setItem(KEY, deadline);
+  }
+  const hEl = document.getElementById('cd-h');
+  const mEl = document.getElementById('cd-m');
+  const sEl = document.getElementById('cd-s');
+  const pad = n => String(n).padStart(2,'0');
+  function tick(){
+    let diff = Math.max(0, deadline - Date.now());
+    const h = Math.floor(diff/3.6e6);
+    const m = Math.floor((diff%3.6e6)/6e4);
+    const s = Math.floor((diff%6e4)/1000);
+    hEl.textContent = pad(h); mEl.textContent = pad(m); sEl.textContent = pad(s);
+    if (diff <= 0){
+      deadline = Date.now() + 24*60*60*1000;
+      localStorage.setItem(KEY, deadline);
+    }
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+
+/* ========== HIGHLIGHT JAM BUKA HARI INI ========== */
+(function(){
+  const today = new Date().getDay(); // 0=Minggu
+  document.querySelectorAll('#hours .hours-row').forEach(row => {
+    const d = row.dataset.day;
+    const match = (d === '1' && today >= 1 && today <= 5) || Number(d) === today;
+    if (match) row.classList.add('today');
+  });
+})();
+</script>
+</body>
+</html>
