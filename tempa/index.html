@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GRAUNG TEMPA — Knalpot Custom Handmade. Ditempa, Bukan Sekadar Dipasang.</title>
+<meta name="description" content="Knalpot custom handmade premium. Ditempa tangan, material stainless & titanium, suara ngebass garang. Garansi suara. Order custom sekarang via WhatsApp." />
+
+<!-- ============================================================
+     GOOGLE FONTS
+     Display: Oswald (industrial, condensed, bold)
+     Body:    Inter (clean, readable)
+============================================================ -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
+
+/* ============================================================
+   DESIGN TOKENS — Industrial Premium (Dark + Fire Accent)
+============================================================ */
+:root{
+  --bg:        #0D0D0D;
+  --surface:   #1A1A1A;
+  --surface-2: #242424;
+  --accent:    #FF4500;   /* api / power */
+  --glow:      #FF6B35;   /* glow effect */
+  --amber:     #FFA500;   /* heat */
+  --metal:     #C0C0C0;   /* chrome */
+  --text:      #F5F5F5;
+  --muted:     #999999;
+  --border:    #2E2E2E;
+
+  --radius: 4px;
+  --maxw: 1180px;
+  --fire-grad: linear-gradient(135deg, #FF4500 0%, #FFA500 100%);
+  --shadow-fire: 0 14px 40px -10px rgba(255,69,0,.5);
+
+  /* type scale */
+  --fs-hero: clamp(48px, 9vw, 80px);
+  --fs-h2:   clamp(32px, 5.5vw, 48px);
+  --fs-h3:   22px;
+  --fs-body: 16px;
+}
+
+/* ============================================================ RESET / BASE ============================================================ */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:var(--fs-body);line-height:1.7;
+  color:var(--text);background:var(--bg);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+h1,h2,h3,h4,.display{font-family:'Oswald',sans-serif;letter-spacing:.01em;line-height:1.04;font-weight:700;text-transform:uppercase}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+ul{list-style:none}
+section{padding:96px 0;position:relative}
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+.label{
+  font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--accent);
+  display:inline-flex;align-items:center;gap:10px;
+}
+.label::before{content:"";width:26px;height:2px;background:var(--fire-grad)}
+
+.sec-head{max-width:720px;margin-bottom:60px}
+.sec-head h2{font-size:var(--fs-h2);margin:16px 0 14px}
+.sec-head h2 .fire{color:var(--accent)}
+.sec-head p{color:var(--muted);font-size:17px}
+
+.mono{font-family:'JetBrains Mono',monospace}
+
+/* ============================================================ BUTTONS ============================================================ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:'Oswald',sans-serif;font-weight:600;font-size:16px;letter-spacing:.06em;text-transform:uppercase;
+  padding:15px 30px;border-radius:var(--radius);border:2px solid transparent;cursor:pointer;
+  transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s,background .25s,color .25s;min-height:48px;
+}
+.btn-fire{background:var(--fire-grad);color:#fff;box-shadow:var(--shadow-fire)}
+.btn-fire:hover{transform:scale(1.05);box-shadow:0 18px 50px -8px rgba(255,69,0,.7)}
+.btn-outline{background:transparent;color:var(--text);border-color:var(--border)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px)}
+
+/* ============================================================ NAVBAR ============================================================ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;padding:16px 0;transition:background .35s,border-color .35s,padding .35s,box-shadow .35s;border-bottom:1px solid transparent}
+.nav.scrolled{background:rgba(10,10,10,.92);backdrop-filter:blur(12px);border-color:var(--border);padding:10px 0;box-shadow:0 6px 30px rgba(0,0,0,.5)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between}
+.brand{font-family:'Oswald';font-weight:700;font-size:24px;letter-spacing:.04em;text-transform:uppercase;display:flex;align-items:center;gap:10px;color:#fff}
+.brand .spark{width:30px;height:30px;display:grid;place-items:center;background:var(--fire-grad);border-radius:var(--radius);box-shadow:0 0 18px rgba(255,69,0,.6)}
+.brand .spark svg{width:18px;height:18px}
+.brand b{color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:34px}
+.nav-links a.lnk{font-family:'Oswald';font-weight:500;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+.nav-links a.lnk:hover{color:var(--text)}
+.nav .btn{padding:11px 22px;font-size:14px}
+.burger{display:none;background:none;border:none;cursor:pointer;padding:8px;z-index:70}
+.burger span{display:block;width:26px;height:2.5px;background:var(--text);margin:5px 0;transition:.3s;border-radius:2px}
+.burger.x span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+.burger.x span:nth-child(2){opacity:0}
+.burger.x span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+
+/* ============================================================ HERO ============================================================ */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:120px 0 80px}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;filter:grayscale(.25) contrast(1.05)}
+.hero-bg::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(105deg, rgba(13,13,13,.96) 0%, rgba(13,13,13,.78) 45%, rgba(13,13,13,.45) 100%),
+             linear-gradient(0deg, var(--bg) 2%, transparent 40%)}
+/* SIGNATURE: heat shimmer / glow keluar dari ujung knalpot */
+.heat{position:absolute;z-index:1;right:6%;bottom:24%;width:300px;height:300px;pointer-events:none;
+  background:radial-gradient(circle, rgba(255,69,0,.55) 0%, rgba(255,107,53,.25) 35%, transparent 70%);
+  filter:blur(22px);animation:shimmer 3.4s ease-in-out infinite}
+.heat.b{right:14%;bottom:18%;width:180px;height:180px;animation-delay:-1.4s;opacity:.8}
+@keyframes shimmer{0%,100%{transform:scale(1) translateY(0);opacity:.55}50%{transform:scale(1.18) translateY(-14px);opacity:.95}}
+
+.hero .wrap{position:relative;z-index:2}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(26,26,26,.7);border:1px solid var(--border);
+  padding:8px 16px;border-radius:var(--radius);font-size:13px;font-weight:600;letter-spacing:.04em;margin-bottom:24px;backdrop-filter:blur(6px)}
+.hero h1{font-size:var(--fs-hero);max-width:14ch;margin:8px 0 20px}
+.hero h1 .fire{color:var(--accent);text-shadow:0 0 40px rgba(255,69,0,.5)}
+.hero p.sub{font-size:19px;color:#cfcfcf;max-width:540px;margin-bottom:34px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+.scroll-ind{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--muted);font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-family:'Oswald'}
+.scroll-ind .mouse{width:24px;height:38px;border:2px solid var(--border);border-radius:14px;display:flex;justify-content:center;padding-top:6px}
+.scroll-ind .mouse i{width:3px;height:8px;background:var(--accent);border-radius:2px;animation:wheel 1.6s infinite}
+@keyframes wheel{0%{opacity:0;transform:translateY(-4px)}40%{opacity:1}100%{opacity:0;transform:translateY(10px)}}
+
+/* ============================================================ TRUST BAR ============================================================ */
+.trust{padding:0;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.trust-top{display:flex;align-items:center;justify-content:center;gap:38px;flex-wrap:wrap;padding:26px 28px;border-bottom:1px solid var(--border)}
+.trust-item{display:flex;align-items:center;gap:11px;font-size:14px;color:var(--muted)}
+.trust-item b{color:var(--text);font-family:'Oswald';font-size:22px;font-weight:700;letter-spacing:.02em}
+.trust-item .stars{color:var(--amber);letter-spacing:2px;font-size:16px}
+.trust-item svg{width:22px;height:22px;color:var(--accent)}
+.marquee{overflow:hidden;padding:16px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee-track{display:flex;gap:46px;width:max-content;animation:scroll-x 26s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee-track span{font-family:'Oswald';font-weight:600;font-size:18px;letter-spacing:.05em;text-transform:uppercase;color:#5a5a5a;display:flex;align-items:center;gap:46px;white-space:nowrap}
+.marquee-track span::after{content:"●";color:var(--accent);font-size:9px}
+@keyframes scroll-x{to{transform:translateX(-50%)}}
+
+/* ============================================================ PRODUCT SHOWCASE ============================================================ */
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.prod-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;position:relative;
+  transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s,border-color .3s}
+.prod-card::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--fire-grad);transform:scaleX(0);transform-origin:left;transition:transform .35s;box-shadow:0 0 18px rgba(255,69,0,.7)}
+.prod-card:hover{transform:translateY(-8px);border-color:#3a3a3a;box-shadow:0 24px 50px -20px rgba(0,0,0,.8)}
+.prod-card:hover::after{transform:scaleX(1)}
+.prod-media{position:relative;aspect-ratio:4/3;overflow:hidden;background:#000}
+.prod-media img{width:100%;height:100%;object-fit:cover;filter:contrast(1.08) brightness(.92);transition:transform .5s}
+.prod-card:hover .prod-media img{transform:scale(1.07)}
+.prod-tag{position:absolute;top:12px;left:12px;font-family:'Oswald';font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:5px 11px;border-radius:var(--radius)}
+.prod-tag.best{background:var(--fire-grad);color:#fff;box-shadow:0 0 16px rgba(255,69,0,.5)}
+.prod-tag.new{background:var(--metal);color:#111}
+.prod-body{padding:22px}
+.prod-body h3{font-size:var(--fs-h3);margin-bottom:6px}
+.prod-spec{display:flex;flex-direction:column;gap:7px;margin:14px 0 18px}
+.prod-spec li{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--muted)}
+.prod-spec li svg{width:16px;height:16px;color:var(--accent);flex-shrink:0}
+.prod-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--border);padding-top:16px}
+.prod-price{font-family:'Oswald';font-weight:700;font-size:24px;color:var(--text)}
+.prod-price small{display:block;font-size:11px;color:var(--muted);font-weight:400;letter-spacing:.05em}
+.prod-foot .btn{padding:10px 20px;font-size:13px}
+
+/* ============================================================ CRAFTSMANSHIP ============================================================ */
+.craft-grid{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center}
+.craft-media{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)}
+.craft-media img{width:100%;aspect-ratio:4/5;object-fit:cover;filter:contrast(1.05)}
+.craft-media .ember{position:absolute;inset:0;background:radial-gradient(circle at 70% 80%, rgba(255,69,0,.3), transparent 55%);pointer-events:none}
+.craft-media .stat{position:absolute;left:18px;bottom:18px;background:rgba(13,13,13,.85);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;backdrop-filter:blur(6px)}
+.craft-media .stat b{font-family:'Oswald';font-size:30px;color:var(--accent);display:block;line-height:1}
+.craft-media .stat span{font-size:12px;color:var(--muted);letter-spacing:.05em}
+.craft-copy h2{font-size:var(--fs-h2);margin:16px 0 20px}
+.craft-copy h2 .fire{color:var(--accent)}
+.craft-copy>p{color:var(--muted);font-size:16.5px;margin-bottom:26px}
+.craft-list{display:flex;flex-direction:column;gap:18px}
+.craft-list li{display:flex;gap:15px}
+.craft-list .ic{width:42px;height:42px;flex-shrink:0;border:1px solid var(--border);border-radius:var(--radius);display:grid;place-items:center;color:var(--accent);background:var(--surface)}
+.craft-list .ic svg{width:21px;height:21px}
+.craft-list b{font-family:'Oswald';font-size:17px;letter-spacing:.03em;text-transform:uppercase;display:block;margin-bottom:2px}
+.craft-list p{font-size:14.5px;color:var(--muted)}
+
+/* ============================================================ WHY US ============================================================ */
+.why{background:var(--surface)}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.why-card{background:var(--bg);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:var(--radius);padding:30px 24px;transition:transform .3s,box-shadow .3s}
+.why-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px -18px rgba(255,69,0,.4)}
+.why-card .ic{width:54px;height:54px;border-radius:var(--radius);background:rgba(255,69,0,.1);display:grid;place-items:center;color:var(--accent);margin-bottom:20px}
+.why-card .ic svg{width:27px;height:27px}
+.why-card h3{font-size:18px;letter-spacing:.03em;margin-bottom:10px}
+.why-card p{font-size:14px;color:var(--muted)}
+
+/* ============================================================ SOUND / SPEC ============================================================ */
+.sound-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:50px;align-items:center}
+.wave{display:flex;align-items:center;gap:6px;height:140px;margin:30px 0}
+.wave i{flex:1;background:var(--fire-grad);border-radius:3px;animation:eq 1.1s ease-in-out infinite;opacity:.9}
+@keyframes eq{0%,100%{height:18%}50%{height:100%}}
+.sound-copy h2{font-size:var(--fs-h2);margin:16px 0 18px}
+.sound-copy h2 .fire{color:var(--accent)}
+.sound-copy p{color:var(--muted);margin-bottom:20px}
+.spec-chips{display:flex;flex-wrap:wrap;gap:10px}
+.spec-chips span{font-family:'JetBrains Mono';font-size:12.5px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:8px 13px;color:var(--metal)}
+.spec-chips span b{color:var(--accent)}
+.spec-table{width:100%;border-collapse:collapse;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;font-size:14px}
+.spec-table th,.spec-table td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border)}
+.spec-table thead th{font-family:'Oswald';text-transform:uppercase;letter-spacing:.06em;font-size:13px;background:var(--surface);color:var(--text)}
+.spec-table thead th:first-child{color:var(--muted)}
+.spec-table tbody td{color:var(--muted)}
+.spec-table tbody td:first-child{font-family:'Oswald';color:var(--text);text-transform:uppercase;font-size:13.5px;letter-spacing:.03em}
+.spec-table .hl{color:var(--accent);font-family:'JetBrains Mono';font-weight:700}
+.spec-table tr:last-child td{border-bottom:none}
+
+/* ============================================================ GALLERY ============================================================ */
+.gal-grid{columns:3;column-gap:16px}
+.gal-item{position:relative;margin-bottom:16px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);cursor:pointer;break-inside:avoid;display:block;width:100%}
+.gal-item img{width:100%;display:block;transition:transform .5s;filter:contrast(1.05)}
+.gal-item:hover img{transform:scale(1.08)}
+.gal-item .ov{position:absolute;inset:0;background:linear-gradient(0deg,rgba(13,13,13,.92),transparent 55%);opacity:0;transition:.35s;display:flex;align-items:flex-end;padding:18px}
+.gal-item:hover .ov{opacity:1}
+.gal-item .ov b{font-family:'Oswald';font-size:16px;letter-spacing:.04em;text-transform:uppercase}
+.gal-item .ov b span{display:block;color:var(--accent);font-size:11px;letter-spacing:.12em}
+
+/* lightbox */
+.lightbox{position:fixed;inset:0;z-index:100;background:rgba(5,5,5,.95);display:none;align-items:center;justify-content:center;padding:24px}
+.lightbox.open{display:flex}
+.lightbox img{max-width:92vw;max-height:88vh;border-radius:var(--radius);border:1px solid var(--border)}
+.lightbox .close{position:absolute;top:22px;right:26px;background:none;border:none;color:#fff;font-size:34px;cursor:pointer;font-family:'Oswald'}
+
+/* ============================================================ TESTIMONIALS ============================================================ */
+.tst-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.tst-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:30px;display:flex;flex-direction:column;gap:18px;position:relative}
+.tst-card::before{content:"";position:absolute;top:0;left:0;width:46px;height:3px;background:var(--fire-grad)}
+.tst-card .stars{color:var(--amber);letter-spacing:2px;font-size:15px}
+.tst-card p{font-size:15.5px;color:#d4d4d4;flex:1}
+.tst-person{display:flex;align-items:center;gap:13px;border-top:1px solid var(--border);padding-top:18px}
+.tst-person .av{width:46px;height:46px;border-radius:var(--radius);background:var(--fire-grad);display:grid;place-items:center;font-family:'Oswald';font-weight:700;font-size:18px;color:#fff;flex-shrink:0}
+.tst-person b{font-family:'Oswald';font-size:16px;letter-spacing:.03em;text-transform:uppercase;display:block}
+.tst-person small{color:var(--muted);font-size:13px}
+
+/* ============================================================ ORDER CTA ============================================================ */
+.order{padding:0}
+.order-inner{position:relative;overflow:hidden;border-radius:var(--radius);margin:0 28px;border:1px solid var(--border)}
+.order-bg{position:absolute;inset:0;z-index:0}
+.order-bg img{width:100%;height:100%;object-fit:cover;filter:grayscale(.3)}
+.order-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(13,13,13,.95) 30%,rgba(255,69,0,.35) 100%)}
+.order-content{position:relative;z-index:1;text-align:center;max-width:680px;margin:0 auto;padding:80px 28px}
+.urgency{display:inline-flex;align-items:center;gap:9px;background:rgba(255,69,0,.14);border:1px solid rgba(255,69,0,.4);padding:8px 17px;border-radius:var(--radius);font-size:13.5px;font-weight:600;margin-bottom:24px}
+.urgency .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(255,69,0,.25);animation:pls 1.8s infinite}
+@keyframes pls{50%{box-shadow:0 0 0 9px rgba(255,69,0,0)}}
+.order-content h2{font-size:var(--fs-h2);margin-bottom:16px}
+.order-content h2 .fire{color:var(--accent)}
+.order-content p{color:#d4d4d4;font-size:18px;margin-bottom:30px}
+.order-content .btn{font-size:18px;padding:18px 38px}
+.order-badges{display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:26px;color:var(--muted);font-size:13px}
+.order-badges span{display:flex;align-items:center;gap:8px}
+.order-badges svg{width:18px;height:18px;color:var(--amber)}
+
+/* ============================================================ FAQ ============================================================ */
+.faq-wrap{max-width:800px;margin:0 auto}
+.faq-item{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);margin-bottom:12px;overflow:hidden;transition:border-color .3s}
+.faq-item.open{border-color:var(--accent)}
+.faq-q{width:100%;background:none;border:none;cursor:pointer;color:var(--text);text-align:left;
+  padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-family:'Oswald';font-weight:600;font-size:17px;letter-spacing:.02em;text-transform:uppercase;min-height:48px}
+.faq-q .pm{position:relative;width:24px;height:24px;flex-shrink:0}
+.faq-q .pm::before,.faq-q .pm::after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--accent);transition:.3s}
+.faq-q .pm::before{width:14px;height:2px}.faq-q .pm::after{width:2px;height:14px}
+.faq-item.open .pm::after{transform:translate(-50%,-50%) rotate(90deg);opacity:0}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
+.faq-a p{padding:0 24px 22px;color:var(--muted);font-size:15px}
+
+/* ============================================================ FOOTER ============================================================ */
+.footer{background:var(--surface);border-top:1px solid var(--border);padding:60px 0 30px}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer .brand{margin-bottom:16px}
+.footer-grid p.tag{color:var(--muted);font-size:14.5px;max-width:34ch}
+.footer h4{font-family:'Oswald';font-size:15px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;color:var(--text)}
+.footer ul li{margin-bottom:11px}
+.footer ul li a{color:var(--muted);font-size:14.5px;transition:color .2s;display:inline-flex;align-items:center;gap:9px}
+.footer ul li a:hover{color:var(--accent)}
+.footer ul li a svg{width:16px;height:16px}
+.footer .copy{border-top:1px solid var(--border);padding-top:24px;text-align:center;color:#666;font-size:13px}
+
+/* ============================================================ WHATSAPP FLOAT ============================================================ */
+.wa-float{position:fixed;right:22px;bottom:22px;z-index:80;width:58px;height:58px;border-radius:50%;background:#25D366;
+  display:grid;place-items:center;box-shadow:0 8px 30px rgba(37,211,102,.5);transition:transform .25s}
+.wa-float:hover{transform:scale(1.1)}
+.wa-float::before{content:"";position:absolute;inset:0;border-radius:50%;background:#25D366;animation:wa 2s infinite;z-index:-1}
+@keyframes wa{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.8);opacity:0}}
+.wa-float svg{width:30px;height:30px;fill:#fff}
+
+/* ============================================================ SCROLL REVEAL ============================================================ */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ============================================================ RESPONSIVE ============================================================ */
+@media(max-width:980px){
+  .prod-grid,.tst-grid{grid-template-columns:repeat(2,1fr)}
+  .why-grid{grid-template-columns:repeat(2,1fr)}
+  .craft-grid,.sound-grid{grid-template-columns:1fr;gap:40px}
+  .gal-grid{columns:2}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+  section{padding:64px 0}
+  .nav-links{position:fixed;inset:0;flex-direction:column;justify-content:center;gap:30px;
+    background:rgba(8,8,8,.98);backdrop-filter:blur(8px);transform:translateX(100%);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+  .nav-links.show{transform:none}
+  .nav-links a.lnk{font-size:24px}
+  .nav-links .btn{font-size:18px;padding:14px 32px}
+  .burger{display:block}
+  .trust-top{gap:22px}
+  .footer-grid{grid-template-columns:1fr;gap:30px}
+}
+@media(max-width:520px){
+  .wrap{padding:0 20px}
+  .prod-grid,.tst-grid,.why-grid{grid-template-columns:1fr}
+  .gal-grid{columns:1}
+  .hero-cta{flex-direction:column;align-items:stretch}
+  .hero-cta .btn{width:100%}
+  .order-inner{margin:0 16px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ NAVBAR ============================================================ -->
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" class="brand">
+      <span class="spark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg></span>
+      GRAUNG<b>TEMPA</b>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a class="lnk" href="#produk">Produk</a>
+      <a class="lnk" href="#galeri">Galeri</a>
+      <a class="lnk" href="#keunggulan">Keunggulan</a>
+      <a class="lnk" href="#order">Order</a>
+      <a class="btn btn-fire" href="https://wa.me/6281234567890?text=Halo%20GRAUNG%20TEMPA,%20saya%20mau%20order%20knalpot%20custom">Order Sekarang</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<span id="top"></span>
+
+<!-- ============================================================ HERO ============================================================ -->
+<header class="hero">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=1400&q=80" alt="Knalpot custom motor dramatic" fetchpriority="high" />
+  </div>
+  <!-- SIGNATURE: heat shimmer dari ujung knalpot -->
+  <div class="heat"></div>
+  <div class="heat b"></div>
+
+  <div class="wrap">
+    <span class="hero-badge reveal">🔥 Handmade • Garansi Suara</span>
+    <h1 class="reveal">Ditempa,<br>Bukan Sekadar <span class="fire">Dipasang.</span></h1>
+    <p class="sub reveal">Knalpot custom hasil tempaan tangan. Material premium, suara ngebass yang garang, dan finishing yang bikin motormu beda di jalan. Bukan pabrikan massal — ini buatan bengkel yang bangga sama tiap lasannya.</p>
+    <div class="hero-cta reveal">
+      <a href="#order" class="btn btn-fire">Order Sekarang
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#galeri" class="btn btn-outline">Lihat Galeri</a>
+    </div>
+  </div>
+
+  <div class="scroll-ind"><span class="mouse"><i></i></span>Scroll</div>
+</header>
+
+<!-- ============================================================ TRUST BAR ============================================================ -->
+<div class="trust">
+  <div class="trust-top">
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+      Dipercaya <b>500+</b> Rider
+    </div>
+    <div class="trust-item"><span class="stars">★★★★★</span><b>4.9</b>&nbsp;dari 312 review</div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 5-3.5 7.5-8.5 9C7.5 19.5 4 17 4 12V6l8-3 8 3z"/></svg>
+      Garansi Suara Resmi
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-3V4a1 1 0 00-1-1H4a1 1 0 00-1 1v11h2"/><circle cx="7.5" cy="17.5" r="2.5"/><path d="M10 17h5"/><circle cx="17.5" cy="17.5" r="2.5"/><path d="M17 7l3 4v4h-2"/></svg>
+      Kirim Seluruh Indonesia
+    </div>
+  </div>
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>CB150R<i></i></span><span>Vixion<i></i></span><span>R15<i></i></span><span>Ninja 250<i></i></span><span>CBR150<i></i></span><span>GSX-R150<i></i></span><span>Aerox<i></i></span><span>NMAX<i></i></span><span>Scoopy<i></i></span><span>Verza<i></i></span><span>Tiger Revo<i></i></span><span>RX-King<i></i></span>
+      <span>CB150R<i></i></span><span>Vixion<i></i></span><span>R15<i></i></span><span>Ninja 250<i></i></span><span>CBR150<i></i></span><span>GSX-R150<i></i></span><span>Aerox<i></i></span><span>NMAX<i></i></span><span>Scoopy<i></i></span><span>Verza<i></i></span><span>Tiger Revo<i></i></span><span>RX-King<i></i></span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ PRODUCT SHOWCASE ============================================================ -->
+<section id="produk">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">Lini Produk</span>
+      <h2>Pilih <span class="fire">Karakter</span> Suaramu.</h2>
+      <p>Tiap series punya tipe suara dan tampang sendiri. Mau yang ngebass kalem buat harian atau yang garang buat trek — semua ditempa satu per satu.</p>
+    </div>
+    <div class="prod-grid">
+      <!-- 1 -->
+      <article class="prod-card reveal">
+        <div class="prod-media">
+          <span class="prod-tag best">Best Seller</span>
+          <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&q=80" alt="Knalpot Series Underbelly" loading="lazy" />
+        </div>
+        <div class="prod-body">
+          <h3>Series Underbelly</h3>
+          <ul class="prod-spec">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Bahan Stainless SUS304 tebal 1.2mm</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Suara deep, ngebass, kalem di RPM bawah</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>PNP — plug and play, tinggal pasang</li>
+          </ul>
+          <div class="prod-foot">
+            <div class="prod-price">Rp 1.250.000<small>Sudah termasuk DB killer</small></div>
+            <a href="https://wa.me/6281234567890?text=Order%20Series%20Underbelly" class="btn btn-fire">Order</a>
+          </div>
+        </div>
+      </article>
+      <!-- 2 -->
+      <article class="prod-card reveal">
+        <div class="prod-media">
+          <span class="prod-tag new">New Series</span>
+          <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&q=80" alt="Knalpot Full System Racing" loading="lazy" />
+        </div>
+        <div class="prod-body">
+          <h3>Full System Racing</h3>
+          <ul class="prod-spec">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Pipa + silencer satu set, bobot ringan</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Suara crispy garang, nendang di putaran atas</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Dongkrak respon tarikan mesin</li>
+          </ul>
+          <div class="prod-foot">
+            <div class="prod-price">Rp 1.950.000<small>Custom sesuai motor</small></div>
+            <a href="https://wa.me/6281234567890?text=Order%20Full%20System%20Racing" class="btn btn-fire">Order</a>
+          </div>
+        </div>
+      </article>
+      <!-- 3 -->
+      <article class="prod-card reveal">
+        <div class="prod-media">
+          <img src="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?w=800&q=80" alt="Knalpot Titanium Series" loading="lazy" />
+        </div>
+        <div class="prod-body">
+          <h3>Titanium Burnt Series</h3>
+          <ul class="prod-spec">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Full titanium, finishing burnt warna pelangi</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Suara khas titanium — kering &amp; berkelas</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Anti karat, paling ringan di kelasnya</li>
+          </ul>
+          <div class="prod-foot">
+            <div class="prod-price">Rp 3.400.000<small>Limited handmade</small></div>
+            <a href="https://wa.me/6281234567890?text=Order%20Titanium%20Burnt%20Series" class="btn btn-fire">Order</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ CRAFTSMANSHIP ============================================================ -->
+<section id="craft">
+  <div class="wrap">
+    <div class="craft-grid">
+      <div class="craft-media reveal">
+        <img src="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?w=800&q=80" alt="Proses handmade knalpot di workshop" loading="lazy" />
+        <span class="ember"></span>
+        <div class="stat"><b>7+</b><span>Tahun menempa knalpot</span></div>
+      </div>
+      <div class="craft-copy reveal">
+        <span class="label">Setiap Knalpot Punya Cerita</span>
+        <h2>Ditempa Tangan, <span class="fire">Bukan Mesin Pabrik.</span></h2>
+        <p>Tiap unit kami kerjakan langsung di bengkel — dipotong, dilas, dan disetel satu per satu. Nggak ada yang keluar workshop sebelum suaranya kami dengar sendiri dan lasannya kami pastikan rapi. Buat kami, knalpot bukan sekadar pipa. Itu identitas motormu.</p>
+        <ul class="craft-list">
+          <li>
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 7l-1.5-1.5a2 2 0 00-3 0L4 11l9 9 5.5-5.5a2 2 0 000-3z"/><path d="M9 12l3 3"/></svg></span>
+            <div><b>Lasan Tangan Rapi</b><p>Pengelasan TIG presisi, dirapikan manual sampai mulus tanpa cela.</p></div>
+          </li>
+          <li>
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6 4.5 2.3 7.1L12 16.5 5.7 21l2.3-7.1-6-4.5h7.6z"/></svg></span>
+            <div><b>Material Premium</b><p>Stainless SUS304 sampai titanium asli — bukan plat kaleng abal-abal.</p></div>
+          </li>
+          <li>
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l2-7 4 14 2-7h4"/></svg></span>
+            <div><b>Quality Control Suara</b><p>Tiap knalpot disetel sampai karakter suaranya pas — deep, crispy, sesuai pesanan.</p></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ WHY US ============================================================ -->
+<section id="keunggulan" class="why">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">Kenapa Pilih Kami</span>
+      <h2>Alasan Rider <span class="fire">Balik Lagi.</span></h2>
+      <p>Bukan cuma jual knalpot. Kami jamin hasilnya nempel di motormu dan kedengeran beda di jalan.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6 4.5 2.3 7.1L12 16.5 5.7 21l2.3-7.1-6-4.5h7.6z"/></svg></span>
+        <h3>Bahan Premium</h3>
+        <p>Stainless SUS304 &amp; titanium asli. Tahan panas, anti karat, awet bertahun-tahun.</p>
+      </div>
+      <div class="why-card reveal">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l2-7 4 14 2-7h4"/><path d="M19 12h2"/></svg></span>
+        <h3>Suara Khas</h3>
+        <p>Karakter ngebass &amp; crispy yang bikin orang nengok. Bisa request sesuai selera.</p>
+      </div>
+      <div class="why-card reveal">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 5-3.5 7.5-8.5 9C7.5 19.5 4 17 4 12V6l8-3 8 3z"/></svg></span>
+        <h3>Garansi Suara</h3>
+        <p>Nggak puas sama suaranya? Kami setel ulang sampai pas. Itu janji bengkel.</p>
+      </div>
+      <div class="why-card reveal">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg></span>
+        <h3>PNP — Plug &amp; Play</h3>
+        <p>Dibikin presisi sesuai dudukan motormu. Datang tinggal pasang, langsung jadi.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ SOUND / SPEC ============================================================ -->
+<section id="spek">
+  <div class="wrap">
+    <div class="sound-grid">
+      <div class="sound-copy reveal">
+        <span class="label">Bukan Cuma Tampang</span>
+        <h2>Spek yang <span class="fire">Ngomong.</span></h2>
+        <p>Suara garang itu hasil hitungan, bukan kebetulan. Diameter pipa, ketebalan bahan, dan desain sekat — semua ngaruh ke karakter suara dan performa. Ini yang kami racik buat tiap series.</p>
+        <!-- animated sound wave -->
+        <div class="wave" id="wave" aria-hidden="true"></div>
+        <div class="spec-chips">
+          <span>Material: <b>SUS304 / Titanium</b></span>
+          <span>Tebal pipa: <b>1.2 – 1.5mm</b></span>
+          <span>Diameter: <b>2.0" – 2.5"</b></span>
+          <span>DB Killer: <b>Bisa lepas-pasang</b></span>
+        </div>
+      </div>
+      <div class="reveal">
+        <table class="spec-table">
+          <thead>
+            <tr><th>Tipe</th><th>Material</th><th>Karakter Suara</th><th>Bobot</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Underbelly</td><td>Stainless 304</td><td>Deep / Ngebass</td><td class="hl">2.1 kg</td></tr>
+            <tr><td>Full Racing</td><td>Stainless 304</td><td>Crispy / Garang</td><td class="hl">1.8 kg</td></tr>
+            <tr><td>Titanium Burnt</td><td>Titanium</td><td>Kering / Berkelas</td><td class="hl">1.3 kg</td></tr>
+          </tbody>
+        </table>
+        <p style="color:var(--muted);font-size:13.5px;margin-top:16px" class="mono">// Semua angka hasil ukur unit produksi. Custom diameter & suara tersedia by request.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ GALLERY ============================================================ -->
+<section id="galeri">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">Hasil di Motor Pelanggan</span>
+      <h2>Udah Nempel di <span class="fire">Jalanan.</span></h2>
+      <p>Bukan render, bukan mockup. Ini knalpot kami yang udah terpasang di motor rider asli. Klik buat lihat detailnya.</p>
+    </div>
+    <div class="gal-grid reveal">
+      <button class="gal-item" data-full="https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=1400&q=80">
+        <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800&q=80" alt="Knalpot custom terpasang" loading="lazy" />
+        <span class="ov"><b><span>Sport 150cc</span>Series Underbelly</b></span>
+      </button>
+      <button class="gal-item" data-full="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=1400&q=80">
+        <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&q=80" alt="Knalpot di motor full bike" loading="lazy" />
+        <span class="ov"><b><span>Naked Bike</span>Full System Racing</b></span>
+      </button>
+      <button class="gal-item" data-full="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=1400&q=80">
+        <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&q=80" alt="Detail knalpot craftsmanship" loading="lazy" />
+        <span class="ov"><b><span>Detail Lasan</span>Titanium Burnt</b></span>
+      </button>
+      <button class="gal-item" data-full="https://images.unsplash.com/photo-1449426468159-d96dbf800f1d?w=1400&q=80">
+        <img src="https://images.unsplash.com/photo-1449426468159-d96dbf800f1d?w=800&q=80" alt="Rider lifestyle dengan knalpot custom" loading="lazy" />
+        <span class="ov"><b><span>Daily Ride</span>Underbelly Stainless</b></span>
+      </button>
+      <button class="gal-item" data-full="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?w=1400&q=80">
+        <img src="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?w=800&q=80" alt="Proses workshop knalpot" loading="lazy" />
+        <span class="ov"><b><span>Behind The Build</span>Workshop GRAUNG</b></span>
+      </button>
+      <button class="gal-item" data-full="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=1400&q=80">
+        <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&q=80" alt="Knalpot racing terpasang" loading="lazy" />
+        <span class="ov"><b><span>Trek Harian</span>Full Racing 250</b></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ TESTIMONIALS ============================================================ -->
+<section id="testi">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">Kata Rider</span>
+      <h2>Yang Udah <span class="fire">Ngerasain.</span></h2>
+      <p>Review jujur dari rider yang motornya udah pakai knalpot tempaan kami.</p>
+    </div>
+    <div class="tst-grid">
+      <div class="tst-card reveal">
+        <span class="stars">★★★★★</span>
+        <p>"Suaranya deep banget, tetangga sampe nengok pas gas pagi-pagi. Lasannya rapi, finishing-nya kayak pabrikan mahal. Worth it parah buat harga segini."</p>
+        <div class="tst-person">
+          <span class="av">RP</span>
+          <span><b>Rizky Pratama</b><small>CB150R Streetfire</small></span>
+        </div>
+      </div>
+      <div class="tst-card reveal">
+        <span class="stars">★★★★★</span>
+        <p>"Pesen Full Racing buat Ninja, PNP beneran tinggal pasang nggak perlu ngakalin. Tarikan kerasa lebih enteng, suaranya crispy garang pas digeber. Mantap bengkelnya."</p>
+        <div class="tst-person">
+          <span class="av">AS</span>
+          <span><b>Andika Surya</b><small>Ninja 250 FI</small></span>
+        </div>
+      </div>
+      <div class="tst-card reveal">
+        <span class="stars">★★★★★</span>
+        <p>"Awalnya ragu order online, takut suara nggak sesuai. Ternyata malah dikasih video tes suara dulu sebelum dikirim. Pelayanan craftsman beneran, bukan jualan asal."</p>
+        <div class="tst-person">
+          <span class="av">DW</span>
+          <span><b>Dimas Wibowo</b><small>Yamaha R15 V3</small></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ ORDER CTA ============================================================ -->
+<section class="order" id="order">
+  <div class="order-inner reveal">
+    <div class="order-bg"><img src="https://images.unsplash.com/photo-1449426468159-d96dbf800f1d?w=1400&q=80" alt="Rider dengan motor custom" loading="lazy" /></div>
+    <div class="order-content">
+      <span class="urgency"><span class="dot"></span>Slot custom terbatas — sisa 8 antrian bulan ini</span>
+      <h2>Siap Upgrade <span class="fire">Motormu?</span></h2>
+      <p>Chat langsung bengkelnya. Ceritain motor &amp; selera suaramu, kami racikkan knalpot yang pas — ditempa khusus buat kamu.</p>
+      <a href="https://wa.me/6281234567890?text=Halo%20GRAUNG%20TEMPA,%20saya%20mau%20pesan%20knalpot%20custom" class="btn btn-fire">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zM6.597 20.13c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.513 5.26l-.999 3.648 3.984-1.087z"/></svg>
+        Order Sekarang via WhatsApp
+      </a>
+      <div class="order-badges">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 5-3.5 7.5-8.5 9C7.5 19.5 4 17 4 12V6l8-3 8 3z"/></svg>Garansi Suara</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-3V4H3v11h2"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/><path d="M17 7l3 4v4"/></svg>Kirim Se-Indonesia</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg>Handmade 100%</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ FAQ ============================================================ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal" style="text-align:center;margin-left:auto;margin-right:auto">
+      <span class="label" style="justify-content:center">FAQ</span>
+      <h2>Masih <span class="fire">Ragu?</span></h2>
+    </div>
+    <div class="faq-wrap reveal">
+      <div class="faq-item">
+        <button class="faq-q">PNP atau perlu custom dulu?<span class="pm"></span></button>
+        <div class="faq-a"><p>Mayoritas tipe sudah PNP (plug and play) sesuai dudukan motormu — tinggal pasang, nggak perlu ngelas atau ngakalin bracket. Kalau motormu udah dimodif atau ada request khusus, tinggal kasih tahu detailnya, kami buatkan custom sesuai ukuran.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Legal nggak buat harian?<span class="pm"></span></button>
+        <div class="faq-a"><p>Semua knalpot kami dilengkapi DB killer yang bisa lepas-pasang. Dengan DB killer terpasang, volume jauh lebih senyap dan aman buat pemakaian harian. Buat suara maksimal tinggal dilepas. Kami sarankan tetap bijak sesuai aturan di daerahmu.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Garansinya gimana?<span class="pm"></span></button>
+        <div class="faq-a"><p>Kami kasih garansi suara dan garansi lasan. Kalau suara nggak sesuai ekspektasi atau ada cacat las dari kami, setel ulang atau perbaikan gratis. Material premium kami juga anti karat, jadi awet bertahun-tahun kalau dirawat normal.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Pengiriman ke luar kota aman?<span class="pm"></span></button>
+        <div class="faq-a"><p>Aman. Kami kirim ke seluruh Indonesia dengan packing kayu/bubble berlapis biar produk sampai mulus tanpa lecet. Sebelum dikirim, tiap unit kami foto dan kirimkan video tes suaranya ke kamu dulu.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Cara order-nya gimana?<span class="pm"></span></button>
+        <div class="faq-a"><p>Gampang. Klik tombol WhatsApp di halaman ini, sebutin tipe motor dan series yang kamu mau (atau ceritain selera suaramu). Kami bantu pilihkan, kasih harga final + ongkir, lalu masuk antrian produksi. Begitu jadi, langsung dikirim.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ FOOTER ============================================================ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="#top" class="brand">
+          <span class="spark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg></span>
+          GRAUNG<b>TEMPA</b>
+        </a>
+        <p class="tag">Knalpot custom handmade buat rider yang ngerti suara, tenaga, dan kualitas tempaan tangan. Ditempa di bengkel, bukan dicetak pabrik.</p>
+      </div>
+      <div>
+        <h4>Navigasi</h4>
+        <ul>
+          <li><a href="#produk">Produk</a></li>
+          <li><a href="#galeri">Galeri</a></li>
+          <li><a href="#keunggulan">Keunggulan</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Kontak</h4>
+        <ul>
+          <li><a href="https://wa.me/6281234567890"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24z"/></svg>WhatsApp: 0812-3456-7890</a></li>
+          <li><a href="https://instagram.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>@graung.tempa</a></li>
+          <li><a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Workshop: Jl. Tempa Raya No.7, Bandung</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="copy">© 2026 GRAUNG TEMPA — Ditempa, Bukan Sekadar Dipasang. Semua hak cipta dilindungi.</p>
+  </div>
+</footer>
+
+<!-- WhatsApp floating button -->
+<a class="wa-float" href="https://wa.me/6281234567890?text=Halo%20GRAUNG%20TEMPA" aria-label="Chat WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zM6.597 20.13c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.513 5.26l-.999 3.648 3.984-1.087zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.149-.174.198-.298.298-.496.099-.198.05-.372-.025-.521-.074-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413z"/></svg>
+</a>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox"><button class="close" id="lbClose" aria-label="Tutup">&times;</button><img id="lbImg" src="" alt="Preview galeri" /></div>
+
+<!-- ============================================================ JAVASCRIPT ============================================================ -->
+<script>
+/* ---- Navbar transparan -> solid ---- */
+const nav=document.getElementById('nav');
+const onScroll=()=>nav.classList.toggle('scrolled',window.scrollY>40);
+onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+/* ---- Hamburger fullscreen ---- */
+const burger=document.getElementById('burger'),navLinks=document.getElementById('navLinks');
+burger.addEventListener('click',()=>{const o=navLinks.classList.toggle('show');burger.classList.toggle('x',o);document.body.style.overflow=o?'hidden':'';});
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('show');burger.classList.remove('x');document.body.style.overflow='';}));
+
+/* ---- scroll offset utk fixed nav ---- */
+document.querySelectorAll('section,#top').forEach(el=>el.style.scrollMarginTop='80px');
+
+/* ---- Reveal on scroll ---- */
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ---- Sound wave bars (generate + randomize tempo) ---- */
+const wave=document.getElementById('wave');
+if(wave){
+  for(let i=0;i<40;i++){
+    const b=document.createElement('i');
+    b.style.animationDuration=(0.7+Math.random()*0.9).toFixed(2)+'s';
+    b.style.animationDelay=(-Math.random()*1).toFixed(2)+'s';
+    b.style.opacity=(0.55+Math.random()*0.45).toFixed(2);
+    wave.appendChild(b);
+  }
+}
+
+/* ---- FAQ accordion ---- */
+document.querySelectorAll('.faq-item').forEach(item=>{
+  const q=item.querySelector('.faq-q'),a=item.querySelector('.faq-a');
+  q.addEventListener('click',()=>{
+    const open=item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(o=>{o.classList.remove('open');o.querySelector('.faq-a').style.maxHeight=null;});
+    if(!open){item.classList.add('open');a.style.maxHeight=a.scrollHeight+'px';}
+  });
+});
+
+/* ---- Gallery lightbox ---- */
+const lb=document.getElementById('lightbox'),lbImg=document.getElementById('lbImg'),lbClose=document.getElementById('lbClose');
+document.querySelectorAll('.gal-item').forEach(g=>g.addEventListener('click',()=>{lbImg.src=g.dataset.full;lb.classList.add('open');document.body.style.overflow='hidden';}));
+const closeLb=()=>{lb.classList.remove('open');document.body.style.overflow='';};
+lbClose.addEventListener('click',closeLb);
+lb.addEventListener('click',e=>{if(e.target===lb)closeLb();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
+</script>
+</body>
+</html>
