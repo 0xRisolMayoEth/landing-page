@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>日本語ラボ — Belajar Kotoba, Kanji &amp; Bunpou</title>
+<meta name="description" content="Belajar bahasa Jepang dari nol: kosakata (kotoba), kanji N5, dan tata bahasa (bunpou) lengkap dengan flashcard, kuis interaktif, dan pelacak progres." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root{
+  --bg:#FAF6EC; --surface:#FFFFFF; --surface-alt:#F4EDDC;
+  --ink:#22201B; --ink-soft:#6B6357; --ink-faint:#9A9384;
+  --accent:#C8372D; --accent-dark:#A32A21; --accent-soft:#F7E4E1;
+  --gold:#C9A227; --gold-soft:#FBF1D6;
+  --green:#2F9E58; --green-soft:#E4F5EA;
+  --wrong:#D64545; --wrong-soft:#FBE6E6;
+  --border:#E7DFCB;
+  --r-lg:20px; --r-md:14px; --r-sm:10px;
+  --shadow-sm:0 4px 16px -6px rgba(34,32,27,.10);
+  --shadow-md:0 20px 46px -18px rgba(34,32,27,.22);
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*,*::before,*::after{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth; overflow-x:hidden; width:100%;}
+body{
+  background:var(--bg); color:var(--ink); font-family:'Inter',system-ui,sans-serif;
+  font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased; overflow-x:hidden; width:100%;
+}
+.jp{font-family:'Noto Sans JP',sans-serif;}
+.display{font-family:'Zen Maru Gothic','Noto Sans JP',sans-serif;}
+a{color:inherit; text-decoration:none;}
+button{font-family:inherit; cursor:pointer; border:none; background:none; color:inherit;}
+ul{list-style:none;}
+img{max-width:100%; display:block;}
+::selection{background:var(--accent); color:#fff;}
+.wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+.hidden{display:none !important;}
+
+/* ================= TOPBAR ================= */
+.topbar{
+  position:sticky; top:0; z-index:50; background:rgba(250,246,236,.9);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.topbar-in{display:flex; align-items:center; justify-content:space-between; gap:12px; height:72px;}
+.brand{display:flex; align-items:center; gap:10px; flex:none;}
+.brand .mark{
+  width:38px; height:38px; border-radius:11px; background:var(--accent); color:#fff;
+  display:flex; align-items:center; justify-content:center; font-family:'Zen Maru Gothic'; font-weight:900; font-size:18px; flex:none;
+}
+.brand .txt{display:flex; flex-direction:column; line-height:1.1;}
+.brand .txt b{font-family:'Zen Maru Gothic'; font-size:16px; font-weight:900;}
+.brand .txt span{font-size:11px; color:var(--ink-faint);}
+
+.tabs{display:flex; gap:4px; background:var(--surface-alt); padding:5px; border-radius:999px; overflow-x:auto; min-width:0; flex:1 1 auto;}
+.tab-btn{
+  padding:9px 18px; border-radius:999px; font-size:14px; font-weight:600; color:var(--ink-soft);
+  white-space:nowrap; transition:background .25s,color .25s;
+}
+.tab-btn.active{background:var(--accent); color:#fff;}
+.tab-btn:not(.active):hover{color:var(--ink); background:#fff;}
+
+.streak-badge{
+  display:flex; align-items:center; gap:7px; background:var(--gold-soft); color:#7A5D0A;
+  padding:8px 14px; border-radius:999px; font-size:13px; font-weight:700; flex:none;
+}
+
+@media(max-width:760px){
+  .brand .txt{display:none;}
+  .streak-badge span.lbl{display:none;}
+  .tab-btn{padding:9px 13px; font-size:13px;}
+  .wrap{padding:0 16px;}
+}
+
+/* ================= SECTION SHELL ================= */
+main{min-height:70vh;}
+.view{padding:48px 0 90px; animation:viewIn .45s var(--ease);}
+@keyframes viewIn{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;}}
+.view-head{margin-bottom:34px;}
+.eyebrow{font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:8px;}
+.view-head h1{font-family:'Zen Maru Gothic'; font-size:clamp(26px,4vw,38px); font-weight:900; letter-spacing:-.01em;}
+.view-head p{color:var(--ink-soft); margin-top:8px; max-width:560px;}
+
+/* ================= DASHBOARD ================= */
+.hero-panel{
+  background:linear-gradient(135deg,var(--accent),var(--accent-dark)); color:#fff;
+  border-radius:24px; padding:40px 36px; margin-bottom:36px; position:relative; overflow:hidden;
+}
+.hero-panel::before{
+  content:"日"; position:absolute; right:-10px; bottom:-42px; font-family:'Noto Sans JP'; font-weight:700;
+  font-size:220px; opacity:.10; line-height:1; pointer-events:none;
+}
+.hero-panel h1{font-family:'Zen Maru Gothic'; font-size:clamp(24px,4vw,34px); font-weight:900; position:relative; z-index:1;}
+.hero-panel p{margin-top:10px; opacity:.92; max-width:520px; position:relative; z-index:1;}
+.hero-stats{display:flex; gap:30px; margin-top:26px; flex-wrap:wrap; position:relative; z-index:1;}
+.hero-stat b{font-family:'Zen Maru Gothic'; font-size:28px; display:block;}
+.hero-stat span{font-size:12.5px; opacity:.85;}
+
+.dash-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+@media(max-width:820px){.dash-grid{grid-template-columns:1fr;}}
+.dash-card{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--r-lg);
+  padding:26px; display:flex; flex-direction:column; gap:14px; transition:transform .3s var(--ease), box-shadow .3s;
+}
+.dash-card:hover{transform:translateY(-4px); box-shadow:var(--shadow-md);}
+.dash-card .dc-top{display:flex; align-items:center; justify-content:space-between;}
+.dc-icon{width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px;}
+.dc-icon.i-kotoba{background:var(--accent-soft); color:var(--accent);}
+.dc-icon.i-kanji{background:var(--gold-soft); color:#8A6A0C;}
+.dc-icon.i-bunpou{background:#E5EEF6; color:#2C6398;}
+.dc-pct{font-family:'Zen Maru Gothic'; font-weight:900; font-size:22px;}
+.dash-card h3{font-size:17px; font-weight:700;}
+.dash-card .dc-meta{font-size:13px; color:var(--ink-faint);}
+.bar-track{height:8px; border-radius:999px; background:var(--surface-alt); overflow:hidden;}
+.bar-fill{height:100%; border-radius:999px; background:var(--accent); transition:width .6s var(--ease);}
+.dash-card.k-kanji .bar-fill{background:#C9A227;}
+.dash-card.k-bunpou .bar-fill{background:#2C6398;}
+.dc-cta{margin-top:auto; align-self:flex-start; font-size:13.5px; font-weight:700; color:var(--accent); display:inline-flex; align-items:center; gap:6px;}
+
+.dash-foot{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-top:34px; padding-top:24px; border-top:1px solid var(--border);}
+.tip-card{font-size:14px; color:var(--ink-soft);}
+.tip-card b{color:var(--ink); font-family:'Noto Sans JP';}
+.reset-link{font-size:13px; color:var(--ink-faint); border-bottom:1px dashed var(--ink-faint);}
+.reset-link:hover{color:var(--wrong); border-color:var(--wrong);}
+
+/* ================= MODE / FILTER BAR ================= */
+.control-row{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:22px;}
+.mode-switch{display:flex; gap:4px; background:var(--surface-alt); padding:4px; border-radius:12px;}
+.mode-btn{padding:9px 16px; border-radius:9px; font-size:13.5px; font-weight:700; color:var(--ink-soft);}
+.mode-btn.active{background:var(--surface); color:var(--accent); box-shadow:var(--shadow-sm);}
+
+.search-box{position:relative; flex:1; max-width:260px; min-width:180px;}
+.search-box input{
+  width:100%; padding:10px 14px 10px 36px; border-radius:10px; border:1px solid var(--border);
+  background:var(--surface); font-size:14px; color:var(--ink);
+}
+.search-box input:focus{outline:none; border-color:var(--accent);}
+.search-box::before{content:"⌕"; position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--ink-faint); font-size:16px;}
+
+.chip-row{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:26px;}
+.chip{
+  padding:8px 15px; border-radius:999px; border:1px solid var(--border); background:var(--surface);
+  font-size:13px; font-weight:600; color:var(--ink-soft); transition:all .2s;
+}
+.chip.active{background:var(--ink); color:#fff; border-color:var(--ink);}
+.chip:not(.active):hover{border-color:var(--accent); color:var(--accent);}
+
+/* ================= FLASHCARD ================= */
+.flash-wrap{max-width:520px; margin:0 auto;}
+.card-scene{perspective:1800px;}
+.flashcard{
+  position:relative; width:100%; height:320px; transform-style:preserve-3d;
+  transition:transform .55s var(--ease); cursor:pointer;
+}
+.flashcard.flipped{transform:rotateY(180deg);}
+.fc-face{
+  position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+  border-radius:24px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:32px; text-align:center; border:1px solid var(--border);
+}
+.fc-front{background:var(--surface); box-shadow:var(--shadow-md);}
+.fc-back{background:var(--ink); color:#fff; transform:rotateY(180deg); border-color:var(--ink);}
+.fc-cat{position:absolute; top:18px; left:20px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint);}
+.fc-star{position:absolute; top:16px; right:18px; font-size:20px; color:var(--border); transition:color .2s, transform .2s;}
+.fc-star.on{color:var(--gold); transform:scale(1.12);}
+.fc-jp{font-family:'Noto Sans JP'; font-weight:700; font-size:clamp(30px,6vw,48px); line-height:1.2;}
+.fc-jp.big{font-size:clamp(64px,10vw,96px);}
+.fc-romaji{margin-top:10px; color:var(--ink-faint); font-size:15px; font-style:italic;}
+.fc-hint{position:absolute; bottom:16px; font-size:12px; color:var(--ink-faint);}
+.fc-meaning{font-size:clamp(19px,3vw,24px); font-weight:700;}
+.fc-sub{margin-top:8px; opacity:.75; font-size:13.5px;}
+.fc-examples{margin-top:18px; display:flex; flex-direction:column; gap:8px; width:100%;}
+.fc-ex-item{background:rgba(255,255,255,.08); border-radius:10px; padding:9px 12px; text-align:left; font-size:13px;}
+.fc-ex-item .jp{font-weight:600;}
+.fc-ex-item .romaji{opacity:.7; font-size:11.5px;}
+.fc-readings{display:flex; gap:22px; margin-top:14px; font-size:13px;}
+.fc-readings b{display:block; font-size:11px; opacity:.7; text-transform:uppercase; letter-spacing:.06em;}
+
+.flash-nav{display:flex; align-items:center; justify-content:center; gap:14px; margin-top:26px;}
+.fnav-btn{
+  width:46px; height:46px; border-radius:50%; background:var(--surface); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center; font-size:18px; transition:border-color .2s, transform .2s;
+}
+.fnav-btn:hover{border-color:var(--accent); transform:translateY(-2px);}
+.fnav-master{
+  padding:12px 24px; border-radius:999px; background:var(--ink); color:#fff; font-weight:700; font-size:14px;
+  display:flex; align-items:center; gap:8px; transition:background .2s, transform .2s;
+}
+.fnav-master.on{background:var(--gold); color:#3d2f04;}
+.fnav-master:hover{transform:translateY(-2px);}
+.flash-progress{text-align:center; margin-top:16px; font-size:13px; color:var(--ink-faint);}
+
+/* ================= QUIZ ================= */
+.quiz-wrap{max-width:560px; margin:0 auto;}
+.quiz-scorebar{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; font-size:13.5px; color:var(--ink-soft); font-weight:600;}
+.quiz-progress-track{height:6px; background:var(--surface-alt); border-radius:999px; overflow:hidden; margin-bottom:26px;}
+.quiz-progress-fill{height:100%; background:var(--accent); border-radius:999px; transition:width .4s var(--ease);}
+.quiz-card{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--r-lg);
+  padding:36px 30px; text-align:center; box-shadow:var(--shadow-sm); margin-bottom:22px;
+}
+.quiz-prompt-label{font-size:12px; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-faint); font-weight:700; margin-bottom:14px;}
+.quiz-prompt{font-family:'Noto Sans JP'; font-weight:700; font-size:clamp(26px,5vw,38px);}
+.quiz-prompt.small{font-family:'Inter'; font-size:20px; font-weight:700;}
+.quiz-options{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+@media(max-width:520px){.quiz-options{grid-template-columns:1fr;}}
+.quiz-opt{
+  padding:16px 18px; border-radius:14px; border:1.5px solid var(--border); background:var(--surface);
+  font-size:15px; font-weight:600; text-align:left; transition:border-color .2s, background .2s, transform .15s;
+}
+.quiz-opt.jp-opt{font-family:'Noto Sans JP'; font-size:18px;}
+.quiz-opt:hover:not(.answered *){border-color:var(--accent);}
+.quiz-opt.correct{background:var(--green-soft); border-color:var(--green); color:#1B6B39;}
+.quiz-opt.wrong{background:var(--wrong-soft); border-color:var(--wrong); color:#9C2A2A;}
+.quiz-opt.disabled{pointer-events:none; opacity:.55;}
+.quiz-next-row{text-align:center; margin-top:8px;}
+.btn{
+  display:inline-flex; align-items:center; gap:8px; padding:13px 26px; border-radius:12px;
+  font-size:14.5px; font-weight:700; transition:transform .25s var(--ease), box-shadow .25s, background .2s;
+}
+.btn-primary{background:var(--accent); color:#fff; box-shadow:0 12px 28px -10px rgba(200,55,45,.5);}
+.btn-primary:hover{transform:translateY(-2px);}
+.btn-ghost{background:var(--surface); border:1px solid var(--border); color:var(--ink);}
+.btn-ghost:hover{border-color:var(--accent); color:var(--accent);}
+
+.quiz-summary{text-align:center; padding:40px 30px;}
+.quiz-summary .qs-emoji{font-size:48px; margin-bottom:10px;}
+.quiz-summary h2{font-family:'Zen Maru Gothic'; font-size:26px; font-weight:900;}
+.quiz-summary .qs-score{font-family:'Zen Maru Gothic'; font-size:42px; font-weight:900; color:var(--accent); margin:12px 0 6px;}
+.quiz-summary p{color:var(--ink-soft); margin-bottom:22px;}
+.quiz-summary .qs-actions{display:flex; gap:12px; justify-content:center; flex-wrap:wrap;}
+.quiz-empty{text-align:center; padding:60px 20px; color:var(--ink-soft);}
+
+/* ================= LIST / GRID VIEW ================= */
+.list-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:14px;}
+.list-item{
+  background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:16px 18px;
+  display:flex; align-items:center; gap:14px; transition:border-color .2s, transform .2s;
+}
+.list-item:hover{border-color:var(--accent); transform:translateY(-2px);}
+.li-jp{font-family:'Noto Sans JP'; font-weight:700; font-size:19px; flex:none; min-width:52px;}
+.li-jp.kanji-char{font-size:26px; text-align:center;}
+.li-body{flex:1; min-width:0;}
+.li-romaji{font-size:11.5px; color:var(--ink-faint); font-style:italic;}
+.li-meaning{font-size:13.5px; color:var(--ink-soft); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.li-star{font-size:19px; color:var(--border); flex:none; transition:color .2s, transform .2s;}
+.li-star.on{color:var(--gold); transform:scale(1.1);}
+.empty-state{text-align:center; padding:60px 20px; color:var(--ink-faint);}
+
+/* ================= BUNPOU ACCORDION ================= */
+.bp-list{display:flex; flex-direction:column; gap:14px;}
+.bp-item{background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow:hidden; transition:border-color .2s;}
+.bp-item.open{border-color:var(--accent);}
+.bp-head{display:flex; align-items:center; gap:16px; padding:18px 22px; }
+.bp-num{font-family:'Zen Maru Gothic'; font-weight:900; color:var(--accent-soft); font-size:22px; -webkit-text-stroke:1px var(--accent); flex:none; width:34px;}
+.bp-head-text{flex:1; min-width:0;}
+.bp-title{font-weight:700; font-size:15.5px;}
+.bp-pattern{font-family:'Noto Sans JP'; font-size:13.5px; color:var(--ink-soft); margin-top:2px;}
+.bp-star{font-size:19px; color:var(--border); flex:none; transition:color .2s;}
+.bp-star.on{color:var(--gold);}
+.bp-chevron{transition:transform .3s var(--ease); color:var(--ink-faint); flex:none;}
+.bp-item.open .bp-chevron{transform:rotate(180deg);}
+.bp-body{max-height:0; overflow:hidden; transition:max-height .4s var(--ease);}
+.bp-body-in{padding:0 22px 22px;}
+.bp-block-label{font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); margin:14px 0 6px;}
+.bp-block-label:first-child{margin-top:0;}
+.bp-explain{font-size:14.5px; color:var(--ink-soft);}
+.bp-ex{background:var(--surface-alt); border-radius:10px; padding:12px 14px; margin-bottom:8px;}
+.bp-ex .jp{font-family:'Noto Sans JP'; font-weight:600; font-size:15.5px;}
+.bp-ex .romaji{font-size:12px; color:var(--ink-faint); font-style:italic; margin-top:2px;}
+.bp-ex .mean{font-size:13px; color:var(--ink-soft); margin-top:4px;}
+.bp-actions{display:flex; align-items:center; gap:10px; margin-top:16px; flex-wrap:wrap;}
+.bp-quiz-box{margin-top:14px; background:var(--surface-alt); border-radius:12px; padding:16px;}
+.bp-quiz-q{font-family:'Noto Sans JP'; font-size:15.5px; font-weight:600; margin-bottom:12px;}
+.bp-quiz-opts{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+@media(max-width:480px){.bp-quiz-opts{grid-template-columns:1fr;}}
+.bp-quiz-opt{padding:10px 12px; border-radius:9px; border:1.5px solid var(--border); background:var(--surface); font-family:'Noto Sans JP'; font-size:14px; font-weight:600; text-align:left;}
+.bp-quiz-opt.correct{background:var(--green-soft); border-color:var(--green);}
+.bp-quiz-opt.wrong{background:var(--wrong-soft); border-color:var(--wrong);}
+.bp-quiz-opt.disabled{pointer-events:none; opacity:.6;}
+.small-btn{font-size:12.5px; font-weight:700; padding:8px 14px; border-radius:8px; background:var(--surface-alt); color:var(--ink-soft);}
+.small-btn:hover{background:var(--accent-soft); color:var(--accent);}
+
+/* ================= FOOTER ================= */
+footer{border-top:1px solid var(--border); padding:34px 0; margin-top:40px;}
+.footer-in{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; font-size:13px; color:var(--ink-faint);}
+.footer-in b{color:var(--ink-soft); font-family:'Noto Sans JP';}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important; transition-duration:.001ms !important;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-in">
+    <a href="#" class="brand" data-tab="beranda">
+      <span class="mark">日</span>
+      <span class="txt"><b>日本語ラボ</b><span>Nihongo Lab</span></span>
+    </a>
+    <nav class="tabs" id="tabNav">
+      <button class="tab-btn active" data-tab="beranda">Beranda</button>
+      <button class="tab-btn" data-tab="kotoba">Kotoba</button>
+      <button class="tab-btn" data-tab="kanji">Kanji</button>
+      <button class="tab-btn" data-tab="bunpou">Bunpou</button>
+    </nav>
+    <div class="streak-badge">🔥 <span id="streakCount">0</span> <span class="lbl">hari beruntun</span></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ BERANDA ============ -->
+  <section class="view" id="view-beranda">
+    <div class="hero-panel">
+      <h1>おかえりなさい！ Selamat datang kembali.</h1>
+      <p>Terus konsisten belajar kotoba (kosakata), kanji, dan bunpou (tata bahasa) dasar level N5. Sedikit demi sedikit, lama-lama jadi bukit — 塵も積もれば山となる。</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><b id="statKotobaCount">0/0</b><span>Kotoba dihafal</span></div>
+        <div class="hero-stat"><b id="statKanjiCount">0/0</b><span>Kanji dihafal</span></div>
+        <div class="hero-stat"><b id="statBunpouCount">0/0</b><span>Bunpou dipahami</span></div>
+        <div class="hero-stat"><b id="statAccuracy">—</b><span>Akurasi kuis</span></div>
+      </div>
+    </div>
+
+    <div class="dash-grid">
+      <div class="dash-card k-kotoba">
+        <div class="dc-top"><span class="dc-icon i-kotoba">言</span><span class="dc-pct" id="pctKotoba">0%</span></div>
+        <h3>Kotoba</h3>
+        <p class="dc-meta"><span id="metaKotoba">0 / 0</span> kata sudah dihafal</p>
+        <div class="bar-track"><div class="bar-fill" id="barKotoba" style="width:0%"></div></div>
+        <button class="dc-cta" data-tab="kotoba">Lanjutkan belajar →</button>
+      </div>
+      <div class="dash-card k-kanji">
+        <div class="dc-top"><span class="dc-icon i-kanji">字</span><span class="dc-pct" id="pctKanji">0%</span></div>
+        <h3>Kanji</h3>
+        <p class="dc-meta"><span id="metaKanji">0 / 0</span> kanji sudah dihafal</p>
+        <div class="bar-track"><div class="bar-fill" id="barKanji" style="width:0%"></div></div>
+        <button class="dc-cta" data-tab="kanji">Lanjutkan belajar →</button>
+      </div>
+      <div class="dash-card k-bunpou">
+        <div class="dc-top"><span class="dc-icon i-bunpou">文</span><span class="dc-pct" id="pctBunpou">0%</span></div>
+        <h3>Bunpou</h3>
+        <p class="dc-meta"><span id="metaBunpou">0 / 0</span> pola sudah dipahami</p>
+        <div class="bar-track"><div class="bar-fill" id="barBunpou" style="width:0%"></div></div>
+        <button class="dc-cta" data-tab="bunpou">Lanjutkan belajar →</button>
+      </div>
+    </div>
+
+    <div class="dash-foot">
+      <p class="tip-card">💡 Tips hari ini: <b>頑張って</b> <i>(ganbatte)</i> — semangat! Coba mode <b>Kuis</b> di tiap bagian untuk menguji ingatanmu.</p>
+      <button class="reset-link" data-reset-progress>Atur ulang semua progres</button>
+    </div>
+  </section>
+
+  <!-- ============ KOTOBA ============ -->
+  <section class="view hidden" id="view-kotoba">
+    <div class="view-head">
+      <span class="eyebrow">// Kosakata</span>
+      <h1>Kotoba — Kosakata Dasar</h1>
+      <p>127 kata dasar N5 dikelompokkan dalam 10 kategori. Hafalkan lewat kartu, uji lewat kuis, atau telusuri lewat daftar.</p>
+    </div>
+
+    <div class="control-row">
+      <div class="mode-switch" data-mode-group="kotoba">
+        <button class="mode-btn active" data-mode-select="kartu">🎴 Kartu</button>
+        <button class="mode-btn" data-mode-select="kuis">📝 Kuis</button>
+        <button class="mode-btn" data-mode-select="daftar">📋 Daftar</button>
+      </div>
+      <div class="search-box hidden" id="kotobaSearchBox">
+        <input type="text" id="kotobaSearchInput" placeholder="Cari kata..." />
+      </div>
+    </div>
+
+    <div class="chip-row" id="kotobaChips"></div>
+
+    <div id="kotobaContent"></div>
+  </section>
+
+  <!-- ============ KANJI ============ -->
+  <section class="view hidden" id="view-kanji">
+    <div class="view-head">
+      <span class="eyebrow">// Aksara</span>
+      <h1>Kanji — 80 Kanji Level N5</h1>
+      <p>Kanji dasar lengkap dengan cara baca on'yomi, kun'yomi, arti, dan contoh kata. Balik kartu untuk lihat detailnya.</p>
+    </div>
+
+    <div class="control-row">
+      <div class="mode-switch" data-mode-group="kanji">
+        <button class="mode-btn active" data-mode-select="kartu">🎴 Kartu</button>
+        <button class="mode-btn" data-mode-select="kuis">📝 Kuis</button>
+        <button class="mode-btn" data-mode-select="daftar">📋 Daftar</button>
+      </div>
+      <div class="search-box hidden" id="kanjiSearchBox">
+        <input type="text" id="kanjiSearchInput" placeholder="Cari kanji..." />
+      </div>
+    </div>
+
+    <div class="chip-row" id="kanjiChips"></div>
+
+    <div id="kanjiContent"></div>
+  </section>
+
+  <!-- ============ BUNPOU ============ -->
+  <section class="view hidden" id="view-bunpou">
+    <div class="view-head">
+      <span class="eyebrow">// Tata Bahasa</span>
+      <h1>Bunpou — Pola Kalimat N5</h1>
+      <p>22 pola tata bahasa dasar dengan penjelasan, contoh kalimat, dan kuis latihan singkat di tiap pola.</p>
+    </div>
+
+    <div class="control-row">
+      <div class="mode-switch" data-mode-group="bunpou">
+        <button class="mode-btn active" data-mode-select="daftar">📖 Daftar Materi</button>
+        <button class="mode-btn" data-mode-select="kuis">📝 Kuis Campuran</button>
+      </div>
+    </div>
+
+    <div id="bunpouContent"></div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span><b>日本語ラボ</b> — dibuat untuk belajar mandiri. Progres tersimpan otomatis di perangkatmu.</span>
+    <span>頑張って！ Semangat belajar 🇯🇵</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   DATA — KOTOBA (KOSAKATA)
+   ============================================================ */
+var KOTOBA_CATEGORIES = [
+  {id:'salam', label:'Salam & Ungkapan', icon:'👋'},
+  {id:'angka', label:'Angka', icon:'🔢'},
+  {id:'keluarga', label:'Keluarga', icon:'👪'},
+  {id:'warna', label:'Warna', icon:'🎨'},
+  {id:'waktu', label:'Waktu & Hari', icon:'🕒'},
+  {id:'makanan', label:'Makanan & Minuman', icon:'🍙'},
+  {id:'tempat', label:'Tempat', icon:'🏠'},
+  {id:'kerja', label:'Kata Kerja', icon:'🏃'},
+  {id:'sifat', label:'Kata Sifat', icon:'✨'},
+  {id:'ganti', label:'Kata Ganti & Tanya', icon:'❓'}
+];
+
+var KOTOBA = [
+  // Salam & Ungkapan
+  {k:'sl1',cat:'salam',jp:'おはようございます',romaji:'ohayou gozaimasu',mean:'Selamat pagi'},
+  {k:'sl2',cat:'salam',jp:'こんにちは',romaji:'konnichiwa',mean:'Selamat siang / Halo'},
+  {k:'sl3',cat:'salam',jp:'こんばんは',romaji:'konbanwa',mean:'Selamat malam'},
+  {k:'sl4',cat:'salam',jp:'おやすみなさい',romaji:'oyasuminasai',mean:'Selamat tidur'},
+  {k:'sl5',cat:'salam',jp:'さようなら',romaji:'sayounara',mean:'Selamat tinggal'},
+  {k:'sl6',cat:'salam',jp:'ありがとうございます',romaji:'arigatou gozaimasu',mean:'Terima kasih'},
+  {k:'sl7',cat:'salam',jp:'どういたしまして',romaji:'dou itashimashite',mean:'Sama-sama'},
+  {k:'sl8',cat:'salam',jp:'すみません',romaji:'sumimasen',mean:'Maaf / Permisi'},
+  {k:'sl9',cat:'salam',jp:'ごめんなさい',romaji:'gomennasai',mean:'Maaf (personal)'},
+  {k:'sl10',cat:'salam',jp:'はじめまして',romaji:'hajimemashite',mean:'Salam kenal'},
+  {k:'sl11',cat:'salam',jp:'よろしくお願いします',romaji:'yoroshiku onegaishimasu',mean:'Mohon bantuannya'},
+  {k:'sl12',cat:'salam',jp:'いただきます',romaji:'itadakimasu',mean:'Selamat makan (ucapan sebelum makan)'},
+  {k:'sl13',cat:'salam',jp:'ごちそうさまでした',romaji:'gochisousama deshita',mean:'Terima kasih atas makanannya'},
+  // Angka
+  {k:'ag1',cat:'angka',jp:'いち',romaji:'ichi',mean:'Satu (1)'},
+  {k:'ag2',cat:'angka',jp:'に',romaji:'ni',mean:'Dua (2)'},
+  {k:'ag3',cat:'angka',jp:'さん',romaji:'san',mean:'Tiga (3)'},
+  {k:'ag4',cat:'angka',jp:'よん',romaji:'yon',mean:'Empat (4)'},
+  {k:'ag5',cat:'angka',jp:'ご',romaji:'go',mean:'Lima (5)'},
+  {k:'ag6',cat:'angka',jp:'ろく',romaji:'roku',mean:'Enam (6)'},
+  {k:'ag7',cat:'angka',jp:'なな',romaji:'nana',mean:'Tujuh (7)'},
+  {k:'ag8',cat:'angka',jp:'はち',romaji:'hachi',mean:'Delapan (8)'},
+  {k:'ag9',cat:'angka',jp:'きゅう',romaji:'kyuu',mean:'Sembilan (9)'},
+  {k:'ag10',cat:'angka',jp:'じゅう',romaji:'juu',mean:'Sepuluh (10)'},
+  {k:'ag11',cat:'angka',jp:'にじゅう',romaji:'nijuu',mean:'Dua puluh (20)'},
+  {k:'ag12',cat:'angka',jp:'ひゃく',romaji:'hyaku',mean:'Seratus (100)'},
+  // Keluarga
+  {k:'kl1',cat:'keluarga',jp:'家族',romaji:'kazoku',mean:'Keluarga'},
+  {k:'kl2',cat:'keluarga',jp:'父',romaji:'chichi',mean:'Ayah (saya)'},
+  {k:'kl3',cat:'keluarga',jp:'母',romaji:'haha',mean:'Ibu (saya)'},
+  {k:'kl4',cat:'keluarga',jp:'お父さん',romaji:'otousan',mean:'Ayah (sopan/panggilan)'},
+  {k:'kl5',cat:'keluarga',jp:'お母さん',romaji:'okaasan',mean:'Ibu (sopan/panggilan)'},
+  {k:'kl6',cat:'keluarga',jp:'兄',romaji:'ani',mean:'Kakak laki-laki (saya)'},
+  {k:'kl7',cat:'keluarga',jp:'姉',romaji:'ane',mean:'Kakak perempuan (saya)'},
+  {k:'kl8',cat:'keluarga',jp:'弟',romaji:'otouto',mean:'Adik laki-laki'},
+  {k:'kl9',cat:'keluarga',jp:'妹',romaji:'imouto',mean:'Adik perempuan'},
+  {k:'kl10',cat:'keluarga',jp:'両親',romaji:'ryoushin',mean:'Orang tua'},
+  {k:'kl11',cat:'keluarga',jp:'子供',romaji:'kodomo',mean:'Anak'},
+  // Warna
+  {k:'wr1',cat:'warna',jp:'赤',romaji:'aka',mean:'Merah'},
+  {k:'wr2',cat:'warna',jp:'青',romaji:'ao',mean:'Biru'},
+  {k:'wr3',cat:'warna',jp:'黄色',romaji:'kiiro',mean:'Kuning'},
+  {k:'wr4',cat:'warna',jp:'緑',romaji:'midori',mean:'Hijau'},
+  {k:'wr5',cat:'warna',jp:'白',romaji:'shiro',mean:'Putih'},
+  {k:'wr6',cat:'warna',jp:'黒',romaji:'kuro',mean:'Hitam'},
+  {k:'wr7',cat:'warna',jp:'茶色',romaji:'chairo',mean:'Coklat'},
+  {k:'wr8',cat:'warna',jp:'ピンク',romaji:'pinku',mean:'Merah muda'},
+  {k:'wr9',cat:'warna',jp:'オレンジ',romaji:'orenji',mean:'Oranye'},
+  {k:'wr10',cat:'warna',jp:'紫',romaji:'murasaki',mean:'Ungu'},
+  // Waktu & Hari
+  {k:'wk1',cat:'waktu',jp:'今日',romaji:'kyou',mean:'Hari ini'},
+  {k:'wk2',cat:'waktu',jp:'明日',romaji:'ashita',mean:'Besok'},
+  {k:'wk3',cat:'waktu',jp:'昨日',romaji:'kinou',mean:'Kemarin'},
+  {k:'wk4',cat:'waktu',jp:'今',romaji:'ima',mean:'Sekarang'},
+  {k:'wk5',cat:'waktu',jp:'朝',romaji:'asa',mean:'Pagi'},
+  {k:'wk6',cat:'waktu',jp:'昼',romaji:'hiru',mean:'Siang'},
+  {k:'wk7',cat:'waktu',jp:'夜',romaji:'yoru',mean:'Malam'},
+  {k:'wk8',cat:'waktu',jp:'月曜日',romaji:'getsuyoubi',mean:'Senin'},
+  {k:'wk9',cat:'waktu',jp:'火曜日',romaji:'kayoubi',mean:'Selasa'},
+  {k:'wk10',cat:'waktu',jp:'水曜日',romaji:'suiyoubi',mean:'Rabu'},
+  {k:'wk11',cat:'waktu',jp:'木曜日',romaji:'mokuyoubi',mean:'Kamis'},
+  {k:'wk12',cat:'waktu',jp:'金曜日',romaji:'kinyoubi',mean:'Jumat'},
+  {k:'wk13',cat:'waktu',jp:'土曜日',romaji:'doyoubi',mean:'Sabtu'},
+  {k:'wk14',cat:'waktu',jp:'日曜日',romaji:'nichiyoubi',mean:'Minggu'},
+  // Makanan & Minuman
+  {k:'mk1',cat:'makanan',jp:'ご飯',romaji:'gohan',mean:'Nasi / Makanan'},
+  {k:'mk2',cat:'makanan',jp:'水',romaji:'mizu',mean:'Air'},
+  {k:'mk3',cat:'makanan',jp:'お茶',romaji:'ocha',mean:'Teh'},
+  {k:'mk4',cat:'makanan',jp:'パン',romaji:'pan',mean:'Roti'},
+  {k:'mk5',cat:'makanan',jp:'魚',romaji:'sakana',mean:'Ikan'},
+  {k:'mk6',cat:'makanan',jp:'肉',romaji:'niku',mean:'Daging'},
+  {k:'mk7',cat:'makanan',jp:'野菜',romaji:'yasai',mean:'Sayur'},
+  {k:'mk8',cat:'makanan',jp:'果物',romaji:'kudamono',mean:'Buah'},
+  {k:'mk9',cat:'makanan',jp:'卵',romaji:'tamago',mean:'Telur'},
+  {k:'mk10',cat:'makanan',jp:'コーヒー',romaji:'koohii',mean:'Kopi'},
+  {k:'mk11',cat:'makanan',jp:'朝ごはん',romaji:'asagohan',mean:'Sarapan'},
+  {k:'mk12',cat:'makanan',jp:'昼ごはん',romaji:'hirugohan',mean:'Makan siang'},
+  {k:'mk13',cat:'makanan',jp:'晩ごはん',romaji:'bangohan',mean:'Makan malam'},
+  // Tempat
+  {k:'tp1',cat:'tempat',jp:'学校',romaji:'gakkou',mean:'Sekolah'},
+  {k:'tp2',cat:'tempat',jp:'家',romaji:'ie',mean:'Rumah'},
+  {k:'tp3',cat:'tempat',jp:'会社',romaji:'kaisha',mean:'Kantor / Perusahaan'},
+  {k:'tp4',cat:'tempat',jp:'病院',romaji:'byouin',mean:'Rumah sakit'},
+  {k:'tp5',cat:'tempat',jp:'駅',romaji:'eki',mean:'Stasiun'},
+  {k:'tp6',cat:'tempat',jp:'図書館',romaji:'toshokan',mean:'Perpustakaan'},
+  {k:'tp7',cat:'tempat',jp:'銀行',romaji:'ginkou',mean:'Bank'},
+  {k:'tp8',cat:'tempat',jp:'公園',romaji:'kouen',mean:'Taman'},
+  {k:'tp9',cat:'tempat',jp:'レストラン',romaji:'resutoran',mean:'Restoran'},
+  {k:'tp10',cat:'tempat',jp:'スーパー',romaji:'suupaa',mean:'Supermarket'},
+  {k:'tp11',cat:'tempat',jp:'トイレ',romaji:'toire',mean:'Toilet'},
+  // Kata Kerja
+  {k:'kk1',cat:'kerja',jp:'食べる',romaji:'taberu',mean:'Makan'},
+  {k:'kk2',cat:'kerja',jp:'飲む',romaji:'nomu',mean:'Minum'},
+  {k:'kk3',cat:'kerja',jp:'見る',romaji:'miru',mean:'Melihat / Menonton'},
+  {k:'kk4',cat:'kerja',jp:'聞く',romaji:'kiku',mean:'Mendengar / Bertanya'},
+  {k:'kk5',cat:'kerja',jp:'話す',romaji:'hanasu',mean:'Berbicara'},
+  {k:'kk6',cat:'kerja',jp:'読む',romaji:'yomu',mean:'Membaca'},
+  {k:'kk7',cat:'kerja',jp:'書く',romaji:'kaku',mean:'Menulis'},
+  {k:'kk8',cat:'kerja',jp:'行く',romaji:'iku',mean:'Pergi'},
+  {k:'kk9',cat:'kerja',jp:'来る',romaji:'kuru',mean:'Datang'},
+  {k:'kk10',cat:'kerja',jp:'帰る',romaji:'kaeru',mean:'Pulang'},
+  {k:'kk11',cat:'kerja',jp:'買う',romaji:'kau',mean:'Membeli'},
+  {k:'kk12',cat:'kerja',jp:'会う',romaji:'au',mean:'Bertemu'},
+  {k:'kk13',cat:'kerja',jp:'寝る',romaji:'neru',mean:'Tidur'},
+  {k:'kk14',cat:'kerja',jp:'起きる',romaji:'okiru',mean:'Bangun'},
+  {k:'kk15',cat:'kerja',jp:'勉強する',romaji:'benkyou suru',mean:'Belajar'},
+  {k:'kk16',cat:'kerja',jp:'働く',romaji:'hataraku',mean:'Bekerja'},
+  // Kata Sifat
+  {k:'sf1',cat:'sifat',jp:'大きい',romaji:'ookii',mean:'Besar'},
+  {k:'sf2',cat:'sifat',jp:'小さい',romaji:'chiisai',mean:'Kecil'},
+  {k:'sf3',cat:'sifat',jp:'新しい',romaji:'atarashii',mean:'Baru'},
+  {k:'sf4',cat:'sifat',jp:'古い',romaji:'furui',mean:'Lama / Tua'},
+  {k:'sf5',cat:'sifat',jp:'高い',romaji:'takai',mean:'Tinggi / Mahal'},
+  {k:'sf6',cat:'sifat',jp:'安い',romaji:'yasui',mean:'Murah'},
+  {k:'sf7',cat:'sifat',jp:'暑い',romaji:'atsui',mean:'Panas'},
+  {k:'sf8',cat:'sifat',jp:'寒い',romaji:'samui',mean:'Dingin'},
+  {k:'sf9',cat:'sifat',jp:'面白い',romaji:'omoshiroi',mean:'Menarik'},
+  {k:'sf10',cat:'sifat',jp:'難しい',romaji:'muzukashii',mean:'Sulit'},
+  {k:'sf11',cat:'sifat',jp:'簡単',romaji:'kantan',mean:'Mudah'},
+  {k:'sf12',cat:'sifat',jp:'好き',romaji:'suki',mean:'Suka'},
+  {k:'sf13',cat:'sifat',jp:'元気',romaji:'genki',mean:'Sehat / Semangat'},
+  {k:'sf14',cat:'sifat',jp:'きれい',romaji:'kirei',mean:'Cantik / Bersih'},
+  // Kata Ganti & Tanya
+  {k:'gt1',cat:'ganti',jp:'私',romaji:'watashi',mean:'Saya'},
+  {k:'gt2',cat:'ganti',jp:'あなた',romaji:'anata',mean:'Kamu'},
+  {k:'gt3',cat:'ganti',jp:'彼',romaji:'kare',mean:'Dia (laki-laki)'},
+  {k:'gt4',cat:'ganti',jp:'彼女',romaji:'kanojo',mean:'Dia (perempuan)'},
+  {k:'gt5',cat:'ganti',jp:'これ',romaji:'kore',mean:'Ini'},
+  {k:'gt6',cat:'ganti',jp:'それ',romaji:'sore',mean:'Itu (dekat lawan bicara)'},
+  {k:'gt7',cat:'ganti',jp:'あれ',romaji:'are',mean:'Itu (jauh)'},
+  {k:'gt8',cat:'ganti',jp:'どこ',romaji:'doko',mean:'Di mana'},
+  {k:'gt9',cat:'ganti',jp:'誰',romaji:'dare',mean:'Siapa'},
+  {k:'gt10',cat:'ganti',jp:'何',romaji:'nani',mean:'Apa'},
+  {k:'gt11',cat:'ganti',jp:'いつ',romaji:'itsu',mean:'Kapan'},
+  {k:'gt12',cat:'ganti',jp:'どうして',romaji:'doushite',mean:'Mengapa'},
+  {k:'gt13',cat:'ganti',jp:'いくら',romaji:'ikura',mean:'Berapa (harga)'}
+];
+
+/* ============================================================
+   DATA — KANJI (80 kanji N5)
+   ============================================================ */
+var KANJI_CATEGORIES = [
+  {id:'angka', label:'Angka & Uang'},
+  {id:'alam', label:'Alam & Cuaca'},
+  {id:'waktu', label:'Waktu'},
+  {id:'orang', label:'Orang'},
+  {id:'tubuh', label:'Tubuh'},
+  {id:'arah', label:'Arah & Posisi'},
+  {id:'tempat', label:'Tempat & Benda'},
+  {id:'kerja', label:'Kata Kerja'},
+  {id:'sifat', label:'Sifat & Lainnya'}
+];
+
+var KANJI = [
+  {char:'一',cat:'angka',on:'イチ、イツ',kun:'ひと-つ',strokes:1,mean:'Satu',ex:[{w:'一つ',r:'ひとつ',m:'satu buah'},{w:'一月',r:'いちがつ',m:'Januari'}]},
+  {char:'二',cat:'angka',on:'ニ',kun:'ふた-つ',strokes:2,mean:'Dua',ex:[{w:'二つ',r:'ふたつ',m:'dua buah'},{w:'二月',r:'にがつ',m:'Februari'}]},
+  {char:'三',cat:'angka',on:'サン',kun:'みっ-つ',strokes:3,mean:'Tiga',ex:[{w:'三つ',r:'みっつ',m:'tiga buah'},{w:'三月',r:'さんがつ',m:'Maret'}]},
+  {char:'四',cat:'angka',on:'シ',kun:'よん、よ',strokes:5,mean:'Empat',ex:[{w:'四つ',r:'よっつ',m:'empat buah'},{w:'四月',r:'しがつ',m:'April'}]},
+  {char:'五',cat:'angka',on:'ゴ',kun:'いつ-つ',strokes:4,mean:'Lima',ex:[{w:'五つ',r:'いつつ',m:'lima buah'},{w:'五月',r:'ごがつ',m:'Mei'}]},
+  {char:'六',cat:'angka',on:'ロク',kun:'むっ-つ',strokes:4,mean:'Enam',ex:[{w:'六つ',r:'むっつ',m:'enam buah'},{w:'六月',r:'ろくがつ',m:'Juni'}]},
+  {char:'七',cat:'angka',on:'シチ',kun:'なな-つ',strokes:2,mean:'Tujuh',ex:[{w:'七つ',r:'ななつ',m:'tujuh buah'},{w:'七月',r:'しちがつ',m:'Juli'}]},
+  {char:'八',cat:'angka',on:'ハチ',kun:'やっ-つ',strokes:2,mean:'Delapan',ex:[{w:'八つ',r:'やっつ',m:'delapan buah'},{w:'八月',r:'はちがつ',m:'Agustus'}]},
+  {char:'九',cat:'angka',on:'キュウ、ク',kun:'ここの-つ',strokes:2,mean:'Sembilan',ex:[{w:'九つ',r:'ここのつ',m:'sembilan buah'},{w:'九月',r:'くがつ',m:'September'}]},
+  {char:'十',cat:'angka',on:'ジュウ',kun:'とお',strokes:2,mean:'Sepuluh',ex:[{w:'十日',r:'とおか',m:'tanggal 10'},{w:'十月',r:'じゅうがつ',m:'Oktober'}]},
+  {char:'百',cat:'angka',on:'ヒャク',kun:'—',strokes:6,mean:'Seratus',ex:[{w:'百円',r:'ひゃくえん',m:'100 yen'}]},
+  {char:'千',cat:'angka',on:'セン',kun:'—',strokes:3,mean:'Seribu',ex:[{w:'千円',r:'せんえん',m:'1000 yen'}]},
+  {char:'万',cat:'angka',on:'マン',kun:'—',strokes:3,mean:'Sepuluh ribu',ex:[{w:'一万円',r:'いちまんえん',m:'10000 yen'}]},
+  {char:'円',cat:'angka',on:'エン',kun:'—',strokes:4,mean:'Yen / Lingkaran',ex:[{w:'百円',r:'ひゃくえん',m:'100 yen'}]},
+  {char:'日',cat:'alam',on:'ニチ、ジツ',kun:'ひ、-び',strokes:4,mean:'Hari / Matahari',ex:[{w:'日本',r:'にほん',m:'Jepang'},{w:'今日',r:'きょう',m:'hari ini'}]},
+  {char:'月',cat:'alam',on:'ゲツ、ガツ',kun:'つき',strokes:4,mean:'Bulan',ex:[{w:'月曜日',r:'げつようび',m:'Senin'},{w:'一月',r:'いちがつ',m:'Januari'}]},
+  {char:'火',cat:'alam',on:'カ',kun:'ひ',strokes:4,mean:'Api',ex:[{w:'火曜日',r:'かようび',m:'Selasa'}]},
+  {char:'水',cat:'alam',on:'スイ',kun:'みず',strokes:4,mean:'Air',ex:[{w:'水曜日',r:'すいようび',m:'Rabu'},{w:'水',r:'みず',m:'air'}]},
+  {char:'木',cat:'alam',on:'モク',kun:'き',strokes:4,mean:'Pohon / Kayu',ex:[{w:'木曜日',r:'もくようび',m:'Kamis'}]},
+  {char:'金',cat:'alam',on:'キン',kun:'かね',strokes:8,mean:'Emas / Uang',ex:[{w:'金曜日',r:'きんようび',m:'Jumat'},{w:'お金',r:'おかね',m:'uang'}]},
+  {char:'土',cat:'alam',on:'ド',kun:'つち',strokes:3,mean:'Tanah',ex:[{w:'土曜日',r:'どようび',m:'Sabtu'}]},
+  {char:'山',cat:'alam',on:'サン',kun:'やま',strokes:3,mean:'Gunung',ex:[{w:'富士山',r:'ふじさん',m:'Gunung Fuji'}]},
+  {char:'川',cat:'alam',on:'セン',kun:'かわ',strokes:3,mean:'Sungai',ex:[{w:'川',r:'かわ',m:'sungai'}]},
+  {char:'天',cat:'alam',on:'テン',kun:'—',strokes:4,mean:'Langit',ex:[{w:'天気',r:'てんき',m:'cuaca'}]},
+  {char:'気',cat:'alam',on:'キ',kun:'—',strokes:6,mean:'Udara / Semangat',ex:[{w:'天気',r:'てんき',m:'cuaca'},{w:'元気',r:'げんき',m:'sehat'}]},
+  {char:'空',cat:'alam',on:'クウ',kun:'そら',strokes:8,mean:'Langit / Kosong',ex:[{w:'空',r:'そら',m:'langit'}]},
+  {char:'雨',cat:'alam',on:'ウ',kun:'あめ',strokes:8,mean:'Hujan',ex:[{w:'雨',r:'あめ',m:'hujan'}]},
+  {char:'年',cat:'waktu',on:'ネン',kun:'とし',strokes:6,mean:'Tahun',ex:[{w:'今年',r:'ことし',m:'tahun ini'},{w:'一年',r:'いちねん',m:'satu tahun'}]},
+  {char:'今',cat:'waktu',on:'コン',kun:'いま',strokes:4,mean:'Sekarang',ex:[{w:'今',r:'いま',m:'sekarang'},{w:'今日',r:'きょう',m:'hari ini'}]},
+  {char:'時',cat:'waktu',on:'ジ',kun:'とき',strokes:10,mean:'Waktu / Jam',ex:[{w:'三時',r:'さんじ',m:'jam 3'},{w:'時間',r:'じかん',m:'waktu'}]},
+  {char:'分',cat:'waktu',on:'フン、ブン',kun:'わ-かる',strokes:4,mean:'Menit / Bagian',ex:[{w:'五分',r:'ごふん',m:'5 menit'}]},
+  {char:'半',cat:'waktu',on:'ハン',kun:'—',strokes:5,mean:'Setengah',ex:[{w:'三時半',r:'さんじはん',m:'jam setengah 4'}]},
+  {char:'週',cat:'waktu',on:'シュウ',kun:'—',strokes:11,mean:'Minggu (pekan)',ex:[{w:'今週',r:'こんしゅう',m:'minggu ini'}]},
+  {char:'人',cat:'orang',on:'ジン、ニン',kun:'ひと',strokes:2,mean:'Orang',ex:[{w:'日本人',r:'にほんじん',m:'orang Jepang'},{w:'三人',r:'さんにん',m:'3 orang'}]},
+  {char:'名',cat:'orang',on:'メイ',kun:'な',strokes:6,mean:'Nama',ex:[{w:'名前',r:'なまえ',m:'nama'}]},
+  {char:'男',cat:'orang',on:'ダン',kun:'おとこ',strokes:7,mean:'Laki-laki',ex:[{w:'男の人',r:'おとこのひと',m:'laki-laki'}]},
+  {char:'女',cat:'orang',on:'ジョ',kun:'おんな',strokes:3,mean:'Perempuan',ex:[{w:'女の人',r:'おんなのひと',m:'perempuan'}]},
+  {char:'子',cat:'orang',on:'シ',kun:'こ',strokes:3,mean:'Anak',ex:[{w:'子供',r:'こども',m:'anak'}]},
+  {char:'父',cat:'orang',on:'フ',kun:'ちち',strokes:4,mean:'Ayah',ex:[{w:'父',r:'ちち',m:'ayah saya'}]},
+  {char:'母',cat:'orang',on:'ボ',kun:'はは',strokes:5,mean:'Ibu',ex:[{w:'母',r:'はは',m:'ibu saya'}]},
+  {char:'目',cat:'tubuh',on:'モク',kun:'め',strokes:5,mean:'Mata',ex:[{w:'目',r:'め',m:'mata'}]},
+  {char:'口',cat:'tubuh',on:'コウ',kun:'くち',strokes:3,mean:'Mulut',ex:[{w:'入り口',r:'いりぐち',m:'pintu masuk'}]},
+  {char:'手',cat:'tubuh',on:'シュ',kun:'て',strokes:4,mean:'Tangan',ex:[{w:'手',r:'て',m:'tangan'},{w:'上手',r:'じょうず',m:'pandai'}]},
+  {char:'足',cat:'tubuh',on:'ソク',kun:'あし',strokes:7,mean:'Kaki',ex:[{w:'足',r:'あし',m:'kaki'}]},
+  {char:'上',cat:'arah',on:'ジョウ',kun:'うえ',strokes:3,mean:'Atas',ex:[{w:'机の上',r:'つくえのうえ',m:'di atas meja'}]},
+  {char:'下',cat:'arah',on:'カ',kun:'した',strokes:3,mean:'Bawah',ex:[{w:'木の下',r:'きのした',m:'di bawah pohon'}]},
+  {char:'中',cat:'arah',on:'チュウ',kun:'なか',strokes:4,mean:'Tengah / Dalam',ex:[{w:'家の中',r:'いえのなか',m:'di dalam rumah'}]},
+  {char:'外',cat:'arah',on:'ガイ',kun:'そと',strokes:5,mean:'Luar',ex:[{w:'外',r:'そと',m:'luar'}]},
+  {char:'左',cat:'arah',on:'サ',kun:'ひだり',strokes:5,mean:'Kiri',ex:[{w:'左',r:'ひだり',m:'kiri'}]},
+  {char:'右',cat:'arah',on:'ウ',kun:'みぎ',strokes:5,mean:'Kanan',ex:[{w:'右',r:'みぎ',m:'kanan'}]},
+  {char:'前',cat:'arah',on:'ゼン',kun:'まえ',strokes:9,mean:'Depan / Sebelum',ex:[{w:'名前',r:'なまえ',m:'nama'},{w:'午前',r:'ごぜん',m:'pagi (AM)'}]},
+  {char:'後',cat:'arah',on:'ゴ',kun:'あと、うしろ',strokes:9,mean:'Belakang / Setelah',ex:[{w:'午後',r:'ごご',m:'siang (PM)'}]},
+  {char:'学',cat:'tempat',on:'ガク',kun:'—',strokes:8,mean:'Belajar',ex:[{w:'学校',r:'がっこう',m:'sekolah'},{w:'学生',r:'がくせい',m:'murid'}]},
+  {char:'校',cat:'tempat',on:'コウ',kun:'—',strokes:10,mean:'Sekolah',ex:[{w:'学校',r:'がっこう',m:'sekolah'}]},
+  {char:'国',cat:'tempat',on:'コク',kun:'くに',strokes:8,mean:'Negara',ex:[{w:'外国',r:'がいこく',m:'luar negeri'}]},
+  {char:'語',cat:'tempat',on:'ゴ',kun:'—',strokes:14,mean:'Bahasa',ex:[{w:'日本語',r:'にほんご',m:'bahasa Jepang'}]},
+  {char:'本',cat:'tempat',on:'ホン',kun:'—',strokes:5,mean:'Buku / Asli',ex:[{w:'本',r:'ほん',m:'buku'},{w:'日本',r:'にほん',m:'Jepang'}]},
+  {char:'車',cat:'tempat',on:'シャ',kun:'くるま',strokes:7,mean:'Mobil',ex:[{w:'電車',r:'でんしゃ',m:'kereta listrik'}]},
+  {char:'電',cat:'tempat',on:'デン',kun:'—',strokes:13,mean:'Listrik',ex:[{w:'電話',r:'でんわ',m:'telepon'}]},
+  {char:'話',cat:'kerja',on:'ワ',kun:'はな-す',strokes:13,mean:'Bicara',ex:[{w:'話す',r:'はなす',m:'berbicara'},{w:'電話',r:'でんわ',m:'telepon'}]},
+  {char:'買',cat:'kerja',on:'バイ',kun:'か-う',strokes:12,mean:'Beli',ex:[{w:'買う',r:'かう',m:'membeli'}]},
+  {char:'食',cat:'kerja',on:'ショク',kun:'た-べる',strokes:9,mean:'Makan',ex:[{w:'食べる',r:'たべる',m:'makan'}]},
+  {char:'飲',cat:'kerja',on:'イン',kun:'の-む',strokes:12,mean:'Minum',ex:[{w:'飲む',r:'のむ',m:'minum'}]},
+  {char:'見',cat:'kerja',on:'ケン',kun:'み-る',strokes:7,mean:'Lihat',ex:[{w:'見る',r:'みる',m:'melihat'}]},
+  {char:'聞',cat:'kerja',on:'ブン',kun:'き-く',strokes:14,mean:'Dengar',ex:[{w:'聞く',r:'きく',m:'mendengar'}]},
+  {char:'読',cat:'kerja',on:'ドク',kun:'よ-む',strokes:14,mean:'Baca',ex:[{w:'読む',r:'よむ',m:'membaca'}]},
+  {char:'書',cat:'kerja',on:'ショ',kun:'か-く',strokes:10,mean:'Tulis',ex:[{w:'書く',r:'かく',m:'menulis'}]},
+  {char:'行',cat:'kerja',on:'コウ',kun:'い-く',strokes:6,mean:'Pergi',ex:[{w:'行く',r:'いく',m:'pergi'},{w:'旅行',r:'りょこう',m:'perjalanan'}]},
+  {char:'来',cat:'kerja',on:'ライ',kun:'く-る',strokes:7,mean:'Datang',ex:[{w:'来る',r:'くる',m:'datang'},{w:'来年',r:'らいねん',m:'tahun depan'}]},
+  {char:'出',cat:'kerja',on:'シュツ',kun:'で-る',strokes:5,mean:'Keluar',ex:[{w:'出る',r:'でる',m:'keluar'}]},
+  {char:'入',cat:'kerja',on:'ニュウ',kun:'はい-る',strokes:2,mean:'Masuk',ex:[{w:'入る',r:'はいる',m:'masuk'}]},
+  {char:'帰',cat:'kerja',on:'キ',kun:'かえ-る',strokes:10,mean:'Pulang',ex:[{w:'帰る',r:'かえる',m:'pulang'}]},
+  {char:'休',cat:'kerja',on:'キュウ',kun:'やす-む',strokes:6,mean:'Istirahat',ex:[{w:'休む',r:'やすむ',m:'beristirahat'},{w:'休み',r:'やすみ',m:'libur'}]},
+  {char:'生',cat:'sifat',on:'セイ',kun:'い-きる',strokes:5,mean:'Hidup / Lahir',ex:[{w:'学生',r:'がくせい',m:'murid'},{w:'先生',r:'せんせい',m:'guru'}]},
+  {char:'先',cat:'sifat',on:'セン',kun:'さき',strokes:6,mean:'Sebelumnya / Duluan',ex:[{w:'先生',r:'せんせい',m:'guru'},{w:'先週',r:'せんしゅう',m:'minggu lalu'}]},
+  {char:'大',cat:'sifat',on:'ダイ',kun:'おお-きい',strokes:3,mean:'Besar',ex:[{w:'大きい',r:'おおきい',m:'besar'},{w:'大学',r:'だいがく',m:'universitas'}]},
+  {char:'小',cat:'sifat',on:'ショウ',kun:'ちい-さい',strokes:3,mean:'Kecil',ex:[{w:'小さい',r:'ちいさい',m:'kecil'}]},
+  {char:'高',cat:'sifat',on:'コウ',kun:'たか-い',strokes:10,mean:'Tinggi / Mahal',ex:[{w:'高い',r:'たかい',m:'tinggi/mahal'}]},
+  {char:'新',cat:'sifat',on:'シン',kun:'あたら-しい',strokes:13,mean:'Baru',ex:[{w:'新しい',r:'あたらしい',m:'baru'}]},
+  {char:'白',cat:'sifat',on:'ハク',kun:'しろ',strokes:5,mean:'Putih',ex:[{w:'白い',r:'しろい',m:'putih'}]}
+];
+
+/* ============================================================
+   DATA — BUNPOU (TATA BAHASA) — 22 pola N5
+   ============================================================ */
+var BUNPOU = [
+  {k:'b1',title:'Kalimat "adalah" positif',pattern:'A は B です',
+   expl:'Pola paling dasar untuk mengatakan "A adalah B". Partikel は dibaca "wa" ketika berfungsi sebagai penanda topik.',
+   examples:[{jp:'私は学生です。',romaji:'watashi wa gakusei desu',mean:'Saya adalah murid.'},{jp:'これは本です。',romaji:'kore wa hon desu',mean:'Ini adalah buku.'}],
+   quiz:{q:'私___学生です。',opts:['は','を','に','で'],ans:0}},
+  {k:'b2',title:'Kalimat "adalah" negatif',pattern:'A は B じゃありません',
+   expl:'Bentuk negatif dari です, artinya "bukan". Bentuk lebih formalnya adalah ではありません.',
+   examples:[{jp:'私は先生じゃありません。',romaji:'watashi wa sensei ja arimasen',mean:'Saya bukan guru.'},{jp:'これは私の本ではありません。',romaji:'kore wa watashi no hon dewa arimasen',mean:'Ini bukan buku saya.'}],
+   quiz:{q:'これは私の本___。',opts:['です','じゃありません','ます','ました'],ans:1}},
+  {k:'b3',title:'Partikel penanda subjek',pattern:'A が B',
+   expl:'Menandai subjek baru atau informasi baru dalam kalimat, sering dipakai dengan kata tanya atau kata kerja keberadaan.',
+   examples:[{jp:'猫がいます。',romaji:'neko ga imasu',mean:'Ada kucing.'},{jp:'誰が来ますか。',romaji:'dare ga kimasu ka',mean:'Siapa yang akan datang?'}],
+   quiz:{q:'猫___います。',opts:['は','が','を','へ'],ans:1}},
+  {k:'b4',title:'Partikel penanda objek',pattern:'A を [kata kerja]',
+   expl:'Menandai objek langsung dari kata kerja transitif.',
+   examples:[{jp:'ご飯を食べます。',romaji:'gohan wo tabemasu',mean:'Makan nasi.'},{jp:'本を読みます。',romaji:'hon wo yomimasu',mean:'Membaca buku.'}],
+   quiz:{q:'水___飲みます。',opts:['を','が','に','で'],ans:0}},
+  {k:'b5',title:'Partikel waktu / tujuan',pattern:'[waktu/tempat] に',
+   expl:'Menunjukkan waktu spesifik (jam, tanggal) atau tujuan pergi/datang.',
+   examples:[{jp:'七時に起きます。',romaji:'shichiji ni okimasu',mean:'Bangun jam 7.'},{jp:'学校に行きます。',romaji:'gakkou ni ikimasu',mean:'Pergi ke sekolah.'}],
+   quiz:{q:'七時___起きます。',opts:['で','に','を','と'],ans:1}},
+  {k:'b6',title:'Partikel lokasi aktivitas',pattern:'[tempat] で',
+   expl:'Menunjukkan tempat terjadinya suatu kegiatan, atau alat/cara melakukan sesuatu.',
+   examples:[{jp:'図書館で勉強します。',romaji:'toshokan de benkyou shimasu',mean:'Belajar di perpustakaan.'},{jp:'バスで行きます。',romaji:'basu de ikimasu',mean:'Pergi naik bus.'}],
+   quiz:{q:'レストラン___食べます。',opts:['に','で','を','へ'],ans:1}},
+  {k:'b7',title:'Partikel arah tujuan',pattern:'[tempat] へ',
+   expl:'Menunjukkan arah tujuan, mirip に tapi lebih menekankan arah pergerakan.',
+   examples:[{jp:'日本へ行きます。',romaji:'nihon e ikimasu',mean:'Pergi ke Jepang.'}],
+   quiz:{q:'東京___行きます。',opts:['へ','を','が','も'],ans:0}},
+  {k:'b8',title:'Partikel "dan / bersama"',pattern:'A と B',
+   expl:'Menghubungkan kata benda ("dan"), atau menunjukkan "bersama dengan" seseorang.',
+   examples:[{jp:'パンとコーヒーを飲みます。',romaji:'pan to koohii wo nomimasu',mean:'(Makan) roti dan minum kopi.'},{jp:'友達と話します。',romaji:'tomodachi to hanashimasu',mean:'Berbicara dengan teman.'}],
+   quiz:{q:'友達___映画を見ます。',opts:['と','や','も','の'],ans:0}},
+  {k:'b9',title:'Partikel "juga"',pattern:'A も',
+   expl:'Berarti "juga", menggantikan posisi partikel は atau が.',
+   examples:[{jp:'私も学生です。',romaji:'watashi mo gakusei desu',mean:'Saya juga murid.'}],
+   quiz:{q:'私___行きます。(saya juga pergi)',opts:['は','も','を','が'],ans:1}},
+  {k:'b10',title:'Partikel kepemilikan',pattern:'A の B',
+   expl:'Menunjukkan kepemilikan ("punya"), atau menjelaskan satu kata benda dengan kata benda lain.',
+   examples:[{jp:'これは私の本です。',romaji:'kore wa watashi no hon desu',mean:'Ini buku saya.'},{jp:'日本語の先生です。',romaji:'nihongo no sensei desu',mean:'Guru bahasa Jepang.'}],
+   quiz:{q:'これは私___本です。',opts:['の','は','を','に'],ans:0}},
+  {k:'b11',title:'Rentang "dari ... sampai"',pattern:'A から B まで',
+   expl:'Menunjukkan rentang waktu atau tempat, "dari A sampai B".',
+   examples:[{jp:'九時から五時まで働きます。',romaji:'kuji kara goji made hatarakimasu',mean:'Bekerja dari jam 9 sampai jam 5.'}],
+   quiz:{q:'九時___五時まで働きます。',opts:['から','に','で','を'],ans:0}},
+  {k:'b12',title:'Bentuk ~ます (sopan, sekarang/akan datang)',pattern:'[kata kerja]ます',
+   expl:'Bentuk sopan kata kerja untuk kegiatan sekarang atau yang akan datang.',
+   examples:[{jp:'毎日、勉強します。',romaji:'mainichi, benkyou shimasu',mean:'Belajar setiap hari.'},{jp:'明日、日本に行きます。',romaji:'ashita, nihon ni ikimasu',mean:'Besok pergi ke Jepang.'}],
+   quiz:{q:'明日、学校に___。(pergi, sopan)',opts:['行きます','行く','行った','行って'],ans:0}},
+  {k:'b13',title:'Bentuk ~ません (negatif sopan)',pattern:'[kata kerja]ません',
+   expl:'Bentuk negatif sopan dari ~ます, artinya "tidak melakukan".',
+   examples:[{jp:'今日は勉強しません。',romaji:'kyou wa benkyou shimasen',mean:'Hari ini tidak belajar.'}],
+   quiz:{q:'今日は勉強___。(tidak belajar)',opts:['しません','します','した','して'],ans:0}},
+  {k:'b14',title:'Bentuk lampau sopan',pattern:'[kata kerja]ました / ませんでした',
+   expl:'ました untuk kejadian lampau positif, ませんでした untuk kejadian lampau negatif — keduanya bentuk sopan.',
+   examples:[{jp:'昨日、映画を見ました。',romaji:'kinou, eiga wo mimashita',mean:'Kemarin menonton film.'},{jp:'朝ごはんを食べませんでした。',romaji:'asagohan wo tabemasendeshita',mean:'Tidak sarapan.'}],
+   quiz:{q:'昨日、日本語を勉強___。(belajar, lampau sopan)',opts:['しました','します','しません','して'],ans:0}},
+  {k:'b15',title:'Menyatakan keinginan',pattern:'[kata kerja stem]たいです',
+   expl:'Menyatakan keinginan untuk melakukan sesuatu, biasanya untuk diri sendiri.',
+   examples:[{jp:'日本に行きたいです。',romaji:'nihon ni ikitai desu',mean:'Ingin pergi ke Jepang.'},{jp:'すしを食べたいです。',romaji:'sushi wo tabetai desu',mean:'Ingin makan sushi.'}],
+   quiz:{q:'水を飲み___。(ingin minum)',opts:['たいです','ます','ました','ません'],ans:0}},
+  {k:'b16',title:'Meminta tolong dengan bentuk て',pattern:'[kata kerja て-form]ください',
+   expl:'Bentuk て dipakai untuk meminta tolong secara sopan.',
+   examples:[{jp:'ちょっと待ってください。',romaji:'chotto matte kudasai',mean:'Tolong tunggu sebentar.'},{jp:'見てください。',romaji:'mite kudasai',mean:'Tolong lihat.'}],
+   quiz:{q:'ちょっと待っ___ください。',opts:['て','た','る','ない'],ans:0}},
+  {k:'b17',title:'Sedang melakukan / kebiasaan',pattern:'[kata kerja て-form]います',
+   expl:'Menunjukkan kegiatan yang sedang berlangsung, atau kebiasaan/keadaan yang berkelanjutan.',
+   examples:[{jp:'今、勉強しています。',romaji:'ima, benkyou shiteimasu',mean:'Sedang belajar sekarang.'},{jp:'東京に住んでいます。',romaji:'toukyou ni sundeimasu',mean:'Tinggal di Tokyo.'}],
+   quiz:{q:'今、テレビを見___。(sedang menonton)',opts:['ています','ます','ました','たいです'],ans:0}},
+  {k:'b18',title:'Bentuk negatif biasa (ない形)',pattern:'[kata kerja]ない',
+   expl:'Bentuk negatif informal, dipakai dalam percakapan santai atau sebagai dasar bentuk tata bahasa lain.',
+   examples:[{jp:'今日は食べない。',romaji:'kyou wa tabenai',mean:'Hari ini tidak makan. (santai)'},{jp:'明日、学校に行かない。',romaji:'ashita, gakkou ni ikanai',mean:'Besok tidak pergi ke sekolah. (santai)'}],
+   quiz:{q:'明日、学校に___。(tidak pergi, biasa)',opts:['行かない','行きません','行った','行く'],ans:0}},
+  {k:'b19',title:'Konjugasi kata sifat い',pattern:'[i-adjective]です / [stem]くないです',
+   expl:'Kata sifat berakhiran い. Bentuk negatifnya mengganti い di akhir dengan くない.',
+   examples:[{jp:'このかばんは高いです。',romaji:'kono kaban wa takai desu',mean:'Tas ini mahal.'},{jp:'このかばんは高くないです。',romaji:'kono kaban wa takakunai desu',mean:'Tas ini tidak mahal.'}],
+   quiz:{q:'このかばんは___です。(tidak mahal)',opts:['高くない','高い','高くて','高かった'],ans:0}},
+  {k:'b20',title:'Konjugasi kata sifat な',pattern:'[na-adjective]です / [na-adjective]な + kata benda',
+   expl:'Kata sifat yang membutuhkan partikel な sebelum kata benda yang dijelaskannya.',
+   examples:[{jp:'元気です。',romaji:'genki desu',mean:'Sehat / semangat.'},{jp:'彼女はきれいな人です。',romaji:'kanojo wa kirei na hito desu',mean:'Dia perempuan yang cantik.'}],
+   quiz:{q:'彼女は___人です。(cantik, sebelum kata benda)',opts:['きれいな','きれい','きれいだ','きれく'],ans:0}},
+  {k:'b21',title:'Menyatakan keberadaan',pattern:'[benda mati]があります / [makhluk hidup]がいます',
+   expl:'あります dipakai untuk benda mati/tak bernyawa, います untuk manusia dan hewan.',
+   examples:[{jp:'机の上に本があります。',romaji:'tsukue no ue ni hon ga arimasu',mean:'Ada buku di atas meja.'},{jp:'部屋に猫がいます。',romaji:'heya ni neko ga imasu',mean:'Ada kucing di kamar.'}],
+   quiz:{q:'教室に学生が___。(ada murid)',opts:['います','あります','です','ます'],ans:0}},
+  {k:'b22',title:'Menyatakan kemampuan',pattern:'[kata kerja kamus]ことができます',
+   expl:'Menyatakan kemampuan atau kesanggupan melakukan sesuatu.',
+   examples:[{jp:'日本語を話すことができます。',romaji:'nihongo wo hanasu koto ga dekimasu',mean:'Bisa berbicara bahasa Jepang.'}],
+   quiz:{q:'私はピアノを弾く___できます。',opts:['ことが','のを','ものが','ことを'],ans:0}}
+];
+
+/* ============================================================
+   STATE & STORAGE
+   ============================================================ */
+var STORAGE_KEY = 'nihongo-lab-progress-v1';
+
+function todayStr(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+
+function loadState(){
+  var def = {kotoba:{}, kanji:{}, bunpou:{}, streak:{lastVisit:null, count:0}, quiz:{correct:0, total:0}};
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return def;
+    var parsed = JSON.parse(raw);
+    return Object.assign(def, parsed, {
+      kotoba: Object.assign({}, parsed.kotoba),
+      kanji: Object.assign({}, parsed.kanji),
+      bunpou: Object.assign({}, parsed.bunpou),
+      streak: Object.assign({lastVisit:null,count:0}, parsed.streak),
+      quiz: Object.assign({correct:0,total:0}, parsed.quiz)
+    });
+  } catch(e){ return def; }
+}
+function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE)); }
+
+var STATE = loadState();
+
+function updateStreak(){
+  var today = todayStr();
+  var last = STATE.streak.lastVisit;
+  if (last === today) { /* no change */ }
+  else {
+    var y = new Date(); y.setDate(y.getDate()-1);
+    var yStr = y.getFullYear()+'-'+String(y.getMonth()+1).padStart(2,'0')+'-'+String(y.getDate()).padStart(2,'0');
+    STATE.streak.count = (last === yStr) ? (STATE.streak.count + 1) : 1;
+    STATE.streak.lastVisit = today;
+    saveState();
+  }
+  document.getElementById('streakCount').textContent = STATE.streak.count;
+}
+
+function isMastered(domain, key){ return !!STATE[domain][key]; }
+function toggleMastered(domain, key){
+  STATE[domain][key] = !STATE[domain][key];
+  saveState();
+}
+function countMastered(domain){
+  var c=0; for (var k in STATE[domain]) if (STATE[domain][k]) c++;
+  return c;
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+function shuffle(arr){
+  var a = arr.slice();
+  for (var i=a.length-1; i>0; i--){
+    var j = Math.floor(Math.random()*(i+1));
+    var t=a[i]; a[i]=a[j]; a[j]=t;
+  }
+  return a;
+}
+function esc(s){
+  return String(s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+function pickN(arr, n){ return shuffle(arr).slice(0, n); }
+
+/* ============================================================
+   NAV / TAB SWITCHING
+   ============================================================ */
+var VIEWS = ['beranda','kotoba','kanji','bunpou'];
+function switchTab(tab){
+  VIEWS.forEach(function(v){
+    document.getElementById('view-'+v).classList.toggle('hidden', v !== tab);
+  });
+  document.querySelectorAll('.tab-btn').forEach(function(b){
+    b.classList.toggle('active', b.getAttribute('data-tab') === tab);
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+  if (tab === 'beranda') renderDashboard();
+  if (tab === 'kotoba') renderKotoba();
+  if (tab === 'kanji') renderKanji();
+  if (tab === 'bunpou') renderBunpou();
+}
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+function renderDashboard(){
+  var kM = countMastered('kotoba'), kT = KOTOBA.length;
+  var jM = countMastered('kanji'), jT = KANJI.length;
+  var bM = countMastered('bunpou'), bT = BUNPOU.length;
+
+  document.getElementById('statKotobaCount').textContent = kM+'/'+kT;
+  document.getElementById('statKanjiCount').textContent = jM+'/'+jT;
+  document.getElementById('statBunpouCount').textContent = bM+'/'+bT;
+  var acc = STATE.quiz.total > 0 ? Math.round(STATE.quiz.correct/STATE.quiz.total*100)+'%' : '—';
+  document.getElementById('statAccuracy').textContent = acc;
+
+  setBar('Kotoba', kM, kT);
+  setBar('Kanji', jM, jT);
+  setBar('Bunpou', bM, bT);
+
+  function setBar(name, m, t){
+    var pct = t>0 ? Math.round(m/t*100) : 0;
+    document.getElementById('pct'+name).textContent = pct+'%';
+    document.getElementById('meta'+name).textContent = m+' / '+t;
+    document.getElementById('bar'+name).style.width = pct+'%';
+  }
+}
+
+/* ============================================================
+   GENERIC: CHIP FILTER ROW
+   ============================================================ */
+function renderChips(container, categories, activeId, onSelect){
+  var html = '<button class="chip'+(activeId==='all'?' active':'')+'" data-cat-select="all">Semua</button>';
+  categories.forEach(function(c){
+    html += '<button class="chip'+(activeId===c.id?' active':'')+'" data-cat-select="'+c.id+'">'+(c.icon?c.icon+' ':'')+esc(c.label)+'</button>';
+  });
+  container.innerHTML = html;
+}
+
+/* ============================================================
+   GENERIC: FLASHCARD DECK
+   ============================================================ */
+function renderFlashDeck(container, items, opts){
+  // opts: {domain, keyOf, frontHtml, backHtml, catLabelOf}
+  if (items.length === 0){
+    container.innerHTML = '<div class="empty-state">Tidak ada kartu di kategori ini.</div>';
+    return;
+  }
+  var idx = opts.state.index % items.length;
+  var item = items[idx];
+  var key = opts.keyOf(item);
+  var mastered = isMastered(opts.domain, key);
+
+  container.innerHTML =
+    '<div class="flash-wrap">' +
+      '<div class="card-scene"><div class="flashcard" id="activeFlashcard">' +
+        '<div class="fc-face fc-front">' +
+          '<span class="fc-cat">'+esc(opts.catLabelOf(item))+'</span>' +
+          '<span class="fc-star'+(mastered?' on':'')+'" data-toggle-master data-domain="'+opts.domain+'" data-key="'+esc(key)+'">★</span>' +
+          opts.frontHtml(item) +
+          '<span class="fc-hint">Klik kartu untuk membalik</span>' +
+        '</div>' +
+        '<div class="fc-face fc-back">' + opts.backHtml(item) + '</div>' +
+      '</div></div>' +
+      '<div class="flash-nav">' +
+        '<button class="fnav-btn" data-flash-nav="prev">←</button>' +
+        '<button class="fnav-master'+(mastered?' on':'')+'" data-toggle-master data-domain="'+opts.domain+'" data-key="'+esc(key)+'">'+(mastered?'★ Sudah Hafal':'☆ Tandai Hafal')+'</button>' +
+        '<button class="fnav-btn" data-flash-nav="next">→</button>' +
+      '</div>' +
+      '<div class="flash-progress">Kartu '+(idx+1)+' dari '+items.length+'</div>' +
+    '</div>';
+}
+
+/* ============================================================
+   GENERIC: QUIZ ENGINE
+   ============================================================ */
+var quizSession = null; // {domain, questions, index, score, answered, active}
+
+function startQuiz(domain, questions){
+  quizSession = {domain:domain, questions:questions, index:0, score:0, answered:false, active:true};
+  renderQuizQuestion();
+}
+
+function renderQuizContainer(){
+  var container = document.getElementById(quizSession.domain+'Content');
+  return container;
+}
+
+function renderQuizQuestion(){
+  var container = document.getElementById(quizSession.domain+'Content');
+  if (!quizSession || quizSession.index >= quizSession.questions.length){
+    renderQuizSummary(container);
+    return;
+  }
+  var q = quizSession.questions[quizSession.index];
+  var pct = Math.round((quizSession.index)/quizSession.questions.length*100);
+  var optClass = q.jpOptions ? 'quiz-opt jp-opt' : 'quiz-opt';
+  var promptClass = q.jpPrompt === false ? 'quiz-prompt small' : 'quiz-prompt';
+
+  var html = '<div class="quiz-wrap">' +
+    '<div class="quiz-scorebar"><span>Soal '+(quizSession.index+1)+' / '+quizSession.questions.length+'</span><span>Skor: '+quizSession.score+'</span></div>' +
+    '<div class="quiz-progress-track"><div class="quiz-progress-fill" style="width:'+pct+'%"></div></div>' +
+    '<div class="quiz-card">' +
+      '<div class="quiz-prompt-label">'+esc(q.label||'Pilih jawaban yang benar')+'</div>' +
+      '<div class="'+promptClass+'">'+q.prompt+'</div>' +
+    '</div>' +
+    '<div class="quiz-options" id="quizOptionsBox">';
+  q.options.forEach(function(opt, i){
+    html += '<button class="'+optClass+'" data-quiz-opt="'+i+'">'+opt+'</button>';
+  });
+  html += '</div><div class="quiz-next-row" id="quizNextRow"></div></div>';
+  container.innerHTML = html;
+}
+
+function answerQuiz(selectedIndex){
+  if (!quizSession || quizSession.answered) return;
+  quizSession.answered = true;
+  var q = quizSession.questions[quizSession.index];
+  var correct = selectedIndex === q.answerIndex;
+  if (correct) quizSession.score++;
+  STATE.quiz.total++;
+  if (correct) STATE.quiz.correct++;
+  if (correct && q.onCorrect) q.onCorrect();
+  saveState();
+
+  var buttons = document.querySelectorAll('#quizOptionsBox [data-quiz-opt]');
+  buttons.forEach(function(btn){
+    var i = parseInt(btn.getAttribute('data-quiz-opt'), 10);
+    btn.classList.add('disabled');
+    if (i === q.answerIndex) btn.classList.add('correct');
+    else if (i === selectedIndex) btn.classList.add('wrong');
+  });
+
+  var isLast = quizSession.index >= quizSession.questions.length - 1;
+  document.getElementById('quizNextRow').innerHTML =
+    '<button class="btn btn-primary" data-quiz-advance>'+(isLast ? 'Lihat Hasil →' : 'Lanjut →')+'</button>';
+}
+
+function advanceQuiz(){
+  if (!quizSession) return;
+  quizSession.index++;
+  quizSession.answered = false;
+  renderQuizQuestion();
+}
+
+function renderQuizSummary(container){
+  var s = quizSession;
+  var total = s.questions.length;
+  var pct = total > 0 ? Math.round(s.score/total*100) : 0;
+  var emoji = '🌱', msg = 'すごい! Luar biasa!';
+  if (pct >= 90) { emoji='🏆'; msg = 'すごい！(Sugoi!) Luar biasa, hampir sempurna!'; }
+  else if (pct >= 70) { emoji='🎉'; msg = 'いいね！(Ii ne!) Bagus sekali!'; }
+  else { emoji='💪'; msg = '頑張って！(Ganbatte!) Terus semangat, coba lagi!'; }
+
+  container.innerHTML =
+    '<div class="quiz-wrap"><div class="quiz-card quiz-summary">' +
+      '<div class="qs-emoji">'+emoji+'</div>' +
+      '<h2>Kuis Selesai!</h2>' +
+      '<div class="qs-score">'+s.score+' / '+total+'</div>' +
+      '<p>'+msg+' Akurasi kamu '+pct+'%.</p>' +
+      '<div class="qs-actions">' +
+        '<button class="btn btn-primary" data-quiz-retry="'+s.domain+'">↻ Ulangi Kuis</button>' +
+        '<button class="btn btn-ghost" data-tab="beranda">Kembali ke Beranda</button>' +
+      '</div>' +
+    '</div></div>';
+  renderDashboard();
+}
+
+/* ============================================================
+   KOTOBA VIEW
+   ============================================================ */
+var kotobaState = {mode:'kartu', cat:'all', index:0, search:''};
+
+function kotobaFiltered(){
+  return KOTOBA.filter(function(w){
+    var matchCat = kotobaState.cat === 'all' || w.cat === kotobaState.cat;
+    var q = kotobaState.search.trim().toLowerCase();
+    var matchSearch = !q || w.jp.toLowerCase().indexOf(q)>=0 || w.romaji.toLowerCase().indexOf(q)>=0 || w.mean.toLowerCase().indexOf(q)>=0;
+    return matchCat && matchSearch;
+  });
+}
+function kotobaCatLabel(id){
+  var c = KOTOBA_CATEGORIES.filter(function(x){return x.id===id;})[0];
+  return c ? c.label : id;
+}
+
+function renderKotoba(){
+  renderChips(document.getElementById('kotobaChips'), KOTOBA_CATEGORIES, kotobaState.cat);
+  document.querySelectorAll('#view-kotoba .mode-btn').forEach(function(b){
+    b.classList.toggle('active', b.getAttribute('data-mode-select') === kotobaState.mode);
+  });
+  document.getElementById('kotobaSearchBox').classList.toggle('hidden', kotobaState.mode !== 'daftar');
+
+  var container = document.getElementById('kotobaContent');
+  var items = kotobaFiltered();
+
+  if (kotobaState.mode === 'kartu'){
+    if (kotobaState.index >= items.length) kotobaState.index = 0;
+    renderFlashDeck(container, items, {
+      domain:'kotoba', state:kotobaState,
+      keyOf: function(it){ return it.k; },
+      catLabelOf: function(it){ return kotobaCatLabel(it.cat); },
+      frontHtml: function(it){
+        return '<span class="fc-jp big" lang="ja">'+esc(it.jp)+'</span><span class="fc-romaji">'+esc(it.romaji)+'</span>';
+      },
+      backHtml: function(it){
+        return '<span class="fc-meaning">'+esc(it.mean)+'</span><span class="fc-sub">'+esc(it.jp)+' · '+esc(it.romaji)+'</span>';
+      }
+    });
+  } else if (kotobaState.mode === 'kuis'){
+    var pool = items.length >= 4 ? items : KOTOBA;
+    if (!quizSession || quizSession.domain !== 'kotoba' || quizSession._fresh !== true){
+      buildKotobaQuiz(pool);
+    } else {
+      renderQuizQuestion();
+    }
+  } else {
+    renderListView(container, items, {
+      domain:'kotoba',
+      keyOf: function(it){ return it.k; },
+      jpOf: function(it){ return it.jp; },
+      romajiOf: function(it){ return it.romaji; },
+      meanOf: function(it){ return it.mean; }
+    });
+  }
+}
+
+function buildKotobaQuiz(pool){
+  var chosen = pickN(pool, Math.min(10, pool.length));
+  var questions = chosen.map(function(item){
+    var distractorPool = pool.filter(function(w){ return w.k !== item.k; });
+    var distractors = pickN(distractorPool, Math.min(3, distractorPool.length)).map(function(w){ return w.mean; });
+    var options = shuffle([item.mean].concat(distractors));
+    var answerIndex = options.indexOf(item.mean);
+    return {
+      label:'Apa arti kata ini?',
+      prompt:'<span lang="ja">'+esc(item.jp)+'</span>',
+      jpPrompt:true,
+      options: options.map(function(o){ return esc(o); }),
+      answerIndex: answerIndex,
+      onCorrect: function(){ STATE.kotoba[item.k] = true; saveState(); }
+    };
+  });
+  quizSession = {domain:'kotoba', questions:questions, index:0, score:0, answered:false, active:true, _fresh:true};
+  renderQuizQuestion();
+}
+
+/* ============================================================
+   KANJI VIEW
+   ============================================================ */
+var kanjiState = {mode:'kartu', cat:'all', index:0, search:''};
+
+function kanjiFiltered(){
+  return KANJI.filter(function(w){
+    var matchCat = kanjiState.cat === 'all' || w.cat === kanjiState.cat;
+    var q = kanjiState.search.trim().toLowerCase();
+    var matchSearch = !q || w.char.indexOf(q)>=0 || w.mean.toLowerCase().indexOf(q)>=0 || w.on.toLowerCase().indexOf(q)>=0 || w.kun.toLowerCase().indexOf(q)>=0;
+    return matchCat && matchSearch;
+  });
+}
+function kanjiCatLabel(id){
+  var c = KANJI_CATEGORIES.filter(function(x){return x.id===id;})[0];
+  return c ? c.label : id;
+}
+
+function renderKanji(){
+  renderChips(document.getElementById('kanjiChips'), KANJI_CATEGORIES, kanjiState.cat);
+  document.querySelectorAll('#view-kanji .mode-btn').forEach(function(b){
+    b.classList.toggle('active', b.getAttribute('data-mode-select') === kanjiState.mode);
+  });
+  document.getElementById('kanjiSearchBox').classList.toggle('hidden', kanjiState.mode !== 'daftar');
+
+  var container = document.getElementById('kanjiContent');
+  var items = kanjiFiltered();
+
+  if (kanjiState.mode === 'kartu'){
+    if (kanjiState.index >= items.length) kanjiState.index = 0;
+    renderFlashDeck(container, items, {
+      domain:'kanji', state:kanjiState,
+      keyOf: function(it){ return it.char; },
+      catLabelOf: function(it){ return kanjiCatLabel(it.cat) + ' · ' + it.strokes + ' goresan'; },
+      frontHtml: function(it){
+        return '<span class="fc-jp big" lang="ja">'+esc(it.char)+'</span>';
+      },
+      backHtml: function(it){
+        var exHtml = it.ex.map(function(e){
+          return '<div class="fc-ex-item"><div class="jp" lang="ja">'+esc(e.w)+' <span style="opacity:.7">('+esc(e.r)+')</span></div><div class="romaji">'+esc(e.m)+'</div></div>';
+        }).join('');
+        return '<span class="fc-meaning">'+esc(it.mean)+'</span>' +
+          '<div class="fc-readings"><div><b>On&apos;yomi</b>'+esc(it.on)+'</div><div><b>Kun&apos;yomi</b>'+esc(it.kun)+'</div></div>' +
+          '<div class="fc-examples">'+exHtml+'</div>';
+      }
+    });
+  } else if (kanjiState.mode === 'kuis'){
+    var pool = items.length >= 4 ? items : KANJI;
+    if (!quizSession || quizSession.domain !== 'kanji' || quizSession._fresh !== true){
+      buildKanjiQuiz(pool);
+    } else {
+      renderQuizQuestion();
+    }
+  } else {
+    renderListView(container, items, {
+      domain:'kanji',
+      keyOf: function(it){ return it.char; },
+      jpOf: function(it){ return it.char; },
+      romajiOf: function(it){ return it.on; },
+      meanOf: function(it){ return it.mean; },
+      kanjiStyle:true
+    });
+  }
+}
+
+function buildKanjiQuiz(pool){
+  var chosen = pickN(pool, Math.min(10, pool.length));
+  var questions = chosen.map(function(item){
+    var toChar = Math.random() < 0.5;
+    var distractorPool = pool.filter(function(w){ return w.char !== item.char; });
+    var distractors = pickN(distractorPool, Math.min(3, distractorPool.length));
+    if (toChar){
+      var opts = shuffle([item].concat(distractors));
+      var optionsHtml = opts.map(function(o){ return '<span lang="ja">'+esc(o.char)+'</span>'; });
+      var answerIndex = opts.indexOf(item);
+      return {
+        label:'Pilih kanji yang tepat untuk arti ini',
+        prompt: esc(item.mean),
+        jpPrompt:false,
+        jpOptions:true,
+        options: optionsHtml,
+        answerIndex: answerIndex,
+        onCorrect: function(){ STATE.kanji[item.char] = true; saveState(); }
+      };
+    } else {
+      var mopts = shuffle([item.mean].concat(distractors.map(function(d){return d.mean;})));
+      var mAnswerIndex = mopts.indexOf(item.mean);
+      return {
+        label:'Apa arti kanji ini?',
+        prompt:'<span lang="ja">'+esc(item.char)+'</span>',
+        jpPrompt:true,
+        options: mopts.map(function(o){ return esc(o); }),
+        answerIndex: mAnswerIndex,
+        onCorrect: function(){ STATE.kanji[item.char] = true; saveState(); }
+      };
+    }
+  });
+  quizSession = {domain:'kanji', questions:questions, index:0, score:0, answered:false, active:true, _fresh:true};
+  renderQuizQuestion();
+}
+
+/* ============================================================
+   GENERIC: LIST VIEW (used by kotoba + kanji)
+   ============================================================ */
+function renderListView(container, items, opts){
+  if (items.length === 0){
+    container.innerHTML = '<div class="empty-state">Tidak ada hasil ditemukan.</div>';
+    return;
+  }
+  var html = '<div class="list-grid">';
+  items.forEach(function(it){
+    var key = opts.keyOf(it);
+    var mastered = isMastered(opts.domain, key);
+    html += '<div class="list-item">' +
+      '<span class="li-jp'+(opts.kanjiStyle?' kanji-char':'')+'" lang="ja">'+esc(opts.jpOf(it))+'</span>' +
+      '<div class="li-body"><div class="li-romaji">'+esc(opts.romajiOf(it))+'</div><div class="li-meaning">'+esc(opts.meanOf(it))+'</div></div>' +
+      '<button class="li-star'+(mastered?' on':'')+'" data-toggle-master data-domain="'+opts.domain+'" data-key="'+esc(key)+'" data-rerender="list">★</button>' +
+    '</div>';
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+/* ============================================================
+   BUNPOU VIEW
+   ============================================================ */
+var bunpouState = {mode:'daftar', openKey:null};
+
+function renderBunpou(){
+  document.querySelectorAll('#view-bunpou .mode-btn').forEach(function(b){
+    b.classList.toggle('active', b.getAttribute('data-mode-select') === bunpouState.mode);
+  });
+  var container = document.getElementById('bunpouContent');
+
+  if (bunpouState.mode === 'daftar'){
+    var html = '<div class="bp-list">';
+    BUNPOU.forEach(function(bp, i){
+      var mastered = isMastered('bunpou', bp.k);
+      var open = bunpouState.openKey === bp.k;
+      var exHtml = bp.examples.map(function(e){
+        return '<div class="bp-ex"><div class="jp" lang="ja">'+esc(e.jp)+'</div><div class="romaji">'+esc(e.romaji)+'</div><div class="mean">'+esc(e.mean)+'</div></div>';
+      }).join('');
+      html += '<div class="bp-item'+(open?' open':'')+'">' +
+        '<button class="bp-head" data-bp-toggle="'+bp.k+'">' +
+          '<span class="bp-num">'+String(i+1).padStart(2,'0')+'</span>' +
+          '<span class="bp-head-text"><div class="bp-title">'+esc(bp.title)+'</div><div class="bp-pattern" lang="ja">'+esc(bp.pattern)+'</div></span>' +
+          '<span class="bp-star'+(mastered?' on':'')+'" data-toggle-master data-domain="bunpou" data-key="'+esc(bp.k)+'" data-rerender="bunpou">★</span>' +
+          '<span class="bp-chevron">▾</span>' +
+        '</button>' +
+        '<div class="bp-body" style="max-height:'+(open?'900px':'0')+'">' +
+          '<div class="bp-body-in">' +
+            '<div class="bp-block-label">Penjelasan</div><div class="bp-explain">'+esc(bp.expl)+'</div>' +
+            '<div class="bp-block-label">Contoh Kalimat</div>' + exHtml +
+            '<div class="bp-actions"><button class="small-btn" data-bp-quiz="'+bp.k+'">📝 Coba Kuis Pola Ini</button></div>' +
+            '<div class="bp-quiz-inline" id="bpq-'+bp.k+'"></div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
+  } else {
+    if (!quizSession || quizSession.domain !== 'bunpou' || quizSession._fresh !== true){
+      buildBunpouQuiz();
+    } else {
+      renderQuizQuestion();
+    }
+  }
+}
+
+function buildBunpouQuiz(){
+  var chosen = shuffle(BUNPOU);
+  var questions = chosen.map(function(bp){
+    return {
+      label: bp.title,
+      prompt: '<span lang="ja">'+esc(bp.quiz.q)+'</span>',
+      jpPrompt:true,
+      jpOptions:true,
+      options: bp.quiz.opts.map(function(o){ return '<span lang="ja">'+esc(o)+'</span>'; }),
+      answerIndex: bp.quiz.ans,
+      onCorrect: function(){ STATE.bunpou[bp.k] = true; saveState(); }
+    };
+  });
+  quizSession = {domain:'bunpou', questions:questions, index:0, score:0, answered:false, active:true, _fresh:true};
+  renderQuizQuestion();
+}
+
+function renderInlineBunpouQuiz(key){
+  var bp = BUNPOU.filter(function(b){ return b.k === key; })[0];
+  if (!bp) return;
+  var box = document.getElementById('bpq-'+key);
+  if (!box) return;
+  if (box.getAttribute('data-built') === '1') return; // already showing, leave as-is
+  box.setAttribute('data-built','1');
+  var optsHtml = bp.quiz.opts.map(function(o,i){
+    return '<button class="bp-quiz-opt" data-bp-opt="'+i+'" data-bp-key="'+key+'">'+esc(o)+'</button>';
+  }).join('');
+  box.innerHTML = '<div class="bp-quiz-box"><div class="bp-quiz-q" lang="ja">'+esc(bp.quiz.q)+'</div><div class="bp-quiz-opts">'+optsHtml+'</div></div>';
+}
+
+function answerInlineBunpou(key, selectedIndex){
+  var bp = BUNPOU.filter(function(b){ return b.k === key; })[0];
+  if (!bp) return;
+  var box = document.getElementById('bpq-'+key);
+  if (!box || box.getAttribute('data-answered') === '1') return;
+  box.setAttribute('data-answered','1');
+  var correct = selectedIndex === bp.quiz.ans;
+  STATE.quiz.total++;
+  if (correct){ STATE.quiz.correct++; STATE.bunpou[bp.k] = true; }
+  saveState();
+  var buttons = box.querySelectorAll('[data-bp-opt]');
+  buttons.forEach(function(btn){
+    var i = parseInt(btn.getAttribute('data-bp-opt'),10);
+    btn.classList.add('disabled');
+    if (i === bp.quiz.ans) btn.classList.add('correct');
+    else if (i === selectedIndex) btn.classList.add('wrong');
+  });
+  // refresh star on this card
+  var starEl = document.querySelector('.bp-star[data-key="'+key+'"]');
+  if (starEl && correct) starEl.classList.add('on');
+}
+
+/* ============================================================
+   GLOBAL EVENT DELEGATION
+   ============================================================ */
+document.addEventListener('click', function(e){
+
+  var navTab = e.target.closest('[data-tab]');
+  if (navTab){ switchTab(navTab.getAttribute('data-tab')); return; }
+
+  var flashcard = e.target.closest('#activeFlashcard');
+  if (flashcard && !e.target.closest('[data-toggle-master]')){
+    flashcard.classList.toggle('flipped');
+    return;
+  }
+
+  var star = e.target.closest('[data-toggle-master]');
+  if (star){
+    e.stopPropagation();
+    var domain = star.getAttribute('data-domain');
+    var key = star.getAttribute('data-key');
+    toggleMastered(domain, key);
+    if (domain === 'kotoba') renderKotoba();
+    else if (domain === 'kanji') renderKanji();
+    else if (domain === 'bunpou') renderBunpou();
+    return;
+  }
+
+  var flashNav = e.target.closest('[data-flash-nav]');
+  if (flashNav){
+    var dir = flashNav.getAttribute('data-flash-nav');
+    var stateRef = document.getElementById('view-kotoba').classList.contains('hidden') ? kanjiState : kotobaState;
+    var isKotoba = !document.getElementById('view-kotoba').classList.contains('hidden');
+    var st = isKotoba ? kotobaState : kanjiState;
+    var items = isKotoba ? kotobaFiltered() : kanjiFiltered();
+    if (items.length){
+      st.index = dir === 'next' ? (st.index+1) % items.length : (st.index-1+items.length) % items.length;
+    }
+    if (isKotoba) renderKotoba(); else renderKanji();
+    return;
+  }
+
+  var catSel = e.target.closest('[data-cat-select]');
+  if (catSel){
+    var cat = catSel.getAttribute('data-cat-select');
+    var isKotobaView = !document.getElementById('view-kotoba').classList.contains('hidden');
+    if (isKotobaView){ kotobaState.cat = cat; kotobaState.index = 0; quizSession = null; renderKotoba(); }
+    else { kanjiState.cat = cat; kanjiState.index = 0; quizSession = null; renderKanji(); }
+    return;
+  }
+
+  var modeSel = e.target.closest('[data-mode-select]');
+  if (modeSel){
+    var mode = modeSel.getAttribute('data-mode-select');
+    if (!document.getElementById('view-kotoba').classList.contains('hidden')){ kotobaState.mode = mode; quizSession = null; renderKotoba(); }
+    else if (!document.getElementById('view-kanji').classList.contains('hidden')){ kanjiState.mode = mode; quizSession = null; renderKanji(); }
+    else if (!document.getElementById('view-bunpou').classList.contains('hidden')){ bunpouState.mode = mode; quizSession = null; renderBunpou(); }
+    return;
+  }
+
+  var quizOpt = e.target.closest('[data-quiz-opt]');
+  if (quizOpt){ answerQuiz(parseInt(quizOpt.getAttribute('data-quiz-opt'),10)); return; }
+
+  var quizAdv = e.target.closest('[data-quiz-advance]');
+  if (quizAdv){ advanceQuiz(); return; }
+
+  var quizRetry = e.target.closest('[data-quiz-retry]');
+  if (quizRetry){
+    var d = quizRetry.getAttribute('data-quiz-retry');
+    quizSession = null;
+    if (d === 'kotoba') renderKotoba();
+    else if (d === 'kanji') renderKanji();
+    else if (d === 'bunpou') renderBunpou();
+    return;
+  }
+
+  var bpToggle = e.target.closest('[data-bp-toggle]');
+  if (bpToggle){
+    var k = bpToggle.getAttribute('data-bp-toggle');
+    bunpouState.openKey = (bunpouState.openKey === k) ? null : k;
+    renderBunpou();
+    return;
+  }
+
+  var bpQuizBtn = e.target.closest('[data-bp-quiz]');
+  if (bpQuizBtn){
+    e.stopPropagation();
+    renderInlineBunpouQuiz(bpQuizBtn.getAttribute('data-bp-quiz'));
+    return;
+  }
+
+  var bpOpt = e.target.closest('[data-bp-opt]');
+  if (bpOpt){
+    answerInlineBunpou(bpOpt.getAttribute('data-bp-key'), parseInt(bpOpt.getAttribute('data-bp-opt'),10));
+    return;
+  }
+
+  var resetBtn = e.target.closest('[data-reset-progress]');
+  if (resetBtn){
+    if (window.confirm('Yakin ingin menghapus semua progres belajar? Tindakan ini tidak bisa dibatalkan.')){
+      STATE = {kotoba:{}, kanji:{}, bunpou:{}, streak:{lastVisit:STATE.streak.lastVisit, count:STATE.streak.count}, quiz:{correct:0, total:0}};
+      saveState();
+      renderDashboard();
+    }
+    return;
+  }
+});
+
+document.addEventListener('input', function(e){
+  if (e.target.id === 'kotobaSearchInput'){ kotobaState.search = e.target.value; renderKotoba(); }
+  if (e.target.id === 'kanjiSearchInput'){ kanjiState.search = e.target.value; renderKanji(); }
+});
+
+document.addEventListener('keydown', function(e){
+  var kotobaVisible = !document.getElementById('view-kotoba').classList.contains('hidden') && kotobaState.mode === 'kartu';
+  var kanjiVisible = !document.getElementById('view-kanji').classList.contains('hidden') && kanjiState.mode === 'kartu';
+  if (!kotobaVisible && !kanjiVisible) return;
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight'){
+    var st = kotobaVisible ? kotobaState : kanjiState;
+    var items = kotobaVisible ? kotobaFiltered() : kanjiFiltered();
+    if (!items.length) return;
+    st.index = e.key === 'ArrowRight' ? (st.index+1)%items.length : (st.index-1+items.length)%items.length;
+    if (kotobaVisible) renderKotoba(); else renderKanji();
+  } else if (e.key === ' '){
+    var card = document.getElementById('activeFlashcard');
+    if (card){ e.preventDefault(); card.classList.toggle('flipped'); }
+  }
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+updateStreak();
+renderDashboard();
+
+})();
+</script>
+</body>
+</html>
